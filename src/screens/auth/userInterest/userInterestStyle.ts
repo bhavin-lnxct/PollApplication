@@ -1,0 +1,97 @@
+import {ms, ScaledSheet} from 'react-native-size-matters';
+import colors from '../../../theme/colors/colors';
+
+export default ScaledSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#d8e0e9',
+  },
+  headerContainer: {
+    alignItems: 'center',
+    margin: ms(10),
+  },
+  headerText: {
+    color: colors.AppTheme.Text,
+    fontSize: ms(20),
+    fontWeight: '600',
+  },
+  labelContainer: {
+    marginTop: ms(15),
+    marginBottom: ms(80),
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  labelItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    // borderColor: colors.AppTheme.Text,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    backgroundColor: colors.AppTheme.Secondary,
+    borderRadius: ms(50),
+    padding: ms(8),
+    paddingHorizontal: ms(10),
+    margin: ms(5),
+  },
+  labelItem: {
+    marginHorizontal: ms(5),
+    fontSize: ms(14),
+    color: colors.AppTheme.Text,
+  },
+  selectedLabelItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: ms(50),
+    padding: ms(8),
+    paddingHorizontal: ms(10),
+    margin: ms(5),
+  },
+  selectedLabelItem: {
+    marginHorizontal: ms(5),
+    fontSize: ms(14),
+    color: colors.AppTheme.Secondary,
+  },
+  likeIcon: {
+    backgroundColor: colors.AppTheme.Secondary,
+    // height: ms(40),
+    // width:ms(40),
+    padding: ms(8),
+    // justifyContent:'center',
+    // alignItems:'center',
+    borderRadius: ms(50),
+  },
+  horizontal: {
+    marginHorizontal: ms(16),
+  },
+  continueButton: {
+    alignItems: 'center',
+    marginVertical: ms(20),
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+});
