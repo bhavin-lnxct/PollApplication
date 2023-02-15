@@ -8,16 +8,17 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginEnd: ms(16),
-    color: colors.blackShade02,
+    marginStart: ms(16),
+    color: colors.AppTheme.blackShade02,
   },
   buttonTitle: {
-    color: colors.blackShade02,
+    color: colors.AppTheme.blackShade02,
     fontSize: ms(16),
     padding: ms(16),
   },
   rightCornerIcon: {
     flexDirection: 'row',
-    color: colors.blackShade02,
+    color: colors.AppTheme.blackShade02,
     padding: ms(16),
   },
 });

@@ -1,77 +1,100 @@
+import React, {useState} from 'react';
 import {
   View,
   Text,
   SafeAreaView,
-  StyleSheet,
   TouchableOpacity,
-  Dimensions,
+  TextInput,
   FlatList,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
 import Header from '../../components/header/header';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CreateFeedStyle from './CreateFeedStyle';
-import {Dropdown} from 'react-native-element-dropdown';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {MultiSelect} from 'react-native-element-dropdown';
 import CustomText from '../../components/text/CustomText';
 import DatePicker from 'react-native-date-picker';
-import profileScreenStyle from '../profile/editProfileScreenStyle';
 import moment from 'moment';
 import {ms} from 'react-native-size-matters';
-import {Button, RadioButton, TextInput} from 'react-native-paper';
+import {RadioButton} from 'react-native-paper';
 import colors from '../../theme/colors/colors';
-import {useNavigation} from '@react-navigation/native';
-import screenNameEnum from '../../helper/screenNameEnum';
-import {showToast} from '../../helper/helper';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {Slider} from '@miblanchard/react-native-slider';
-import images from '../../theme/images/images';
-import FastImage from 'react-native-fast-image';
-import {Background} from 'victory-native';
-import {debounce} from 'lodash';
-import Icon from '../../components/icon/Icon';
-// const data = [
-//   { label: 'Poll', value: 'poll' },
-//   { label: 'Image', value: 'image' },
-// ];
-
-const data = [
-  {image: images.pollText, text: 'Text poll', value: 'poll'},
-  {image: images.pollImage, text: 'Image poll', value: 'image'},
-];
+import ThemeButton from '../../components/themeButton/themeButton';
+import {showToast} from '../../helper/helper';
+import screenNameEnum from '../../helper/screenNameEnum';
+import {useUserData} from '../../redux/reducers/user-slice/userSlice';
+import {InterestDataSelector} from '../../helper/profileHelper';
+import messages from '../../helper/messages';
+import {SvgXml} from 'react-native-svg';
+import svg from '../../theme/svg/svg';
 
 const CreateFeedScreen = () => {
   const [value, setValue] = useState('');
   const [date, setDate] = useState('');
   const [isRange, setRange] = useState('');
-  const [isFocus, setIsFocus] = useState(false);
   const [openDatePicker, setDatePicker] = useState(false);
   const navigation = useNavigation();
   const currentTime = new Date().getTime();
   const after3HourTime = new Date(currentTime + 2 * 60 * 60 * 1000);
   const [checked, setChecked] = useState(false);
+  const [category, setCategory] = useState([]);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [privateEndTime, setPrivateEndTime] = useState('');
 
-  useEffect(() => {
-    console.log(checked);
-  }, [checked]);
+  const SelectType = [
+    {image: svg.createtextPoll, text: 'Text poll', val: 'poll'},
+    {image: svg.createImagePoll, text: 'Image poll', val: 'image'},
+  ];
 
   const isValidDate = (d: string) => {
     const dt = Date.parse(d);
     return !Number.isNaN(dt);
   };
 
-  useEffect(() => {
-    setValue('');
-    setDate('');
-    setRange('');
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setValue('');
+      setDate('');
+      setRange('');
+      setChecked(false);
+      setIsPrivate(false);
+      setPrivateEndTime('');
+      setCategory([]);
+    }, []),
+  );
 
   const ContinueHandler = () => {
-    console.log('clicked');
-    console.log(value, 'value');
+    if (value === 'survey') {
+      navigation.navigate(screenNameEnum.CreateSurveyScreen);
+    }
 
-    if (value === '') {
-      showToast('select a post type');
+    if (isPrivate && category.length === 0) {
+      showToast(messages.selectCategoryForPoll);
       return;
+    }
+    if (isPrivate && privateEndTime === '') {
+      showToast(messages.createPollEndTime);
+      return;
+    }
+    if (isPrivate && isRange === '') {
+      showToast(messages.createPollExpectedVote);
+      return;
+    }
+    if (value === '') {
+      showToast(messages.selectePollType);
+      return;
+    }
+    if (isRange !== '') {
+      if (!Number.isNaN(Number(isRange))) {
+        if (Number(isRange) < 100) {
+          return showToast('Minimum value is 100');
+        }
+        if (Number(isRange) > 100000) {
+          return showToast('Maximum value is 100000');
+        }
+      } else {
+        return showToast('Enter a valid range');
+      }
     }
     value === 'poll' &&
       navigation.navigate(screenNameEnum.CreateFeed, {
@@ -79,6 +102,9 @@ const CreateFeedScreen = () => {
         date,
         isRange,
         checked,
+        isPrivate,
+        category,
+        privateEndTime,
       });
     value === 'image' &&
       navigation.navigate(screenNameEnum.CreateFeedImage, {
@@ -86,276 +112,203 @@ const CreateFeedScreen = () => {
         date,
         isRange,
         checked,
+        isPrivate,
+        category,
+        privateEndTime,
       });
     setValue('');
     setDate('');
     setRange('');
-  };
-
-  const onPressSelectType = val => {
-    setValue(val);
+    setIsPrivate(false);
+    setChecked(false);
+    setPrivateEndTime('');
+    setCategory([]);
   };
 
   return (
-    <>
-      <Header title="Create Post" isBack={true} post={false} />
+    <View style={CreateFeedStyle.container}>
+      <Header
+        title="Create Poll"
+        isBack={true}
+        post={false}
+        isNotification={true}
+      />
       <KeyboardAwareScrollView>
         <SafeAreaView>
           <View style={CreateFeedStyle.containerCreateFeed}>
-            <CustomText textStyle={CreateFeedStyle.selectPollText}>
-              {' '}
-              Select Poll :
-            </CustomText>
-
             <FlatList
-              data={data}
+              data={SelectType}
               renderItem={({item, index}) => (
                 <TouchableOpacity
-                  activeOpacity={0.8}
                   key={index}
-                  style={{
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    marginTop: ms(10),
-                  }}
-                  onPress={() => onPressSelectType(item?.value)}>
+                  style={{marginHorizontal: 12, alignItems: 'center'}}
+                  onPress={() => setValue(item?.val)}>
                   <View
                     style={[
-                      {
-                        backgroundColor: '#EDEDED',
-                        padding: ms(15),
-                        margin: ms(12),
-                        borderRadius: ms(20),
-                      },
-                      value === item?.value && {
-                        backgroundColor: 'rgba(0, 6, 61, 0.8);',
+                      CreateFeedStyle.svgContainer,
+                      value === item?.val && {
+                        backgroundColor: colors.AppTheme.OtherSecond,
                       },
                     ]}>
-                    <FastImage
-                      source={item?.image}
-                      resizeMode={FastImage.resizeMode.cover}
-                      style={{height: ms(170), width: ms(150)}}
+                    <SvgXml
+                      xml={item?.image}
+                      width={ms(100)}
+                      height={ms(102)}
                     />
                   </View>
-                  <Text
-                    style={{
-                      color: '#000000',
-                      fontWeight: '600',
-                      fontSize: ms(16),
-                      marginTop: ms(8),
-                    }}>
+                  <CustomText textStyle={CreateFeedStyle.selectPollTitle}>
                     {item?.text}
-                  </Text>
+                  </CustomText>
                 </TouchableOpacity>
               )}
               horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              // showsVerticalScrollIndicator={false}
+              contentContainerStyle={{marginTop: ms(10)}}
             />
             <View style={CreateFeedStyle.selectPoll}>
               <CustomText textStyle={CreateFeedStyle.selectPollText}>
                 End Time
               </CustomText>
-
-              <DatePicker
-                modal
-                style={CreateFeedStyle.reactdatepicker__monthtext}
-                open={openDatePicker}
-                date={isValidDate(date) ? new Date(date) : after3HourTime}
-                mode="datetime"
-                confirmText="Set"
-                minimumDate={after3HourTime}
-                onConfirm={d => {
-                  setDate(d);
-                  setDatePicker(false);
-                }}
-                onCancel={() => {
-                  setDatePicker(false);
-                }}
-              />
-
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={profileScreenStyle.dateViewInput}
-                onPress={() => setDatePicker(true)}>
-                <CustomText textStyle={profileScreenStyle.dateText}>
-                  {isValidDate(date)
-                    ? moment(date).format('DD/MM/YYYY HH:MM')
-                    : 'select'}
-                </CustomText>
-              </TouchableOpacity>
+              {!isPrivate ? (
+                <>
+                  <DatePicker
+                    modal
+                    style={{}}
+                    open={openDatePicker}
+                    date={isValidDate(date) ? new Date(date) : after3HourTime}
+                    mode="datetime"
+                    confirmText="Set"
+                    minimumDate={after3HourTime}
+                    onConfirm={d => {
+                      setDate(d);
+                      setDatePicker(false);
+                    }}
+                    onCancel={() => {
+                      setDatePicker(false);
+                    }}
+                  />
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={CreateFeedStyle.dateViewInput}
+                    onPress={() => setDatePicker(true)}>
+                    <CustomText textStyle={CreateFeedStyle.dateText}>
+                      {isValidDate(date)
+                        ? moment(date).format('DD/MM/YYYY HH:MM')
+                        : 'select'}
+                    </CustomText>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <View style={CreateFeedStyle.genderContainer}>
+                  <RadioButton
+                    value="1"
+                    status={privateEndTime === '1' ? 'checked' : 'unchecked'}
+                    onPress={() => setPrivateEndTime('1')}
+                    color={colors.AppTheme.blackShade02}
+                  />
+                  <CustomText textStyle={CreateFeedStyle.genderText}>
+                    1 Day
+                  </CustomText>
+                  <RadioButton
+                    value="7"
+                    status={privateEndTime === '7' ? 'checked' : 'unchecked'}
+                    onPress={() => setPrivateEndTime('7')}
+                    color={colors.AppTheme.blackShade02}
+                  />
+                  <CustomText textStyle={CreateFeedStyle.genderText}>
+                    7 Day
+                  </CustomText>
+                </View>
+              )}
             </View>
-
             <View style={CreateFeedStyle.selectPoll}>
               <CustomText textStyle={CreateFeedStyle.selectPollText}>
                 Maximum Expected Votes
               </CustomText>
-
               <TextInput
-                style={{
-                  backgroundColor: 'transparent',
-                  textAlign: 'center',
-                  height: 40,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                textColor={colors.AppTheme.Text}
-                mode="outlined"
-                keyboardType="number-pad"
+                style={CreateFeedStyle.pollVoteInput}
                 placeholder="Votes"
-                value={isRange.toString()}
-                onChangeText={text =>
-                  text > 500
-                    ? showToast('Maximum value is 500')
-                    : setRange(text)
-                }
+                placeholderTextColor={colors.AppTheme.Text}
+                keyboardType="numeric"
+                value={isRange}
+                onChangeText={text => {
+                  setRange(text);
+                }}
               />
             </View>
             <View style={CreateFeedStyle.containerRange}>
               <Slider
                 animateTransitions
-                value={isRange}
-                onValueChange={val => setRange(Math.round(val))}
-                maximumValue={1000}
-                minimumValue={150}
-                // step={5}
-                thumbTintColor={colors.AppTheme.Text}
+                value={
+                  parseInt(isRange) >= 100 &&
+                  parseInt(isRange) &&
+                  parseInt(isRange) <= 100000 &&
+                  parseInt(isRange)
+                }
+                onValueChange={val => setRange(Math.round(val).toString())}
+                maximumValue={100000}
+                minimumValue={100}
+                thumbTintColor={colors.AppTheme.Primary}
                 trackClickable={true}
                 maximumTrackTintColor="#d3d3d3"
-                minimumTrackTintColor={'#F26419'}
-                renderAboveThumbComponent={() => (
-                  <Text style={CreateFeedStyle.voteRangeText}>
-                    {'Votes' + ' ' + isRange}
-                  </Text>
-                )}
+                minimumTrackTintColor={colors.AppTheme.SecondaryNew}
+                renderAboveThumbComponent={() =>
+                  parseInt(isRange) >= 100 && (
+                    <Text style={CreateFeedStyle.voteRangeText}>{isRange}</Text>
+                  ) &&
+                  parseInt(isRange) <= 100000 && (
+                    <Text style={CreateFeedStyle.voteRangeText}>{isRange}</Text>
+                  )
+                }
               />
             </View>
-
-            <View
-              style={{
-                alignItems: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <CustomText textStyle={{color: colors.AppTheme.Primary}}>
+            <View style={CreateFeedStyle.explanationMain}>
+              <CustomText textStyle={CreateFeedStyle.explanationTitle}>
                 Do you require vote explanation?
               </CustomText>
-              <TouchableOpacity
-                onPress={() => setChecked(!checked)}
-                activeOpacity={0.8}
-                style={[
-                  {
-                    width: ms(23),
-                    height: ms(23),
-                    borderWidth: ms(1),
-                    borderRadius: ms(8),
-                    borderColor: colors.AppTheme.PlaceholderColor,
-                  },
-                  checked && {
-                    backgroundColor: colors.AppTheme.Primary,
-                    borderColor: colors.AppTheme.Primary,
-                  },
-                ]}>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  {checked && (
-                    <Icon
-                      type="Feather"
-                      name="check"
-                      size={ms(15)}
-                      color={colors.AppTheme.Secondary}
-                    />
-                  )}
-                </View>
-              </TouchableOpacity>
-              {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={CreateFeedStyle.explanationButtonMain}>
                 <TouchableOpacity
+                  onPress={() => setChecked(true)}
                   activeOpacity={0.8}
-                  onPress={debounce(() => setChecked(true), 100)}
                   style={[
-                    {
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#EDEDED',
-                      height: ms(40),
-                      width: ms(80),
-                      marginRight: ms(14),
-                      borderRadius: ms(10),
-                      marginTop: ms(8),
-                    },
-                    checked && {
-                      backgroundColor: 'rgba(0, 6, 61, 0.8)',
-                    },
+                    CreateFeedStyle.explanationButton,
+                    checked && CreateFeedStyle.explanationButtonCheck,
                   ]}>
                   <CustomText
-                    textStyle={
-                      checked
-                        ? {color: colors.AppTheme.Secondary}
-                        : {color: colors.AppTheme.Text}
-                    }>
+                    textStyle={[
+                      CreateFeedStyle.explanationButtonText,
+                      checked && CreateFeedStyle.explanationButtonTextCheck,
+                    ]}>
                     Yes
                   </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={debounce(() => setChecked(false), 100)}
+                  onPress={() => setChecked(false)}
                   style={[
-                    {
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#EDEDED',
-                      height: ms(40),
-                      width: ms(80),
-                      marginRight: ms(14),
-                      borderRadius: ms(10),
-                      marginTop: ms(8),
-                    },
-                    !checked && {
-                      backgroundColor: 'rgba(0, 6, 61, 0.8)',
-                    },
+                    CreateFeedStyle.explanationButton,
+                    !checked && CreateFeedStyle.explanationButtonCheck,
                   ]}>
                   <CustomText
-                    textStyle={
-                      checked
-                        ? {color: colors.AppTheme.Text}
-                        : {color: colors.AppTheme.Secondary}
-                    }>
+                    textStyle={[
+                      CreateFeedStyle.explanationButtonText,
+                      !checked && CreateFeedStyle.explanationButtonTextCheck,
+                    ]}>
                     No
                   </CustomText>
                 </TouchableOpacity>
-              </View> */}
+              </View>
+            </View>
+            <View style={CreateFeedStyle.themeButton}>
+              <ThemeButton
+                title={'Continue'}
+                containerStyle={{}}
+                onPress={ContinueHandler}
+              />
             </View>
           </View>
         </SafeAreaView>
       </KeyboardAwareScrollView>
-      <View
-        style={{
-          paddingHorizontal: ms(20),
-          paddingVertical: ms(20),
-          // marginBottom: ms(80),
-        }}>
-        <Button
-          onPress={ContinueHandler}
-          icon={'share'}
-          textColor={colors.AppTheme.Secondary}
-          buttonColor={colors.AppTheme.Primary}
-          mode="elevated"
-          style={{padding: 8}}>
-          <CustomText
-            textStyle={{
-              textAlign: 'center',
-              color: colors.AppTheme.Secondary,
-              fontSize: ms(16),
-            }}>
-            Continue
-          </CustomText>
-        </Button>
-      </View>
-    </>
+    </View>
   );
 };
 

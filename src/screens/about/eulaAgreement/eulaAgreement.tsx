@@ -9,13 +9,13 @@ import eulaAgreementStyle from "./eulaAgreementStyle";
 const EulaAgreement = () => {
     return(
         <SafeAreaView style={eulaAgreementStyle.container}>
-      <Header title="EULA Agreement"/>
+      <Header title="EULA Agreement" isBack={true}/>
       <View style={eulaAgreementStyle.mainContainer}>
         <ScrollView>
           <Text style={eulaAgreementStyle.headerTitle}>
             End User License Agreement
           </Text>
-          <Text style={{marginLeft: ms(24), color: colors.grayShade8F}}>
+          <Text style={{marginLeft: ms(24), color: colors.AppTheme.grayShade8F}}>
             Last updated on July 2022
           </Text>
           <View>
@@ -43,7 +43,7 @@ const EulaAgreement = () => {
                 textAlign: 'justify',
                 marginHorizontal: ms(24),
                 marginTop: 4,
-                color: colors.blackShade20,
+                color: colors.AppTheme.blackShade20,
               }}
             >
               We reserve the right, at any time and without prior notice, to
@@ -217,7 +217,7 @@ const EulaAgreement = () => {
               to file a complaint about information or materials uploaded by
               other users, {'\n'}contact us at:
               <Text
-                style={{color: colors.blueviolet}}
+                style={{color: colors.AppTheme.blueviolet}}
                 onPress={() => {
                   Linking.openURL('https://lnxct.com');
                 }}

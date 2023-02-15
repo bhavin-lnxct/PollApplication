@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import screenNameEnum from '../helper/screenNameEnum';
 import FeedScreen from '../screens/feed/feedScreen/feedScreen';
 import FeedDetailsView from '../screens/feed/feedDetailsView/feedDetailsView';
 import FeedCard from '../components/card/feedCard';
 import PollQuestion from '../screens/feed/poll/pollQuestion';
-import FeedCommentScreen from '../screens/feed/feedDetailsView/feedCommentScreen';
 import AboutNavigation from './aboutNavigation';
 import ChangePassword from '../screens/auth/changePassword/changePassword';
 import EditProfileScreen from '../screens/profile/editProfileScreen';
 import ProfileScreen from '../screens/profile/myProfile/profileScreen';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import Notification from '../screens/notification/Notification';
-import { useNavigation } from '@react-navigation/native';
-// import ProfileScreen from '../screens/profile/myProfile/profileScreen';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import notifee, {EventType} from '@notifee/react-native';
+import {openUrl} from '../helper/helper';
+import SurveyScreen from '../screens/survey/SurveyScreen';
+import SurveyDetail from '../screens/survey/surveyDetail/surveyDetail';
 
 const RootStack = createNativeStackNavigator();
 
@@ -44,11 +46,6 @@ const routes = [
     component: FeedCard,
   },
   {
-    route: screenNameEnum.FeedCommentScreen,
-    label: 'FeedCommentScreen',
-    component: FeedCommentScreen,
-  },
-  {
     route: screenNameEnum.AboutStack,
     label: 'AboutStack',
     component: AboutNavigation,
@@ -68,34 +65,49 @@ const routes = [
     label: 'Notification',
     component: Notification,
   },
+  {
+    route: screenNameEnum.SurveyScreen,
+    label: 'SurveyScreen',
+    component: SurveyScreen,
+  },
+  {
+    route: screenNameEnum.SurveyDetail,
+    label: 'SurveyDetail',
+    component: SurveyDetail,
+  },
 ];
 
 const FeedNavigation = () => {
-
   const navigation = useNavigation();
 
-  useEffect(()=>{
-    //background listener
-    const unsubscribe = dynamicLinks().onLink((link)=>{
-      handleDynamicLink(link)
+  useEffect(() => {
+    notifee.onForegroundEvent(async ({type, detail}) => {
+      switch (type) {
+        case EventType.DISMISSED:
+          console.log('User dismissed notification', detail.notification);
+          break;
+        case EventType.PRESS:
+          openUrl(detail?.notification?.data?.url);
+          break;
+      }
     });
+
     //foreground listener
-    dynamicLinks().getInitialLink().then((link)=>{
-      handleDynamicLink(link)
+    const unsubscribe = dynamicLinks().onLink(link => {
+      if (link) {
+        openUrl(link?.url);
+      }
     });
+    //background listener
+    dynamicLinks()
+      .getInitialLink()
+      .then(link => {
+        if (link) {
+          openUrl(link?.url);
+        }
+      });
     return () => unsubscribe();
-
-  },[])
-
-  const handleDynamicLink = (link) => {
-    if(link?.url){
-      setTimeout(() => {
-        navigation.navigate(screenNameEnum.FeedDetailsView,{postId: link?.url})
-      }, 200);
-    }else{
-      return ;
-    }
-  }
+  }, []);
 
   return (
     <RootStack.Navigator screenOptions={{headerShown: false}}>

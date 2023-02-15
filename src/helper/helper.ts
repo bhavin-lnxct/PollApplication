@@ -1,26 +1,28 @@
 import RNFS from 'react-native-fs';
-import { Platform } from 'react-native';
+import {Linking, Platform} from 'react-native';
 import Toast from 'react-native-root-toast';
-import { EventEmitter } from "fbemitter";
+import {EventEmitter} from 'fbemitter';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
+import messaging from '@react-native-firebase/messaging';
+import notifee from '@notifee/react-native';
 
 export const Emmiter = new EventEmitter();
 
-export const removeSpace = ( text: string ) => {
-    const trimEndText = text.trimEnd();
-    const trimmedText = trimEndText.trimStart();
-    return trimmedText;
-}
+export const removeSpace = (text: string) => {
+  const trimEndText = text.trimEnd();
+  const trimmedText = trimEndText.trimStart();
+  return trimmedText;
+};
 
 export const showToast = (msg, duration = Toast.durations.SHORT) => {
-    Toast.show(msg, {
-      duration: duration,
-      position: Toast.positions.BOTTOM,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    });
+  Toast.show(msg, {
+    duration: duration,
+    position: Toast.positions.BOTTOM,
+    shadow: true,
+    animation: true,
+    hideOnPress: true,
+    delay: 0,
+  });
 };
 
 export interface PhotoModel {
@@ -68,10 +70,10 @@ export const getUploadMediaUrl = async (objMedia: PhotoModel) => {
   }
 };
 
-export const createShareLink = async (postId:string) => {
-  
-    const link = await dynamicLinks().buildShortLink({
-      link: `https://mythought.page.link/${postId}`,
+export const createShareLink = async (postId: string) => {
+  const link = await dynamicLinks().buildShortLink(
+    {
+      link: `https://mythought.page.link/feed/${postId}`,
       // ios: {
       //   bundleId: <bundle_id>,
       //   appStoreId: <appstore_id>,
@@ -79,10 +81,62 @@ export const createShareLink = async (postId:string) => {
       domainUriPrefix: 'https://mythought.page.link',
       android: {
         packageName: 'com.Ponder',
-      }
-      
-    },dynamicLinks.ShortLinkType.SHORT);
-  
-    return link;
-  
+      },
+    },
+    dynamicLinks.ShortLinkType.SHORT,
+  );
+
+  return link;
+};
+
+export const UseNumberFormate = (text: number | bigint) => {
+  var nf = new Intl.NumberFormat(
+    Intl.DateTimeFormat().resolvedOptions().locale,
+    {notation: 'compact', compactDisplay: 'short'},
+  ).format(text);
+
+  return +nf;
+};
+
+export const validateEmail = (text:string) => {
+  let regex = new RegExp(/^([A-Za-z0-9_\-\.])+\@([A-Za-z_\-\.])+\.([A-Za-z]{2,4})$/);
+  let res = regex.test(text);
+  return res;
+} 
+
+export const getFireBaseToken = async () => {
+  await messaging().registerDeviceForRemoteMessages();
+  const token = await messaging().getToken();
+  return token;
+}
+
+export const notificationGenerator = async (message) => {
+    await notifee.requestPermission();
+    const channelId = await notifee.createChannel({
+      id: '123',
+      name: 'Ponder',
+    });
+    await notifee.displayNotification({
+      title: message.data.title,
+      body: message.data.body,
+      data: {url: message.data.url},
+      android: {
+        channelId,
+        // smallIcon: 'name-of-a-small-icon',
+        // pressAction: {
+        //   id: 'default',
+        // },
+      },
+    });
+}
+
+export const openUrl = async (data) => {
+  const link = data.replace('https://mythought.page.link','ponder:/')
+
+  Linking.canOpenURL(link).then(() => {
+    console.log('URL works');
+    Linking.openURL(link).catch(error => {
+      console.log('An error has occurred in URL:', error);
+    });
+  });
 }

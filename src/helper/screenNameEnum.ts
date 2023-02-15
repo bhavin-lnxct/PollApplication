@@ -24,10 +24,11 @@ enum screenNameEnum {
   CreateFeed = 'CreateFeed',
   PollQuestion = 'PollQuestion',
   FeedDetailsView = 'FeedDetailsView',
-  FeedCommentScreen = 'FeedCommentScreen',
   CreateFeedScreen = 'CreateFeedScreen',
   CreateFeedImage = 'CreateFeedImage',
+  CreateSurveyScreen = 'CreateSurveyScreen',
   ResultScreen = 'ResultScreen',
+  SurveyDetail = 'SurveyDetail',
 
   // profile
 
@@ -35,6 +36,9 @@ enum screenNameEnum {
   ProfileScreen = 'ProfileScreen',
   FollowersScreen = 'FollowersScreen',
   FollowingScreen = 'FollowingScreen',
+
+  // survey screen
+  SurveyScreen = 'SurveyScreen',
 
   //about screen
   AboutDetailScreen = 'AboutDetailScreen',
@@ -45,8 +49,10 @@ enum screenNameEnum {
   TermsOfUse = 'TermsOfUse',
 
   // Notifications screen
-  Notification = "Notification",
+  Notification = 'Notification',
 
+  // Splash screen
+  SplashScreen = 'SplashScreen',
 
   // Demo
   List1 = 'List1',

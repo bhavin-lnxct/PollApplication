@@ -1,0 +1,8 @@
+{
+    "react-native": {
+      "admob_android_app_id": "ca-app-pub-3562819414393828~6255972538",
+      "admob_ios_app_id": "ca-app-pub-3562819414393828~2648447782",
+      "android_task_executor_maximum_pool_size": 10,
+      "android_task_executor_keep_alive_seconds": 3
+    }
+  }

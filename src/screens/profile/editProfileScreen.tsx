@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-  ActivityIndicator,
 } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import FastImage from 'react-native-fast-image';
@@ -17,17 +16,15 @@ import colors from '../../theme/colors/colors';
 import editProfileScreenStyle from './editProfileScreenStyle';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
-import {Chip, RadioButton} from 'react-native-paper';
-import {EducationData, InterestData} from '../../helper/profileHelper';
+import {RadioButton} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import storage from 'redux-persist/lib/storage';
-import {API, Auth, graphqlOperation, Storage} from 'aws-amplify';
+import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {getUploadMediaUrl, showToast} from '../../helper/helper';
 import {
+  useFeedSelector,
   userAction,
   useUserData,
 } from '../../redux/reducers/user-slice/userSlice';
-import ProfileHeader from './component/profileHeader';
 import images from '../../theme/images/images';
 import {useDispatch} from 'react-redux';
 import {Query} from '../../network/Query';
@@ -38,30 +35,45 @@ import bottomSheetStyle from '../../components/bottomSheet/bottomSheetStyle';
 import {Dropdown} from 'react-native-element-dropdown';
 import {SvgXml} from 'react-native-svg';
 import svg from '../../theme/svg/svg';
-
 import screenNameEnum from '../../helper/screenNameEnum';
 import Header from '../../components/header/header';
+import Loading from '../../components/loading/Loading';
+import messages from '../../helper/messages';
+import DropDownPicker from 'react-native-dropdown-picker';
+import _ from 'lodash';
+
 const EditProfileScreen = () => {
   const userData = useUserData();
+  const feedSelector = useFeedSelector();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [openCameraModal, setCameraModal] = useState(false);
+  const [ProfilePhotoModel, setProfilePhotoModel] = useState(false);
   const [profileImage, setProfileImage] = useState('');
-  const [fullname, setFullname] = useState('');
+  const [fullName, setFullName] = useState('');
   const [userName, setUserName] = useState('');
   const [date, setDate] = useState('');
   const [openDatePicker, setDatePicker] = useState(false);
   const [gender, setGender] = useState('');
   const [about, setAbout] = useState('');
-  const [Education, setEducation] = useState('');
+  const [education, setEducation] = useState('');
   const [interest, setInterest] = useState([]);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [uploadImage, setUploadImage] = useState('');
+  const [educationData, setEducationData] = useState([{}]);
+  const [isPoll, setPoll] = useState(feedSelector);
+  const [openDropDown, setOpenDropDown] = useState(false);
+  const currentTime = new Date();
+  const thirteenYearAgo = new Date(
+    currentTime.setFullYear(currentTime.getFullYear() - 13),
+  );
+  let uploadImageUrl = '';
 
   useEffect(() => {
     NetInfo.fetch().then(st => {
       if (!st.isConnected) {
-        showToast('connect to the internet');
+        showToast(messages.noInterNet);
       }
     });
     if (!userData?.image_url) {
@@ -71,18 +83,26 @@ const EditProfileScreen = () => {
       setProfileImage(imageUrl);
     }
     setUserName(userData?.user_name);
-    setFullname(userData?.user_display_name);
-    setDate(userData?.birth_date || new Date());
+    setFullName(userData?.user_display_name);
+    setDate(userData?.birth_date);
     setAbout(userData?.user_bio);
     setGender(userData?.gender);
     setEducation(userData?.user_education);
-
-    console.log(userData, 'uuuuuuuuuuu');
     if (userData?.user_interest) {
       let interestArray = userData?.user_interest.split(',');
       setInterest(interestArray);
     }
+    getEducationData();
+    setIsUploadingImage(false);
+    setUploadImage('');
   }, [userData]);
+
+  const removePhoto = () => {
+    setProfileImage('');
+    setIsUploadingImage(true);
+    setUploadImage('');
+    setProfilePhotoModel(false);
+  };
 
   const saveProfile = async () => {
     if (saveLoading) {
@@ -90,22 +110,17 @@ const EditProfileScreen = () => {
     }
 
     if (userName.indexOf(' ') >= 0) {
-      showToast('Username does not contain white space');
+      showToast(messages.usernameWhitespace);
       return;
     }
 
     if (userName === '' || userName.length < 3) {
-      showToast('Username must be a minimum of 3');
+      showToast(messages.username3Character);
       return;
     }
 
-    if (profileImage === '' || !profileImage) {
-      showToast('Please select a photo for profile');
-      return;
-    }
-
-    if (gender === '') {
-      console.log('gender is not defined');
+    if (!education) {
+      showToast(messages.selectEducation);
       return;
     }
 
@@ -113,94 +128,97 @@ const EditProfileScreen = () => {
 
     NetInfo.fetch().then(st => {
       if (!st.isConnected) {
-        showToast('connect to the internet');
+        showToast(messages.noInterNet);
         setSaveLoading(false);
         return;
       }
     });
 
-    if (uploadImage === '') {
+    if (uploadImage !== '') {
+      try {
+        const media = await fetch(uploadImage);
+        const blob = await media.blob();
+        const type = blob?.type;
+        const ext = type.split('/')[1];
+        uploadImageUrl = `profile/${
+          userData?.user_id
+        }-${new Date().getTime()}.${ext}`;
+
+        await Storage.put(uploadImageUrl, blob, {
+          level: 'public',
+          contentType: type,
+        });
+      } catch (error) {
+        setSaveLoading(false);
+        console.log(
+          'failed to upload image in s3 in update user',
+          error.message,
+        );
+      }
+    }
+
+    var input = {
+      birth_date: date,
+      gender: gender,
+      user_id: userData?.user_id,
+      user_bio: about,
+      user_display_name: fullName,
+      user_education: education,
+      user_name: userName,
+    };
+
+    if (isUploadingImage === true) {
+      if (uploadImage !== '') {
+        var input = {
+          ...input,
+          image_url: `public/${uploadImageUrl}`,
+        };
+      } else {
+        var input = {
+          ...input,
+          image_url: null,
+        };
+      }
+    }
+
+    try {
       const result = await API.graphql(
-        graphqlOperation(Query.updateUser, {
-          birth_date: date.toString(),
-          gender: gender,
-          user_id: userData?.user_id,
-          user_bio: about,
-          user_display_name: fullname,
-          user_education: Education,
-          user_name: userName,
-        }),
+        graphqlOperation(Query.updateUser, input),
       );
       setSaveLoading(false);
-      navigation.goBack();
-      showToast('Profile has been successfully saved');
-      console.log(result, 'result from update user without image');
-
-      const updateUser = {
+      var updateUser = {
         ...userData,
-        birth_date: date.toString(),
+        birth_date: date,
         gender: gender,
         user_bio: about,
-        user_display_name: fullname,
-        user_education: Education,
+        user_display_name: fullName,
+        user_education: education,
         user_name: userName,
       };
+      if (isUploadingImage === true) {
+        if (uploadImage !== '') {
+          var updateUser = {
+            ...updateUser,
+            image_url: `public/${uploadImageUrl}`,
+          };
+        } else {
+          var updateUser = {
+            ...updateUser,
+            image_url: null,
+          };
+        }
+      }
+      setUploadImage('');
+      setIsUploadingImage(false);
       dispatch(userAction.setUserData(updateUser));
-    } else {
-      const media = await fetch(uploadImage);
-      const blob = await media.blob();
-      const type = blob?.type;
-      const ext = type.split('/')[1];
-      const fileName = `profile/${
-        userData?.user_id
-      }-${new Date().getTime()}.${ext}`;
-
-      await Storage.put(fileName, blob, {
-        level: 'public',
-        contentType: type,
-        // useAccelerateEndpoint: true,
-      })
-        .then(async () => {
-          console.log('upload image successfully in s3');
-          try {
-            setUploadImage('');
-            const result = await API.graphql(
-              graphqlOperation(Query.updateUser, {
-                image_url: `public/${fileName}`,
-                birth_date: date.toString(),
-                gender: gender,
-                user_id: userData?.user_id,
-                user_bio: about,
-                user_display_name: fullname,
-                user_education: Education,
-                user_name: userName,
-              }),
-            );
-
-            console.log(result, 'result from update user with image');
-            navigation.goBack();
-            showToast('Profile has been successfully saved');
-            setSaveLoading(false);
-            const updateUser = {
-              ...userData,
-              image_url: `public/${fileName}`,
-              birth_date: date.toString(),
-              gender: gender,
-              user_bio: about,
-              user_display_name: fullname,
-              user_education: Education,
-              user_name: userName,
-            };
-            dispatch(userAction.setUserData(updateUser));
-          } catch (error) {
-            console.log(error, 'error from update user');
-            setSaveLoading(false);
-          }
-        })
-        .catch(e => {
-          console.log(e, 'error from upload image in s3 bucket');
-          setSaveLoading(false);
-        });
+      dispatch(userAction.setFeedSelector(isPoll));
+      navigation.goBack();
+      showToast(messages.profileSaved);
+    } catch (error) {
+      setUploadImage('');
+      setIsUploadingImage(false);
+      setSaveLoading(false);
+      console.log('failed to update user detail', error);
     }
   };
 
@@ -214,8 +232,6 @@ const EditProfileScreen = () => {
       includeExtra: true,
       presentationStyle: 'fullScreen',
     }).then(async (cameraResponse: any) => {
-      console.log(cameraResponse, 'camera response');
-
       if (cameraResponse.didCancel) {
         return;
       }
@@ -236,22 +252,26 @@ const EditProfileScreen = () => {
         type: cameraResponse.assets[0].type,
       };
 
+      if (resp?.fileSize / 1000000 > 10) {
+        showToast(messages.cantUploadImageMax10);
+        return;
+      }
+
       const ext = resp?.type.split('/')[1];
 
       if (ext === 'jpeg' || ext === 'png' || ext === 'jpg') {
         const dataImage = await getUploadMediaUrl(resp);
         setProfileImage(dataImage);
+        setIsUploadingImage(true);
         setUploadImage(resp?.uri);
       } else {
-        console.log('please select jpeg , jpg or png file');
-        showToast('please select jpeg , jpg or png file');
+        showToast(messages.selectValidImage);
         return;
       }
     });
   };
 
   const onClickCamera = () => {
-    console.log('camera clicked');
     setCameraModal(false);
 
     launchCamera({
@@ -279,100 +299,42 @@ const EditProfileScreen = () => {
         type: cameraResponse.assets[0].type,
       };
 
+      if (resp?.fileSize / 1000000 > 10) {
+        showToast(messages.cantUploadImageMax10);
+        return;
+      }
+
       const ext = resp?.type.split('/')[1];
 
       if (ext === 'jpeg' || ext === 'png' || ext === 'jpg') {
         const dataImage = await getUploadMediaUrl(resp);
         setProfileImage(dataImage);
+        setIsUploadingImage(true);
         setUploadImage(resp?.uri);
       } else {
-        console.log('please select jpeg , jpg or png file');
-        showToast('please select jpeg , jpg or png file');
+        showToast(messages.selectValidImage);
         return;
       }
     });
   };
 
-  const isValiddate = (d: string) => {
+  const isValidate = (d: string) => {
     const dt = Date.parse(d);
     return !Number.isNaN(dt);
   };
 
   const onPressEditProfile = async () => {
-    const mic = await Permission.getMicPermission();
     const camera = await Permission.getCameraPermission();
     const storage = await Permission.getStoragePermission();
-    if (mic && camera && storage) {
-      setCameraModal(true);
+    if (camera && storage) {
+      setProfilePhotoModel(true);
+      // setCameraModal(true);
     } else {
-      showToast('mice, camera and storage permission required');
+      showToast(messages.cameraAndStoragePermission);
     }
   };
 
-  const [value, setValue] = useState('');
-  const [isFocus, setIsFocus] = useState(false);
-
-  const data = [...EducationData.map(val => ({label: val, value: val}))];
-
-  const color = [
-    colors.AppTheme.Primary,
-    colors.AppTheme.RedSalsa,
-    colors.AppTheme.OrangeRed,
-    colors.AppTheme.Sunglow,
-    colors.AppTheme.YellowGreen,
-  ];
-  let customIndex = 0;
-
-  const renderProfileView = () => {
-    return (
-      <>
-        {/* <View style={{ marginTop: ms(30), alignItems: 'center', }}>
-					<FastImage
-						style={profileScreenStyle.profileImage}
-						source={profileImage ? { uri: profileImage } : images.dp}
-						resizeMode={FastImage.resizeMode.cover}
-					/>
-					<TouchableOpacity 
-          activeOpacity={0.8}
-						style={{ marginTop: ms(15) }}
-						hitSlop={{ left: 10, right: 10, top: 10, bottom: 10 }}
-						onPress={onPressEditProfile}>
-						<CustomText textStyle={{ color: colors.AppTheme.Text, fontWeight: '500' }}>
-							Edit Profile
-						</CustomText>
-					</TouchableOpacity>
-				</View> */}
-
-        <View style={editProfileScreenStyle.profileContainer}>
-          <View style={{}}>
-            <FastImage
-              style={editProfileScreenStyle.profileImage}
-              source={profileImage ? { uri: profileImage } : images.dp}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{bottom: ms(-10), left: ms(14), position: 'absolute'}}
-              hitSlop={{left: 10, right: 10, top: 100, bottom: 10}}
-              onPress={onPressEditProfile}>
-              <Icon
-                type="MaterialIcons"
-                name="edit-location"
-                size={30}
-                color={colors.AppTheme.Primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <CustomText textStyle={[editProfileScreenStyle.profileTitle]}>
-            {userName}
-          </CustomText>
-        </View>
-      </>
-    );
-  };
-
   const onPressEditInterest = () => {
-    console.log('edit interest clicked');
     navigation.navigate(screenNameEnum.UserInterest, {
       interestData: interest,
       isEdit: true,
@@ -380,73 +342,152 @@ const EditProfileScreen = () => {
     });
   };
 
+  const getEducationData = async () => {
+    try {
+      const result = await API.graphql(graphqlOperation(Query.getEducation));
+      const data = result?.data?.getEducation.map((item, index) => {
+        return {
+          id: index,
+          label: item.education_name,
+          value: item.education_name,
+        };
+      });
+      setEducationData(data);
+    } catch (error) {
+      console.log(
+        'ERROR in file: editProfileScreen.tsx:317 ~ getEducationData',
+        error?.errors[0]?.message,
+      );
+    }
+  };
+
+  const color = [
+    colors.AppTheme.Primary,
+    colors.AppTheme.SecondaryNew,
+    colors.AppTheme.Terittory,
+    colors.AppTheme.OtherFirst,
+  ];
+  let customIndex = 0;
+
+  const renderProfileView = () => {
+    return (
+      <View style={editProfileScreenStyle.profileContainer}>
+        <View style={{}}>
+          <FastImage
+            style={editProfileScreenStyle.profileImage}
+            source={profileImage ? {uri: profileImage} : images.dp}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            hitSlop={{left: 10, right: 10, top: 10, bottom: 10}}
+            onPress={onPressEditProfile}>
+            <Icon
+              type="FontAwesome"
+              name="camera"
+              size={15}
+              color={colors.AppTheme.Secondary}
+              style={editProfileScreenStyle.editIcon}
+            />
+          </TouchableOpacity>
+        </View>
+        <CustomText textStyle={[editProfileScreenStyle.profileTitle]}>
+          {userName}
+        </CustomText>
+      </View>
+    );
+  };
+
   const renderInputView = () => {
+    DropDownPicker.setListMode('SCROLLVIEW');
+
     return (
       <View style={editProfileScreenStyle.renderViewContainer}>
-        <View style={editProfileScreenStyle.textInputViewNew}>
-          <TextInput
-            value={userName}
-            onChangeText={val => setUserName(val)}
-            placeholder="Username"
-            placeholderTextColor={colors.grayShadeAB}
-            maxLength={24}
-            style={editProfileScreenStyle.textInputNew}
-          />
-        </View>
-
-        <View style={editProfileScreenStyle.textInputViewNew}>
-          <TextInput
-            value={fullname}
-            onChangeText={val => setFullname(val)}
-            placeholder="Full Name"
-            placeholderTextColor={colors.grayShadeAB}
-            maxLength={24}
-            style={editProfileScreenStyle.textInputNew}
-          />
-        </View>
-
-        <DatePicker
-          modal
-          open={openDatePicker}
-          date={isValiddate(date) ? new Date(date) : new Date()}
-          mode="date"
-          confirmText="Set"
-          onConfirm={d => {
-            setDate(d);
-            setDatePicker(false);
-          }}
-          onCancel={() => {
-            setDatePicker(false);
-          }}
-        />
-
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={editProfileScreenStyle.textInputViewNew}
-          onPress={() => setDatePicker(true)}>
-          <CustomText textStyle={editProfileScreenStyle.textInputNew}>
-            {isValiddate(date) ? moment(date).format('DD/MM/YYYY') : 'select'}
+        <View style={editProfileScreenStyle.textInputBox}>
+          <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
+            User Name
           </CustomText>
-        </TouchableOpacity>
-
-        <View
-          style={[
-            editProfileScreenStyle.textInputViewNew,
-            editProfileScreenStyle.aboutTextInputView,
-          ]}>
-          <TextInput
-            value={about}
-            onChangeText={val => setAbout(val)}
-            placeholderTextColor={colors.grayShadeAB}
-            maxLength={500}
-            multiline={true}
-            style={[
-              editProfileScreenStyle.aboutTextInput,
-              editProfileScreenStyle.textInputNew,
-            ]}
-            placeholder={'Bio:'}
-          />
+          <View style={editProfileScreenStyle.textInputViewNew}>
+            <TextInput
+              value={userName}
+              onChangeText={val => setUserName(val)}
+              placeholder="Username"
+              placeholderTextColor={colors.AppTheme.grayShadeAB}
+              maxLength={24}
+              style={editProfileScreenStyle.textInputNew}
+            />
+          </View>
         </View>
+        <View style={editProfileScreenStyle.textInputBox}>
+          <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
+            Full Name
+          </CustomText>
+          <View style={editProfileScreenStyle.textInputViewNew}>
+            <TextInput
+              value={fullName}
+              onChangeText={val => setFullName(val)}
+              placeholder="Full Name"
+              placeholderTextColor={colors.AppTheme.grayShadeAB}
+              maxLength={24}
+              style={editProfileScreenStyle.textInputNew}
+            />
+          </View>
+        </View>
+        <View style={editProfileScreenStyle.textInputBox}>
+          <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
+            Date Of Birth
+          </CustomText>
+          <DatePicker
+            modal
+            open={openDatePicker}
+            date={isValidate(date) ? new Date(date) : thirteenYearAgo}
+            mode="date"
+            confirmText="Set"
+            maximumDate={thirteenYearAgo}
+            onConfirm={d => {
+              setDate(d);
+              setDatePicker(false);
+            }}
+            onCancel={() => {
+              setDatePicker(false);
+            }}
+          />
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={editProfileScreenStyle.textInputViewNew}
+            onPress={() => setDatePicker(true)}>
+            <CustomText textStyle={editProfileScreenStyle.textInputNew}>
+              {isValidate(date)
+                ? moment(new Date(date)).format('DD/MM/YYYY')
+                : 'select'}
+            </CustomText>
+          </TouchableOpacity>
+        </View>
+        <View style={editProfileScreenStyle.textInputBox}>
+          <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
+            Bio
+          </CustomText>
+          <View
+            style={[
+              editProfileScreenStyle.textInputViewNew,
+              editProfileScreenStyle.aboutTextInputView,
+            ]}>
+            <TextInput
+              value={about}
+              onChangeText={val => setAbout(val)}
+              placeholderTextColor={colors.AppTheme.grayShadeAB}
+              maxLength={300}
+              multiline={true}
+              style={[
+                editProfileScreenStyle.aboutTextInput,
+                editProfileScreenStyle.textInputNew,
+              ]}
+              placeholder={'Bio:'}
+            />
+          </View>
+        </View>
+
         <View
           style={[
             editProfileScreenStyle.textInputViewNew,
@@ -454,81 +495,141 @@ const EditProfileScreen = () => {
           ]}>
           <CustomText textStyle={editProfileScreenStyle.usernameTxtStyle}>
             {' '}
-            Gender
+            Gender :
           </CustomText>
           <View style={editProfileScreenStyle.genderContainer}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <RadioButton
+                value="male"
+                status={gender === 'male' ? 'checked' : 'unchecked'}
+                onPress={() => setGender('male')}
+                color={colors.AppTheme.Primary}
+              />
+              <CustomText textStyle={editProfileScreenStyle.genderText}>
+                Male
+              </CustomText>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <RadioButton
+                value="female"
+                status={gender === 'female' ? 'checked' : 'unchecked'}
+                onPress={() => setGender('female')}
+                color={colors.AppTheme.Primary}
+              />
+              <CustomText textStyle={editProfileScreenStyle.genderText}>
+                Female
+              </CustomText>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <RadioButton
+                value="other"
+                status={gender === 'other' ? 'checked' : 'unchecked'}
+                onPress={() => setGender('other')}
+                color={colors.AppTheme.Primary}
+              />
+              <CustomText textStyle={editProfileScreenStyle.genderText}>
+                Other
+              </CustomText>
+            </View>
+          </View>
+        </View>
+        <View style={editProfileScreenStyle.textInputBox}>
+          <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
+            Select Your Education :
+          </CustomText>
+          <DropDownPicker
+            style={editProfileScreenStyle.textInputDropDown}
+            labelStyle={{color: colors.AppTheme.Text, fontSize: ms(16)}}
+            selectedItemLabelStyle={editProfileScreenStyle.selectedTextStyle}
+            searchTextInputStyle={editProfileScreenStyle.inputSearchStyle}
+            placeholderStyle={editProfileScreenStyle.placeholderStyle}
+            searchPlaceholderTextColor={colors.AppTheme.PlaceholderColor}
+            textStyle={{
+              flexWrap: 'wrap',
+              width: '100%',
+              fontFamily: 'DMSans-Regular',
+            }}
+            searchContainerStyle={{
+              borderBottomColor: 'transparent',
+              paddingHorizontal: ms(10),
+            }}
+            dropDownContainerStyle={{
+              borderColor: 'transparent',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.22,
+              shadowRadius: 2.22,
+              elevation: 3,
+            }}
+            searchable={true}
+            searchPlaceholder="Search..."
+            open={openDropDown}
+            value={education || 'Education'}
+            items={educationData}
+            setOpen={setOpenDropDown}
+            setValue={setEducation}
+            onChangeValue={val => val && setEducation(val)}
+            props={{activeOpacity: 1}}
+            itemProps={{activeOpacity: 0.8}}
+            scrollViewProps={{
+              scrollEnabled: true,
+              showsVerticalScrollIndicator: true,
+            }}
+            flatListProps={{
+              keyboardShouldPersistTaps: 'handled',
+            }}
+          />
+        </View>
+        <View
+          style={[
+            editProfileScreenStyle.textInputViewNew,
+            editProfileScreenStyle.gender,
+          ]}>
+          <CustomText textStyle={editProfileScreenStyle.viewPollText}>
+            View Poll :
+          </CustomText>
+          <View style={editProfileScreenStyle.viewPollContent}>
             <RadioButton
-              value="male"
-              status={gender === 'male' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('male')}
-              color={colors.blackShade02}
+              value="all"
+              status={isPoll === 'all' ? 'checked' : 'unchecked'}
+              onPress={() => setPoll('all')}
+              color={colors.AppTheme.Primary}
             />
             <CustomText textStyle={editProfileScreenStyle.genderText}>
-              Male
+              All
             </CustomText>
+          </View>
+          <View style={editProfileScreenStyle.viewPollContent}>
             <RadioButton
-              value="female"
-              status={gender === 'female' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('female')}
-              color={colors.blackShade02}
+              value="interest"
+              status={isPoll === 'interest' ? 'checked' : 'unchecked'}
+              onPress={() => setPoll('interest')}
+              color={colors.AppTheme.Primary}
             />
             <CustomText textStyle={editProfileScreenStyle.genderText}>
-              Female
+              Interested
             </CustomText>
           </View>
         </View>
-
-        <Dropdown
-          style={[
-            editProfileScreenStyle.containerDropDwon,
-            editProfileScreenStyle.textInputDropDown,
-            isFocus && {borderColor: 'blue', borderWidth: 1},
-          ]}
-          placeholderStyle={editProfileScreenStyle.placeholderStyle}
-          selectedTextStyle={editProfileScreenStyle.selectedTextStyle}
-          inputSearchStyle={editProfileScreenStyle.inputSearchStyle}
-          iconStyle={editProfileScreenStyle.iconStyle}
-          itemTextStyle={{color: colors.AppTheme.Primary}}
-          data={data}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? 'Education' : '...'}
-          searchPlaceholder="Search..."
-          value={value || Education}
-          dropdownPosition={'auto'}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-            setEducation(item.value);
-          }}
-          renderLeftIcon={() => (
-            <Icon
-              style={editProfileScreenStyle.icon}
-              color={isFocus ? 'blue' : 'black'}
-              name="Safety"
-              type="AntDesign"
-              size={20}
-            />
-          )}
-        />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: ms(16),
-          }}>
-          <CustomText
-            textStyle={[
-              editProfileScreenStyle.usernameTxtStyle,
-              editProfileScreenStyle.interstedTxtStyle,
-            ]}>
+        <View style={editProfileScreenStyle.interestMain}>
+          <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
             {' '}
-            Intersted In
+            Interested In
           </CustomText>
 
           <View style={editProfileScreenStyle.flexRow}>
@@ -548,7 +649,7 @@ const EditProfileScreen = () => {
         <View style={editProfileScreenStyle.interstedItemContainer}>
           {interest?.map((val, i) => {
             i === 0 ? (customIndex = 0) : customIndex++;
-            if (customIndex % 5 === 0) {
+            if (customIndex % 4 === 0) {
               customIndex = 0;
             }
             return (
@@ -570,7 +671,7 @@ const EditProfileScreen = () => {
   };
 
   return (
-    <View style={{backgroundColor: 'rgba(0, 6, 61, 0.1)'}}>
+    <View style={{backgroundColor: '#efefef'}}>
       <Header
         title={userName}
         isBack={true}
@@ -578,9 +679,7 @@ const EditProfileScreen = () => {
         onPressProfile={saveProfile}
       />
       {saveLoading ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size={'large'} color={colors.AppTheme.Text} />
-        </View>
+        <Loading Size={'large'} Color={colors.AppTheme.Text} />
       ) : (
         <KeyboardAwareScrollView>
           <SafeAreaView style={editProfileScreenStyle.container}>
@@ -593,32 +692,95 @@ const EditProfileScreen = () => {
             onClose={() => setCameraModal(false)}
             isVideo={false}>
             <View style={bottomSheetStyle.container}>
-              <TouchableOpacity activeOpacity={0.8} onPress={onClickCamera}>
-                <Icon
-                  type="Entypo"
-                  name="camera"
-                  size={50}
-                  color={colors.blackShade1B}
-                  style={bottomSheetStyle.btnImage}
-                />
-
-                <CustomText textStyle={bottomSheetStyle.btnText}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={onClickCamera}
+                style={editProfileScreenStyle.bottomTouchable}>
+                <View style={editProfileScreenStyle.bottomCamera}>
+                  <SvgXml xml={svg.BottomCamera} />
+                </View>
+                <CustomText textStyle={editProfileScreenStyle.btnText}>
                   Camera
                 </CustomText>
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.8} onPress={onClickGallery}>
-                <Icon
-                  type="Ionicons"
-                  name="folder"
-                  size={50}
-                  color={colors.blackShade1B}
-                  style={bottomSheetStyle.btnImage}
-                />
-
-                <CustomText textStyle={bottomSheetStyle.btnText}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={onClickGallery}
+                style={editProfileScreenStyle.bottomTouchable}>
+                <View style={editProfileScreenStyle.bottomCamera}>
+                  <SvgXml xml={svg.BottomGallery} />
+                </View>
+                <CustomText textStyle={editProfileScreenStyle.btnText}>
                   Gallery
                 </CustomText>
               </TouchableOpacity>
+            </View>
+          </BottomSheet>
+
+          <BottomSheet
+            isVisible={ProfilePhotoModel}
+            onClose={() => setProfilePhotoModel(false)}
+            isVideo={false}>
+            <View
+              style={editProfileScreenStyle.ProfilePhotoBottomSheetContainer}>
+              <CustomText textStyle={editProfileScreenStyle.editProfileText}>
+                Edit Profile Picture
+              </CustomText>
+              {profileImage && (
+                <View
+                  style={[
+                    editProfileScreenStyle.flexRow,
+                    editProfileScreenStyle.editProfileTitle,
+                  ]}>
+                  <SvgXml
+                    xml={svg.EditProfileReomve}
+                    height={ms(16)}
+                    width={ms(16)}
+                  />
+
+                  <TouchableOpacity onPress={removePhoto}>
+                    <Text style={editProfileScreenStyle.editProfileTitleText}>
+                      Remove Photo
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              <View
+                style={[
+                  editProfileScreenStyle.flexRow,
+                  editProfileScreenStyle.editProfileTitle,
+                ]}>
+                <SvgXml
+                  xml={svg.EditProfileImage}
+                  height={ms(16)}
+                  width={ms(16)}
+                />
+                <TouchableOpacity
+                  onPress={() => {
+                    setProfilePhotoModel(false);
+                    setCameraModal(true);
+                  }}>
+                  <Text style={editProfileScreenStyle.editProfileTitleText}>
+                    Add New Photo
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={[
+                  editProfileScreenStyle.flexRow,
+                  editProfileScreenStyle.editProfileTitle,
+                ]}>
+                <SvgXml
+                  xml={svg.EditProfileCancel}
+                  height={ms(16)}
+                  width={ms(16)}
+                />
+                <TouchableOpacity onPress={() => setProfilePhotoModel(false)}>
+                  <Text style={editProfileScreenStyle.editProfileTitleText}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </BottomSheet>
         </KeyboardAwareScrollView>

@@ -14,95 +14,121 @@ import SimpleButton from '../../../components/button/SimpleButton';
 import Header from '../../../components/header/header';
 import Icon from '../../../components/icon/Icon';
 import CustomText from '../../../components/text/CustomText';
+import {Emmiter} from '../../../helper/helper';
+import screenNameEnum from '../../../helper/screenNameEnum';
 import {Query} from '../../../network/Query';
 import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
 import colors from '../../../theme/colors/colors';
+import images from '../../../theme/images/images';
 import followersFollowingStyle from './followersFollowingStyle';
 
 interface FollowingScreenInterface {
-  setHeaderText: (text: string) => void;
-  user_id: string;
-  user_image: string;
-  username: string;
+  item: [object];
+  userId: string;
 }
 
-const FollowingScreen = ({setHeaderText}: FollowingScreenInterface) => {
+const FollowingScreen = ({userId}: FollowingScreenInterface) => {
   const route = useRoute();
   const userData = useUserData();
-  const [isFollow, setIsFollow] = useState(false);
   const [followingData, setFollowingData] = useState([]);
+  const [tempFollowingData, setTempFollwingData] = useState([]);
   const navigation = useNavigation();
 
   const getFollowing = async () => {
     try {
       const result = await API.graphql(
-        graphqlOperation(Query.getFollowing, {user_id: route?.params?.userId}),
+        graphqlOperation(Query.getFollowing, {
+          user_id: userId,
+          my_id: userData?.user_id,
+        }),
       );
       setFollowingData(result?.data?.getFollowing);
-    } catch (err) {
-      console.log('Error from getFollowing', err?.data?.errors[0]?.message);
+      setTempFollwingData(result?.data?.getFollowing);
+    } catch (error) {
+      console.log(
+        'ERROR in file: followingScreen.tsx:43 ~ getFollowing',
+        error?.errors[0]?.message,
+      );
     }
   };
 
-  useCallback(() => {
+  useEffect(() => {
     getFollowing();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setHeaderText('Following');
-    }, []),
-  );
-
-  const onPressFollow = async () => {
-    if (isFollow) {
-      setIsFollow(false);
-      try {
-        const result = await API.graphql(
-          graphqlOperation(Query.unFollowUser, {
-            following_id: route?.params?.userId,
-            user_id: userData?.user_id,
-          }),
-        );
-      } catch (err) {
-        console.log(err.message);
-      }
-    } else {
-      setIsFollow(true);
-      try {
-        const result = await API.graphql(
-          graphqlOperation(Query.followUser, {
-            follow_time: new Date().toString(),
-            following_id: route?.params?.userId,
-            user_id: userData?.user_id,
-          }),
-        );
-      } catch (err) {
-        console.log(err.message);
-      }
+  const searchUser = (text: string) => {
+    if(text === ''){
+      setFollowingData(tempFollowingData);
+    }else{
+      const user = tempFollowingData.filter((dt)=>dt.username.includes(text));
+      setFollowingData(user);
     }
-  };
+  }
 
-  const UserRow = ({
-    user_id,
-    user_image,
-    username,
-  }: FollowingScreenInterface) => {
+  const UserRow = ({item}: FollowingScreenInterface) => {
+    const [loading, setLoading] = useState(false);
+    const [isFollow, setIsFollow] = useState(item?.already_follow);
+
+    const onPressFollow = async () => {
+      if (loading) {
+        return;
+      }
+      if (isFollow) {
+        setIsFollow(false);
+        setLoading(true);
+        try {
+          const result = await API.graphql(
+            graphqlOperation(Query.unFollowUser, {
+              following_id: item?.user_id,
+              user_id: userData?.user_id,
+            }),
+          );
+          Emmiter.emit('decreaseFollowing');
+          setLoading(false);
+        } catch (error) {
+          console.log(
+            'ERROR in file: followingScreen.tsx:71 ~ onPressFollow',
+            error?.errors[0]?.message,
+          );
+          setLoading(false);
+        }
+      } else {
+        setIsFollow(true);
+        setLoading(true);
+        try {
+          const result = await API.graphql(
+            graphqlOperation(Query.followUser, {
+              follow_time: new Date().toString(),
+              following_id: item?.user_id,
+              user_id: userData?.user_id,
+            }),
+          );
+          Emmiter.emit('increaseFollowing');
+          setLoading(false);
+        } catch (error) {
+          console.log(
+            'ERROR in file: followingScreen.tsx:83 ~ onPressFollow',
+            error?.errors[0]?.message,
+          );
+          setLoading(false);
+        }
+      }
+    };
+
     return (
       <View style={followersFollowingStyle.userRowContainer}>
         <View style={followersFollowingStyle.userDataContainer}>
           <Pressable
             onPress={() =>
               navigation.navigate(screenNameEnum.ProfileScreen, {
-                user_id,
-                username,
+                userId: item?.user_id
               })
             }>
             <FastImage
-              source={{
-                uri: `https://d1iermgo1iu801.cloudfront.net/${user_image}`,
+              source={item?.user_image ? {
+                uri: `https://d1iermgo1iu801.cloudfront.net/${item?.user_image}`,
                 priority: FastImage.priority.normal,
-              }}
+              } : images.dp}
               resizeMode={FastImage.resizeMode.cover}
               style={followersFollowingStyle.userImage}
             />
@@ -112,14 +138,14 @@ const FollowingScreen = ({setHeaderText}: FollowingScreenInterface) => {
               marginLeft: ms(5),
               color: colors.AppTheme.Text,
             }}>
-            {username}
+            {item?.username}
           </CustomText>
         </View>
         <View
           style={{
             width: ms(80),
           }}>
-          {userData.user_id === user_id ? (
+          {userData.user_id === item?.user_id ? (
             <CustomText
               textStyle={{
                 textDecorationLine: 'underline',
@@ -132,12 +158,16 @@ const FollowingScreen = ({setHeaderText}: FollowingScreenInterface) => {
             </CustomText>
           ) : (
             <SimpleButton
+              loading={loading}
+              loadingColor={
+                isFollow ? colors.AppTheme.Primary : colors.AppTheme.Secondary
+              }
               title={isFollow ? 'Following' : 'Follow'}
               onPress={debounce(() => onPressFollow(), 100)}
               containerStyle={[
                 followersFollowingStyle.followButtonContainer,
                 isFollow
-                  ? {backgroundColor: '#CECECE'}
+                  ? {backgroundColor: colors.AppTheme.OtherSecond}
                   : {backgroundColor: colors.AppTheme.Primary},
               ]}
               buttonTitleStyle={[
@@ -168,12 +198,10 @@ const FollowingScreen = ({setHeaderText}: FollowingScreenInterface) => {
             cursorColor={colors.AppTheme.Text}
             placeholderTextColor={'#7D7D7D'}
             style={followersFollowingStyle.searchBarTextInput}
+            onChangeText={(val)=> searchUser(val)}
           />
         </View>
       </View>
-      <Text style={followersFollowingStyle.allFollowersText}>
-        All Followers
-      </Text>
       {followingData.length === 0 ? (
         <View style={followersFollowingStyle.noFollowersText}>
           <CustomText
@@ -186,13 +214,8 @@ const FollowingScreen = ({setHeaderText}: FollowingScreenInterface) => {
       ) : (
         <FlatList
           data={followingData}
-          renderItem={({item, index}) => (
-            <UserRow
-              user_image={item?.user_image}
-              username={item?.username}
-              user_id={item?.user_id}
-            />
-          )}
+          renderItem={({item, index}) => <UserRow item={item} />}
+          keyExtractor={item => item?.user_id}
         />
       )}
     </View>

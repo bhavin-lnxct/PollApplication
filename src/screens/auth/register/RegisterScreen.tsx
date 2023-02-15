@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react';
 import {
   Keyboard,
   SafeAreaView,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -10,19 +9,16 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ms} from 'react-native-size-matters';
 import RegisterScreenStyle from './RegisterScreenStyle';
-// import CheckBox from 'react-native-check-box';
 import {useNavigation} from '@react-navigation/native';
 import ThemeButton from '../../../components/themeButton/themeButton';
 import colors from '../../../theme/colors/colors';
 import screenNameEnum from '../../../helper/screenNameEnum';
-import {removeSpace, showToast} from '../../../helper/helper';
+import {removeSpace, showToast, validateEmail} from '../../../helper/helper';
 import {Auth} from 'aws-amplify';
-import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth';
 import CustomText from '../../../components/text/CustomText';
-import FastImage from 'react-native-fast-image';
-import images from '../../../theme/images/images';
 import Icon from '../../../components/icon/Icon';
 import LoginScreenStyle from '../login/LoginScreenStyle';
+import messages from '../../../helper/messages';
 import {SvgXml} from 'react-native-svg';
 import svg from '../../../theme/svg/svg';
 
@@ -32,6 +28,8 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [resetPassword, setResetPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(true);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(true);
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
@@ -43,38 +41,46 @@ const RegisterScreen = () => {
     Keyboard.dismiss();
     const trimmedEmail = removeSpace(email);
 
-    if (!email || !password || !resetPassword) {
-      showToast('please fill all required fields');
+    if (!trimmedEmail || !password || !resetPassword) {
+      showToast(messages.fillAllFields);
+      return;
+    }
+
+    const isValidEmail = validateEmail(trimmedEmail);
+    if (isValidEmail === false) {
+      showToast(messages.enterValidEmail);
       return;
     }
 
     if (password.length < 6) {
-      showToast('password must be minimum 6 character long');
+      showToast(messages.passwordMustBe);
       return;
     }
 
     if (password !== resetPassword) {
-      showToast('password and confirm password does not match');
+      showToast(messages.passwordDoesNotMAtch);
       return;
     }
 
     try {
       setLoading(true);
-      const res = await Auth.signUp({username: email, password});
+      const res = await Auth.signUp({username: trimmedEmail, password});
       let userId = res?.userSub;
-      console.log(userId, 'user id ');
       navigation.navigate(screenNameEnum.VerifyEmailScreen, {
         trimmedEmail,
         userId,
         password,
       });
       setLoading(false);
-    } catch (error: any) {
-      console.log(error, 'error from sign up');
+    } catch (error) {
+      console.log(
+        'ERROR in file: RegisterScreen.tsx:70 ~ RegisterScreen',
+        error.message,
+      );
       let message = error.message;
 
-      if (message === 'Username should be an email.') {
-        message = 'Please enter a valid email address';
+      if (message === 'Username should be either an email or a phone number.') {
+        message = `${messages.enterValidEmail}`;
       }
 
       showToast(message);
@@ -89,16 +95,13 @@ const RegisterScreen = () => {
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
       <SafeAreaView style={RegisterScreenStyle.container}>
-        <FastImage
-          source={images.signUp}
-          resizeMode={FastImage.resizeMode.cover}
-          style={RegisterScreenStyle.imageStyle}
-        />
-        <CustomText textStyle={RegisterScreenStyle.signUpHeaderTitle}>
-          Sign Up
-        </CustomText>
-
-        <View style={{marginHorizontal: ms(16), marginTop: ms(50)}}>
+        <View style={RegisterScreenStyle.imageStyleView}>
+          <SvgXml xml={svg.AuthSignUp} />
+          <CustomText textStyle={RegisterScreenStyle.signUpHeaderTitle}>
+            Sign Up
+          </CustomText>
+        </View>
+        <View style={RegisterScreenStyle.authMainBox}>
           <View style={LoginScreenStyle.loginTextInputContainer}>
             <Icon
               type="Fontisto"
@@ -130,12 +133,12 @@ const RegisterScreen = () => {
               placeholder="Create Password"
               returnKeyType="next"
               onSubmitEditing={() => confirmPasswordRef.current?.focus()}
-              secureTextEntry={true}
+              secureTextEntry={showPassword}
               cursorColor={colors.AppTheme.Text}
               placeholderTextColor={colors.AppTheme.PlaceholderColor}
               onChangeText={val => setPassword(val)}
             />
-            {/* <TouchableOpacity
+            <TouchableOpacity
               activeOpacity={0.8}
               hitSlop={{top: 10, bottom: 10, left: 20, right: 10}}
               style={{position: 'absolute', right: 0}}
@@ -146,7 +149,7 @@ const RegisterScreen = () => {
                 size={ms(18)}
                 color={'#7D7D7D'}
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
           <View style={LoginScreenStyle.loginTextInputContainer}>
             <Icon
@@ -158,15 +161,15 @@ const RegisterScreen = () => {
             <TextInput
               ref={confirmPasswordRef}
               style={LoginScreenStyle.loginFormTextInput}
-              placeholder="Repeat Password"
+              placeholder="Confirm Password"
               returnKeyType="done"
               onSubmitEditing={() => SignUp(email, password, resetPassword)}
               cursorColor={colors.AppTheme.Text}
-              secureTextEntry={true}
+              secureTextEntry={showRepeatPassword}
               placeholderTextColor={colors.AppTheme.PlaceholderColor}
               onChangeText={val => setResetPassword(val)}
             />
-            {/* <TouchableOpacity
+            <TouchableOpacity
               activeOpacity={0.8}
               hitSlop={{top: 10, bottom: 10, left: 20, right: 10}}
               style={{position: 'absolute', right: 0}}
@@ -177,7 +180,7 @@ const RegisterScreen = () => {
                 size={ms(18)}
                 color={'#7D7D7D'}
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
         <ThemeButton
@@ -186,7 +189,7 @@ const RegisterScreen = () => {
           onPress={() => {
             SignUp(email, password, resetPassword);
           }}
-          containerStyle={{marginHorizontal: ms(16), marginTop: ms(50)}}
+          containerStyle={RegisterScreenStyle.signupButton}
         />
         <View style={RegisterScreenStyle.loginButtonContainer}>
           <CustomText textStyle={RegisterScreenStyle.loginButtonText}>
@@ -195,7 +198,7 @@ const RegisterScreen = () => {
           <TouchableOpacity activeOpacity={0.8} onPress={onPressGoToLogin}>
             <CustomText
               textStyle={{
-                fontFamily: 'Poppins-Bold',
+                fontFamily: 'DMSans-Bold',
                 fontSize: ms(14),
                 color: colors.AppTheme.Text,
               }}>

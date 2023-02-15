@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832694751949",
+    "project_id": "mythoughts-9f5f7",
+    "storage_bucket": "mythoughts-9f5f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832694751949:android:267843c96f97ff5fe58f84",
+        "android_client_info": {
+          "package_name": "com.Ponder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832694751949-m7j5hii10uvuqj6mgtioonmt2df5lncb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG2Lw18zz7A_cxkNjlzLM2fLCL7ZOyMsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832694751949-m7j5hii10uvuqj6mgtioonmt2df5lncb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

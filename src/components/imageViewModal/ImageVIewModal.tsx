@@ -1,6 +1,5 @@
 // import {
 //     Dimensions,
-//     Image,
 //     Platform,
 //     SafeAreaView,
 //     StyleSheet,
@@ -89,7 +88,7 @@
 //       >
 //         <SafeAreaView style={styles.container}>
 //           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-//             <Image
+//             <FastImage
 //               source={images.cancelImage}
 //               resizeMode="contain"
 //               style={styles.imageCross}

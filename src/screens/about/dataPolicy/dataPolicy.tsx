@@ -9,11 +9,11 @@ import dataPolicyStyle from "./dataPolicyStyle";
 const DataPolicy = () => {
     return(
         <SafeAreaView style={dataPolicyStyle.container}>
-      <Header title="Data Policy"/>
+      <Header title="Data Policy" isBack={true}/>
       <View style={dataPolicyStyle.mainContainer}>
         <ScrollView>
           <Text style={dataPolicyStyle.headerTitle}>Data Policy</Text>
-          <Text style={{marginLeft: ms(24), color: colors.grayShade8F}}>
+          <Text style={{marginLeft: ms(24), color: colors.AppTheme.grayShade8F}}>
             Last updated on July 2022
           </Text>
           <View>

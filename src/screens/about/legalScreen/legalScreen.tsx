@@ -10,25 +10,41 @@ const LegalScreen = () => {
   const navigation = useNavigation();
 
   const onPressDataPolicy = () => {
-    navigation.navigate(screenNameEnum.DataPolicy)
-  }
+    navigation.navigate(screenNameEnum.DataPolicy);
+  };
   const EULAAgreement = () => {
-    navigation.navigate(screenNameEnum.EulaAgreement)
-  }
+    navigation.navigate(screenNameEnum.EulaAgreement);
+  };
   const PrivacyPolicy = () => {
-    navigation.navigate(screenNameEnum.PrivacyPolicy)
-  }
+    navigation.navigate(screenNameEnum.PrivacyPolicy);
+  };
   const TermsofUse = () => {
-    navigation.navigate(screenNameEnum.TermsOfUse)
-  }
+    navigation.navigate(screenNameEnum.TermsOfUse);
+  };
   return (
     <SafeAreaView style={legalScreenStyle.container}>
-      <Header title="Legal" />
+      <Header title="Legal" isBack={true} isNotification={true} />
       <View style={legalScreenStyle.mainContainer}>
-        <AboutButton title="Terms of Use" onPressButton={TermsofUse} />
-        <AboutButton title="Privacy Policy" onPressButton={PrivacyPolicy} />
-        <AboutButton title="Data Policy" onPressButton={onPressDataPolicy} />
-        <AboutButton title="EULA Agreement" onPressButton={EULAAgreement} />
+        <AboutButton
+          aboutStyle={legalScreenStyle.legalButton}
+          title="Terms of Use"
+          onPressButton={TermsofUse}
+        />
+        <AboutButton
+          aboutStyle={legalScreenStyle.legalButton}
+          title="Privacy Policy"
+          onPressButton={PrivacyPolicy}
+        />
+        <AboutButton
+          aboutStyle={legalScreenStyle.legalButton}
+          title="Data Policy"
+          onPressButton={onPressDataPolicy}
+        />
+        <AboutButton
+          aboutStyle={legalScreenStyle.legalButton}
+          title="EULA Agreement"
+          onPressButton={EULAAgreement}
+        />
       </View>
     </SafeAreaView>
   );

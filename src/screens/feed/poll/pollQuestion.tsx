@@ -1,12 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
-import {
-  Keyboard,
-  Pressable,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {TextInput, TouchableOpacity, View} from 'react-native';
 import {ms} from 'react-native-size-matters';
 import CustomText from '../../../components/text/CustomText';
 import colors from '../../../theme/colors/colors';
@@ -16,11 +10,11 @@ import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
 import pollQuestionStyle from './pollQuestionStyle';
 import {useDispatch} from 'react-redux';
 import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
-import BottomSheet from '../../../components/bottomSheet/bottomSheet';
 import Icon from '../../../components/icon/Icon';
-import {showToast} from '../../../helper/helper';
+import {removeSpace, showToast} from '../../../helper/helper';
 import ThemeButton from '../../../components/themeButton/themeButton';
-import CreateFeedImageStyle from '../../create-feed/CreateFeedImageStyle';
+import messages from '../../../helper/messages';
+import feedCardStyle from '../../../components/card/feedCardStyle';
 
 export interface PollOptionsInterface {
   option: string;
@@ -35,127 +29,108 @@ export interface PollQuestionInterface {
   setIsVoted: any;
 }
 
-const PollQuestion: React.FC = ({
-  item,
-  routeName,
-  setIsVoted,
-}: PollQuestionInterface) => {
-  const [totalVote, setTotalVote] = useState(item?.total_votes || 0);
-  const [voted, setVoted] = useState(item?.already_voted || false);
+const PollQuestion: React.FC = ({item, routeName}: PollQuestionInterface) => {
   const userData = useUserData();
   const dispatch = useDispatch();
-  const [textBoxVisible, setTextBoxVisible] = useState(false);
-  const char = ['A', 'B', 'C', 'D', 'E'];
-  // const [getVote, setGetVote] = useState(0);
   const [explanation, setExplanation] = useState('');
-  const [createPoll, setCreatePoll] = useState('');
+  const [createPoll, setCreatePoll] = useState();
+  const [viewMore, setViewMore] = useState(false);
 
-  const CreatePoll = () => {
-    console.log('clicked');
-    setVoted(true);
+  const viewOptions =
+    viewMore || item?.options.length < 4
+      ? item?.options
+      : item?.options?.slice(0, 4);
+
+  const onPressVote = async () => {
+    try {
+      const trimmedExplanation = removeSpace(explanation);
+      if (item?.post_required_explanation && trimmedExplanation === '') {
+        showToast(messages.EnterReasoning);
+        return;
+      }
+      dispatch(
+        feedSliceActions.voteAction({
+          id: item?.post_id,
+          optionId: createPoll?.option_id,
+        }),
+      );
+      const result = await API.graphql(
+        graphqlOperation(Query.giveAns, {
+          user_id: userData?.user_id,
+          post_id: item?.post_id,
+          option_id: createPoll?.option_id,
+          explanation: trimmedExplanation,
+        }),
+      );
+    } catch (error) {
+      console.log(
+        'ERROR in file: pollQuestion.tsx:70 ~ onPressVote',
+        error?.errors[0]?.message,
+      );
+    }
   };
 
-  const pollRow = (data: object, char: any) => {
-    const [getVote, setGetVote] = useState(data?.vote);
-    const onPressAns = async (val: object | undefined) => {
-      setCreatePoll(val.option_id);
-
-      try {
-        if (item?.post_required_explanation && explanation === '') {
-          console.log(item?.post_required_explanation);
-          setTextBoxVisible(false);
-          return showToast('You need to enter a reason');
-        }
-        setGetVote(vote => vote + 1);
-        setTotalVote(totalVote => totalVote + 1);
-        setVoted(true);
-        setIsVoted(true);
-
-        const result = await API.graphql(
-          graphqlOperation(Query.giveAns, {
-            user_id: userData?.user_id,
-            post_id: item?.post_id,
-            option_id: data?.option_id,
-            explanation: explanation,
-          }),
-        );
-      } catch (err) {
-        console.log('ERROR TO GIVE ANS', err);
-      }
+  const pollRow = (data: object) => {
+    const onSelectAns = async (val: object | undefined) => {
+      setCreatePoll(val);
     };
 
     return (
       <View
         style={[
           pollQuestionStyle.pollRowImageContainer,
-          voted && pollQuestionStyle.pollRowContainerVoted,
+          item?.already_voted && {marginTop: ms(10)},
         ]}>
         <TouchableOpacity
           activeOpacity={0.8}
-          disabled={voted}
-          style={[
-            voted
-              ? pollQuestionStyle.pollContainerButtonVoted
-              : pollQuestionStyle.pollContainerButton,
-          ]}
-          onPress={() =>
-            item?.post_required_explanation
-              ? setTextBoxVisible(true)
-              : onPressAns(data)
-          }>
+          disabled={item?.already_voted}
+          style={pollQuestionStyle.pollContainerButton}
+          onPress={() => onSelectAns(data)}>
           <View style={pollQuestionStyle.pollContainer}>
             <View
               style={[
                 pollQuestionStyle.pollFillView,
-                voted && {
+                item?.already_voted && {
                   backgroundColor: colors.AppTheme.OtherSecond,
                   width: `${
-                    Math.round((Number(getVote) * 100) / totalVote) || 0
+                    Math.round(
+                      (Number(data?.vote) * 100) / item?.total_votes,
+                    ) || 0
                   }%`,
                   borderRadius: ms(10),
                 },
               ]}
             />
             <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                flexDirection: 'row',
-                marginLeft: ms(12),
-              }}>
-              {voted ? (
+              style={[
+                pollQuestionStyle.alreadyVoted,
+                item?.already_voted && pollQuestionStyle.itemAleadyVoted,
+              ]}>
+              {item?.already_voted ? (
                 <>
                   <CustomText textStyle={pollQuestionStyle.optionPurntegText}>
-                    {Math.round((Number(getVote) * 100) / totalVote) || 0}%
+                    {Math.round(
+                      (Number(data?.vote) * 100) / item?.total_votes,
+                    ) || 0}{' '}
+                    %
                   </CustomText>
-                  <CustomText
-                    textStyle={[
-                      pollQuestionStyle.optionText,
-                      voted && {marginLeft: ms(10)},
-                    ]}>
+                  <CustomText textStyle={pollQuestionStyle.optionText}>
                     {data?.option}
                   </CustomText>
                 </>
               ) : (
                 <>
-                  {createPoll === data?.option_id ? (
-                    <Icon type="AntDesign" name="checkcircle" size={ms(16.5)} />
-                  ) : (
-                    <View
-                      style={{
-                        borderWidth: ms(1.5),
-                        borderColor: '#000',
-                        borderRadius: ms(50),
-                        height: ms(16),
-                        width: ms(16),
-                      }}
+                  {createPoll?.option_id === data?.option_id ? (
+                    <Icon
+                      type="AntDesign"
+                      name="checkcircle"
+                      size={ms(16)}
+                      color={'#000'}
                     />
+                  ) : (
+                    <View style={pollQuestionStyle.optionsText} />
                   )}
-                  <CustomText
-                    textStyle={[
-                      pollQuestionStyle.optionText,
-                      voted && {marginLeft: ms(16)},
-                    ]}>
+                  <CustomText textStyle={pollQuestionStyle.optionText}>
                     {data?.option}
                   </CustomText>
                 </>
@@ -163,76 +138,79 @@ const PollQuestion: React.FC = ({
             </View>
           </View>
         </TouchableOpacity>
-
-        <BottomSheet
-          isVisible={textBoxVisible}
-          onClose={() => setTextBoxVisible(false)}>
-          <View style={pollQuestionStyle.explanationContainer}>
-            <CustomText textStyle={pollQuestionStyle.explanationHeadingText}>
-              Reason for vote
-              <CustomText textStyle={{color: 'red'}}>*</CustomText>
-            </CustomText>
-            <View style={pollQuestionStyle.explanationInputContainer}>
-              <TextInput
-                autoFocus={true}
-                cursorColor={'rgba(43, 50, 95, 0.8)'}
-                placeholder={'Enter your explanation here'}
-                placeholderTextColor={colors.AppTheme.PlaceholderColor}
-                returnKeyType={'send'}
-                value={explanation}
-                onChangeText={text => setExplanation(text)}
-                onSubmitEditing={() => onPressAns(data)}
-                style={pollQuestionStyle.explanationInput}
-              />
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => onPressAns(data)}>
-                <Icon
-                  name="send-circle"
-                  type="MaterialCommunityIcons"
-                  color={colors.AppTheme.HeaderBg}
-                  size={ms(40)}
-                  style={{
-                    marginRight: ms(6),
-                    marginTop: ms(6),
-                    marginBottom: ms(6),
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </BottomSheet>
       </View>
     );
   };
 
   return (
     <>
-      <View
-        style={[pollQuestionStyle.container, voted && {paddingBottom: ms(10)}]}>
+      <View style={pollQuestionStyle.container}>
+        <View style={!item?.already_voted && {paddingTop: ms(10)}}>
+          {viewOptions?.map((val: object, i: number) => {
+            return <View key={i}>{pollRow(val)}</View>;
+          })}
+          {!viewMore && item?.options.length > 4 && (
+            <TouchableOpacity
+              style={pollQuestionStyle.ViewMoreButton}
+              onPress={() => setViewMore(!viewMore)}>
+              <CustomText textStyle={pollQuestionStyle.viewMoreText}>
+                View More
+              </CustomText>
+              <Icon
+                type={'MaterialCommunityIcons'}
+                name={'chevron-double-down'}
+                size={16}
+                color={'black'}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={{marginTop: ms(5)}} />
         <CustomText textStyle={pollQuestionStyle.totalVotesText}>
-          1440 Votes
+          {item?.total_votes} Votes
         </CustomText>
-        {item?.options?.map((val, i) => {
-          return (
-            <View
-              style={voted ? {paddingLeft: ms(12)} : {paddingLeft: ms(0)}}
-              key={i}>
-              {pollRow(val, char[i])}
-            </View>
-          );
-        })}
       </View>
+      <View style={{marginTop: ms(5)}} />
+      {item?.post_category && item?.post_category.length > 0 && (
+        <View style={feedCardStyle.labelViewContainer}>
+          {item?.post_category?.map((val, i) => {
+            return (
+              <View style={feedCardStyle.labelContainer} key={i}>
+                <CustomText textStyle={feedCardStyle.labelText}>
+                  {val}
+                </CustomText>
+              </View>
+            );
+          })}
+        </View>
+      )}
+
+      {item?.post_required_explanation && !item?.already_voted && (
+        <>
+          <CustomText textStyle={pollQuestionStyle.ReasoningTitle}>
+            Reason for your vote
+          </CustomText>
+          <TextInput
+            placeholder="write your reason"
+            placeholderTextColor={colors.AppTheme.grayShade8F}
+            style={pollQuestionStyle.reasoningTextInput}
+            multiline={true}
+            onChangeText={val => setExplanation(val)}
+          />
+        </>
+      )}
+
       <View>
-        <ThemeButton
-          title={'Vote'}
-          containerStyle={[
-            CreateFeedImageStyle.addOptionButtonContainer,
-            pollQuestionStyle.themeButton,
-          ]}
-          titleStyle={CreateFeedImageStyle.addOptionText}
-          onPress={CreatePoll}
-        />
+        {!item?.already_voted && (
+          <ThemeButton
+            title={'Vote'}
+            containerStyle={pollQuestionStyle.addOptionButtonContainer}
+            titleStyle={pollQuestionStyle.addOptionText}
+            onPress={() =>
+              createPoll ? onPressVote() : showToast(messages.selectOption)
+            }
+          />
+        )}
       </View>
     </>
   );

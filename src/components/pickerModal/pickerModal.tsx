@@ -36,7 +36,7 @@ const PickerModal = ({
                 activeOpacity={0.8}
                     onPress={onPressCamera}
                 >
-                    <Icon type='Entypo' name='camera' size={50} color={colors.blackShade1B} style={pickerModalStyle.btnImage}/>
+                    <Icon type='Entypo' name='camera' size={50} color={colors.AppTheme.blackShade1B} style={pickerModalStyle.btnImage}/>
                     
                     <Text style={pickerModalStyle.btnText}>Camera</Text>
                 </TouchableOpacity>
@@ -44,7 +44,7 @@ const PickerModal = ({
                 activeOpacity={0.8}
                     onPress={onPressGallery}
                 >
-                    <Icon type='Ionicons' name='folder' size={50} color={colors.blackShade1B} style={pickerModalStyle.btnImage}/>
+                    <Icon type='Ionicons' name='folder' size={50} color={colors.AppTheme.blackShade1B} style={pickerModalStyle.btnImage}/>
 
                     <Text style={pickerModalStyle.btnText}>Gallery</Text>
                 </TouchableOpacity>

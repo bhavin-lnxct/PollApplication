@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.pollapplication",
+    package = "com.Ponder",
 )
 
 android_resource(
     name = "res",
-    package = "com.pollapplication",
+    package = "com.Ponder",
     res = "src/main/res",
 )
 

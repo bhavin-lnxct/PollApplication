@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   userData: null,
+  feedSelector: 'all',
 };
 
 const userSlice = createSlice({
@@ -16,6 +17,9 @@ const userSlice = createSlice({
     },
     clearUser: state => {
       state.userData = null;
+    },
+    setFeedSelector: (state, action) => {
+      state.feedSelector = action.payload;
     },
   },
 });
@@ -30,5 +34,10 @@ export const userReducer = userSlice.reducer;
 
 export const useUserData = () => {
   const user = useSelector(state => state?.user?.userData);
+  return user;
+};
+
+export const useFeedSelector = () => {
+  const user = useSelector(state => state?.user?.feedSelector);
   return user;
 };

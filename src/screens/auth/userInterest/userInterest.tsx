@@ -10,13 +10,12 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ms} from 'react-native-size-matters';
 import {SvgXml} from 'react-native-svg';
 import {useDispatch} from 'react-redux';
-import {compose} from 'redux';
 import Header from '../../../components/header/header';
 import CustomText from '../../../components/text/CustomText';
 import ThemeButton from '../../../components/themeButton/themeButton';
 import {showToast} from '../../../helper/helper';
+import messages from '../../../helper/messages';
 import {InterestData} from '../../../helper/profileHelper';
-import screenNameEnum from '../../../helper/screenNameEnum';
 import {Query} from '../../../network/Query';
 import {
   userAction,
@@ -38,15 +37,11 @@ const UserInterest = () => {
 
   const [interesteditem, setInterestedItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log('userData================userData==================', userData)
-  // 
   const color = [
     colors.AppTheme.Primary,
-    colors.AppTheme.RedSalsa,
-    colors.AppTheme.OrangeRed,
-    colors.AppTheme.Sunglow,
-    colors.AppTheme.YellowGreen,
+    colors.AppTheme.SecondaryNew,
+    colors.AppTheme.Terittory,
+    colors.AppTheme.OtherFirst,
   ];
   let customIndex = 0;
   useEffect(() => {
@@ -59,7 +54,7 @@ const UserInterest = () => {
 
   const onPressContinue = async () => {
     if (interesteditem.length === 0) {
-      showToast('choose your interest');
+      showToast(messages.chooseInterest);
       return;
     }
     setIsLoading(true);
@@ -72,7 +67,11 @@ const UserInterest = () => {
             user_id: userId,
           }),
         );
-        if (!!result) {
+        console.log(
+          'file: userInterest.tsx:71 ~ onPressContinue ~ result',
+          result,
+        );
+        if (result) {
           naviagtion.goBack();
           const updateUser = {
             ...userData,
@@ -90,12 +89,10 @@ const UserInterest = () => {
             user_id: userId,
           }),
         );
-
-        if (!!result) {
+        if (result) {
           const result = await API.graphql(
             graphqlOperation(Query.getUser, {user_id: userId}),
           );
-          console.log(result, 'rrrrrrrrrrr ');
           dispatch(
             userAction.setUserData({
               ...result?.data?.getuser,
@@ -105,7 +102,10 @@ const UserInterest = () => {
         }
       }
     } catch (error) {
-      console.log(error, 'error in update user ------------ ');
+      console.log(
+        'ERROR in file: userInterest.tsx:103 ~ onPressContinue',
+        error?.errors[0]?.message,
+      );
       setIsLoading(false);
     }
   };
@@ -114,8 +114,8 @@ const UserInterest = () => {
     if (interesteditem.includes(val)) {
       setInterestedItem(oldData => oldData.filter(e => e !== val));
     } else {
-      if (interesteditem.length > 9) {
-        showToast('select maximum of 10');
+      if (interesteditem.length > 19) {
+        showToast(messages.maxInterest);
         return;
       }
       setInterestedItem(oldData => [...oldData, val]);
@@ -154,7 +154,6 @@ const UserInterest = () => {
     );
   };
 
-  
   return (
     <View style={userInterestStyle.container}>
       <Header title="Interested In" isBack={isEdit} />
@@ -169,7 +168,7 @@ const UserInterest = () => {
             }}>
             <View style={userInterestStyle.likeIcon}>
               <SvgXml
-                xml={svg.LikeIntrest}
+                xml={svg.LikeInterest}
                 height={ms(22)}
                 width={ms(22)}
                 style={{bottom: -1, right: -0.2}}
@@ -179,10 +178,10 @@ const UserInterest = () => {
               textStyle={{
                 marginLeft: ms(12),
                 color: colors.AppTheme.Text,
-                fontFamily: 'Poppins-Medium',
+                fontFamily: 'DMSans-Medium',
                 fontSize: ms(18),
               }}>
-              Chose Your Intrest
+              Chose Your Interest
             </CustomText>
           </View>
           <CustomText
@@ -191,12 +190,12 @@ const UserInterest = () => {
               color: colors.AppTheme.Text,
               marginTop: ms(8),
             }}>
-            Chose Which You Have More Intrest To Give You Best App Exoerience
+            Chose Which You Have More Intrest To Give You Best App Experience
           </CustomText>
           <View style={userInterestStyle.labelContainer}>
             {InterestData.map((val, i) => {
               i === 0 ? (customIndex = 0) : customIndex++;
-              if (customIndex % 5 === 0) {
+              if (customIndex % 4 === 0) {
                 customIndex = 0;
               }
               return renderInterestedItem(val, i, color[customIndex]);
@@ -204,11 +203,14 @@ const UserInterest = () => {
           </View>
         </SafeAreaView>
       </KeyboardAwareScrollView>
-      <View
-        style={userInterestStyle.continueButton}>
+      <View style={userInterestStyle.continueButton}>
         <ThemeButton
-          title={ `${isEdit ? 'Save' : 'Continue'} `}
-          containerStyle={{width: '60%', backgroundColor: 'transparent'}}
+          title={`${isEdit ? 'Save' : 'Continue'} `}
+          containerStyle={{
+            width: '60%',
+            backgroundColor: 'transparent',
+            borderRadius: 50,
+          }}
           onPress={onPressContinue}
           loading={isLoading}
         />

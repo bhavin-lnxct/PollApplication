@@ -1,4 +1,4 @@
-import { ms, s, ScaledSheet, vs } from 'react-native-size-matters';
+import {ms, s, ScaledSheet, vs} from 'react-native-size-matters';
 import colors from '../../theme/colors/colors';
 
 export default ScaledSheet.create({
@@ -11,26 +11,23 @@ export default ScaledSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
+    fontSize: ms(42),
+    lineHeight: ms(84),
     fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: '#000000c0',
   },
 
   iconImageContainer: {
-    // borderTopLeftRadius: ms(15),
-    // borderTopRightRadius: ms(15),
     borderRadius: ms(15),
-    // backgroundColor: '#E3F2D4',
     height: ms(116),
     alignItems: 'center',
     justifyContent: 'center',
   },
   deleteIconContainer: {
     position: 'absolute',
-    right: 10,
-    top: 10,
+    right: ms(10),
+    top: ms(10),
   },
   deleteIconStyle: {
     // backgroundColor: 'rgba(0, 6, 61,.5)',
@@ -41,7 +38,7 @@ export default ScaledSheet.create({
   previewImage: {
     height: ms(100),
     width: ms(100),
-    borderRadius:ms(10),
+    borderRadius: ms(10),
   },
   imageIcon: {
     backgroundColor: colors.AppTheme.GreenBlueCrayola,
@@ -54,8 +51,7 @@ export default ScaledSheet.create({
     marginLeft: ms(7),
   },
   addOptionButtonContainer: {
-    marginHorizontal: ms(20),
-    marginBottom: ms(30),
+   margin:ms(20)
   },
   addOptionText: {
     textAlign: 'center',
@@ -80,7 +76,7 @@ export default ScaledSheet.create({
   animatedTitleTest: {
     color: 'rgb(255, 255, 255)',
     fontSize: ms(20),
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'DMSans-Bold',
   },
   animatedTextInputView: {
     borderBottomWidth: ms(2),
@@ -91,18 +87,24 @@ export default ScaledSheet.create({
   },
   createImageMain: {
     justifyContent: 'space-between',
-    elevation: 4,
-    width: "100%",
-    backgroundColor:'#fff',
-    borderRadius:ms(10),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: ms(10),
   },
   PlusIcon: {
-    borderColor: '#7D7D7D',
     borderRadius: ms(10),
-    borderWidth: ms(3),
+    backgroundColor: '#E4E4E4',
     height: ms(100),
     width: ms(100),
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });

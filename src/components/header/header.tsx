@@ -29,9 +29,9 @@ export interface HeaderProps {
   post?: boolean;
   isClose?: boolean;
   isProfile?: boolean;
-  onpress: () => void;
-  onPressPost: () => void;
-  onPressProfile: () => void;
+  onpress?: () => void;
+  onPressPost?: () => void;
+  onPressProfile?: () => void;
   isUser?: boolean;
   isNotification?: boolean;
 }
@@ -52,20 +52,20 @@ const Header = ({
   const userData = useUserData();
   const navigation = useNavigation();
   const UserProfiles = useRef();
-  
+
   const onPressNotification = () => {
     navigation.navigate(screenNameEnum.Notification);
   };
 
   return (
     <SafeAreaView>
-      <View style={styles.headerContainer}>
+      <View>
         <View style={styles.container}>
           {isBack && (
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.goBack()}>
-              <IconAntDesign size={24} name={'arrowleft'} color={'#EBEBEB'} />
+              <Icon type='Feather' size={24} name={'chevron-left'} color={'#EBEBEB'} />
             </TouchableOpacity>
           )}
           {isClose && (

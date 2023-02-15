@@ -13,13 +13,13 @@ export default ScaledSheet.create({
     textAlign: 'center',
     marginTop: ms(12),
     fontSize: ms(16),
-    color: colors.grayShade8F,
+    color: colors.AppTheme.grayShade8F,
   },
   verificationCodeTextInput: {
     height: ms(48),
     padding: ms(16),
     marginTop: ms(15),
-    borderColor: colors.grayShadeCC,
+    borderColor: colors.AppTheme.grayShadeCC,
     borderWidth: ms(1),
     borderRadius: ms(50),
     fontSize: ms(13),
@@ -32,7 +32,6 @@ export default ScaledSheet.create({
   },
   resendButtonTitle: {
     fontSize: ms(16),
-    color: colors.white,
   },
   verificationCodeTextContainer: {
     textAlign: 'center',
@@ -40,10 +39,11 @@ export default ScaledSheet.create({
     marginTop: ms(24),
   },
   loginFormTextInput:{
-    // paddingVertical: ms(12),
-    // marginHorizontal: ms(15),
     fontSize: ms(13),
     color: 'black'
   },
-  
+  imageStyleView: {
+    alignItems: 'center',
+    marginTop: ms(44),
+  },
 });

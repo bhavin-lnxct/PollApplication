@@ -9,13 +9,13 @@ import privacyPolicyStyle from "./privacyPolicyStyle";
 const PrivacyPolicy = () => {
     return(
         <SafeAreaView style={privacyPolicyStyle.container}>
-      <Header title="Privacy Policy" />
+      <Header title="Privacy Policy" isBack={true}/>
       <View style={privacyPolicyStyle.mainContainer}>
         <ScrollView>
           <Text style={privacyPolicyStyle.headerTitle}>
             Privacy Policy
           </Text>
-          <Text style={{marginLeft: ms(24), color: colors.grayShade8F}}>
+          <Text style={{marginLeft: ms(24), color: colors.AppTheme.grayShade8F}}>
             Last updated on July 2022
           </Text>
           <View>

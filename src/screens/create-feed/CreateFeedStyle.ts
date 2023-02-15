@@ -1,9 +1,16 @@
-import { ms, s, ScaledSheet, vs } from 'react-native-size-matters';
+import {ms, s, ScaledSheet, vs} from 'react-native-size-matters';
 import colors from '../../theme/colors/colors';
 
 export default ScaledSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#EFEFEF',
+  },
+  privateSwitchContainer: {
+    flexDirection: 'row',
+    marginTop: ms(15),
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   titleTextInput: {
     height: ms(70),
@@ -18,32 +25,50 @@ export default ScaledSheet.create({
   },
   descriptionContainer: {
     height: ms(100),
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
   },
   optionContainer: {
     marginTop: ms(10),
   },
   optionTextInput: {
+    color: colors.AppTheme.Text,
     height: ms(50),
     marginTop: ms(10),
     padding: ms(10),
     fontSize: ms(13),
-    borderColor: colors.AppTheme.PlaceholderColor,
-    borderWidth: 1,
     borderRadius: ms(10),
-    color: '#000',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderWidth: 0,
+    backgroundColor: '#fff',
+  },
+  optionTextInputFirst: {
+    marginTop: ms(24),
   },
   closeTextInput: {
+    color: colors.AppTheme.Text,
     height: ms(50),
     marginTop: ms(10),
     padding: ms(10),
-    backgroundColor: '#fff',
-    fontSize: ms(16),
-    borderColor: colors.AppTheme.PlaceholderColor,
-    borderWidth: 1,
+    fontSize: ms(13),
     borderRadius: ms(10),
-    color: 'black',
-    width: '85%'
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    backgroundColor: '#fff',
+    borderWidth: 0,
+    width: '85%',
   },
   moreOptionTextInputContainer: {
     flexDirection: 'row',
@@ -75,7 +100,7 @@ export default ScaledSheet.create({
   pollTitle: {
     fontSize: ms(18),
     color: colors.AppTheme.Text,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'DMSans-Bold',
     paddingLeft: ms(6),
   },
   pollContain: {
@@ -84,70 +109,65 @@ export default ScaledSheet.create({
     alignItems: 'center',
   },
   addOptionButtonStyle: {
-    // justifyContent:'flex-end',
     alignItems: 'flex-end',
     width: ms(100),
     borderRadius: ms(10),
     flex: 1,
-    // flexDirection:'row',
     height: ms(40),
     marginTop: ms(16),
     backgroundColor: 'transparent',
   },
   addOptionText: {
-    color: colors.AppTheme.Text,
+    color: colors.AppTheme.Primary,
     fontSize: ms(16),
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'DMSans-Bold',
     borderBottomWidth: 1,
-    borderBottomColor: colors.AppTheme.Text
-
+    borderBottomColor: colors.AppTheme.Primary,
   },
   selectPollText: {
     fontSize: ms(16),
     color: colors.AppTheme.Text,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'DMSans-Bold',
+    marginVertical:ms(10)
   },
   selectPoll: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: ms(16),
-  },
-  reactdatepicker__monthtext: {
-    color: 'red',
+    marginTop: ms(10),
   },
   containerCreateFeed: {
     flex: 1,
-    padding: 16,
+    padding: ms(16),
     justifyContent: 'center',
   },
   dropdown: {
-    height: 50,
+    height: ms(50),
     borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
+    borderWidth: ms(0.5),
+    borderRadius: ms(8),
+    paddingHorizontal: ms(8),
     marginVertical: ms(5),
   },
   icon: {
-    marginRight: 5,
+    marginRight: ms(5),
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: ms(16),
     color: colors.AppTheme.Text,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: ms(16),
     color: colors.AppTheme.Text,
   },
   iconStyle: {
-    width: 20,
-    height: 20,
+    width: ms(20),
+    height: ms(20),
   },
   inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+    height: ms(40),
+    fontSize: ms(16),
   },
   containerRange: {
     flex: 1,
@@ -157,7 +177,8 @@ export default ScaledSheet.create({
   },
   voteRangeText: {
     color: colors.AppTheme.Text,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'DMSans-Medium',
+    textAlign: 'center',
     fontSize: ms(14),
   },
   uploadImageText: {
@@ -167,6 +188,159 @@ export default ScaledSheet.create({
   },
   uploadImageTextMain: {
     marginTop: ms(16),
-    alignItems:'center',
+    alignItems: 'center',
+  },
+  selectPollMain: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: ms(4),
+  },
+  selectPollContent: {
+    backgroundColor: '#fff',
+    padding: ms(12),
+    margin: ms(12),
+    borderRadius: ms(20),
+  },
+  selectPollTitle: {
+    color: colors.AppTheme.Text,
+    fontFamily: 'DMSans-Bold',
+    fontSize: ms(16),
+    marginTop: ms(8),
+  },
+  dateViewInput: {
+    height: ms(40),
+    paddingHorizontal: ms(16),
+    justifyContent: 'center',
+    borderRadius: ms(4),
+    marginTop: ms(10),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    backgroundColor: '#fff',
+  },
+
+  pollVoteInput: {
+    textAlign: 'center',
+    alignContent: 'center',
+    backgroundColor: '#fff',
+    width: ms(80),
+    height: ms(40),
+    fontSize: ms(16),
+    color: colors.AppTheme.Text,
+    fontFamily: 'DMSans-Medium',
+    borderRadius: ms(4),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  explanationIcon: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  explanationIconMain: {
+    width: ms(23),
+    height: ms(23),
+    borderWidth: ms(1),
+    borderRadius: ms(8),
+    borderColor: colors.AppTheme.PlaceholderColor,
+  },
+  explanationMain: {
+    // alignItems: 'center',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    marginTop: ms(16),
+  },
+  explanationTitle: {
+    color: colors.AppTheme.Text,
+    fontFamily: 'DMSans-Bold',
+    fontSize: ms(16),
+  },
+  themeButton: {
+    marginTop: ms(40),
+  },
+  containerDropDown: {
+    flex: 1,
+    padding: ms(16),
+    justifyContent: 'center',
+  },
+  textInputDropDown: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    backgroundColor: '#FFF',
+    height: ms(50),
+    marginTop: ms(6),
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: ms(10),
+  },
+  dropdownInputSearchStyle: {
+    height: ms(40),
+    fontSize: ms(16),
+    color: colors.AppTheme.Text,
+  },
+
+  genderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: ms(3),
+  },
+  genderText: {
+    color: colors.AppTheme.Text,
+    fontFamily: 'DMSans-Medium',
+    marginHorizontal: ms(5),
+  },
+  dateText: {
+    fontSize: ms(16),
+    color: colors.AppTheme.Text,
+    fontFamily: 'DMSans-Medium',
+  },
+  toggleSwitch: {
+    fontWeight: '700',
+    fontSize: ms(16),
+    color: colors.AppTheme.Primary,
+  },
+  explanationButtonMain: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    marginTop: ms(16),
+  },
+  explanationButton: {
+    paddingVertical: ms(10),
+    paddingHorizontal: ms(37),
+    backgroundColor: colors.AppTheme.OtherSecond,
+    marginRight: ms(16),
+    borderRadius: ms(6),
+  },
+  explanationButtonCheck: {
+    backgroundColor: colors.AppTheme.Primary,
+  },
+  explanationButtonText: {
+    color: colors.AppTheme.Text,
+    fontSize: ms(16),
+  },
+  explanationButtonTextCheck: {
+    color: colors.AppTheme.Secondary,
+  },
+  svgContainer: {
+    borderRadius:ms(20),
+    backgroundColor: colors.AppTheme.Secondary,
+    padding:ms(12)
   }
 });

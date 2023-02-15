@@ -6,6 +6,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Header from "../../../components/header/header";
 import ThemeButton from "../../../components/themeButton/themeButton";
 import { showToast } from "../../../helper/helper";
+import messages from "../../../helper/messages";
 import colors from "../../../theme/colors/colors";
 import changePasswordStyle from "./changePasswordStyle";
 
@@ -20,15 +21,15 @@ const ChangePassword = () => {
     const onPressChangePassword = () => {
 
         if(!oldPassword || !newPassword || !confirmNewPassword){
-            showToast('fill all the fields');
+            showToast(messages.fillAllFields);
             return;
         }
         if(newPassword.length < 6){
-            showToast('password must be minimum 6 character long');
+            showToast(messages.passwordMustBe);
             return;
         }
         if(newPassword !== confirmNewPassword){
-            showToast(`new password and confirm password doesn't match`);
+            showToast(messages.passwordDoesNotMAtch);
             return;
         }
 
@@ -36,10 +37,9 @@ const ChangePassword = () => {
 
         Auth.currentAuthenticatedUser({bypassCache: true})
         .then(user => {
-            // console.log(user, 'user')
             Auth.changePassword(user,oldPassword,newPassword)
             .then((res)=>{
-                showToast('password has been successfully changed');
+                showToast(messages.passwordChanged);
                 navigation.goBack();
                 setOldPassword('');
                 setNewPassword('');
@@ -49,18 +49,17 @@ const ChangePassword = () => {
             .catch((err)=>{
                 let message = err.message;
                 if (message === 'Incorrect username or password.') {
-                    message = 'Incorrect password.';
+                    message = `${messages.incorrectPassword}`;
                 }
                 if (message === 'Password did not conform with policy: Password not long enough') 
                 {
-                    message = 'Password must be six characters long';
+                    message = `${messages.passwordMustBe}`;
                 }
                 showToast(message);
                 setIsLoading(false);
             })
         })
         .catch((e)=>{
-            console.log(e.message);
             showToast(e.message);
             setIsLoading(false);
         })
@@ -70,24 +69,24 @@ const ChangePassword = () => {
         <View style={changePasswordStyle.container}>
             <SafeAreaView>
                 <Header title="Change Password" isBack={true}/>
-                    <KeyboardAwareScrollView>
+                    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
                         <View style={changePasswordStyle.inputContainer}>
                             <TextInput
-                                placeholder="Enter Old Password"
+                                placeholder="Old password"
                                 value={oldPassword}
                                 onChangeText={val => setOldPassword(val)}
                                 placeholderTextColor={colors.AppTheme.PlaceholderColor}
                                 style={changePasswordStyle.textInput}
                             />
                             <TextInput
-                                placeholder="Set New Password"
+                                placeholder="New password"
                                 value={newPassword}
                                 onChangeText={val => setNewPassword(val)}
                                 placeholderTextColor={colors.AppTheme.PlaceholderColor}
                                 style={changePasswordStyle.textInput}
                             />
                             <TextInput
-                                placeholder="Confirm New Password"
+                                placeholder="Confirm new password"
                                 value={confirmNewPassword}
                                 onChangeText={val => setConfirmNewPassword(val)}
                                 placeholderTextColor={colors.AppTheme.PlaceholderColor}

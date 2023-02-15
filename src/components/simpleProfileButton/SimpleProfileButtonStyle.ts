@@ -7,24 +7,12 @@ export default ScaledSheet.create({
     settingButton: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginEnd: ms(16),
         marginStart: ms(16),
-        color: colors.blackShade02,
+        color: colors.AppTheme.blackShade02,
         marginTop: ms(8),
-        backgroundColor: colors.AppTheme.Secondary,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 2,
-        borderRadius: 10,
     },
     buttonTitle: {
         flexDirection: 'row',
-        width: "100%",
         alignItems: 'center',
     },
     rightCornerIcon: {

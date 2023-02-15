@@ -10,16 +10,15 @@ const images = {
     restore: require('../../assets/images/auth/forget1.png'),
     restoreSecond: require('../../assets/images/auth/forget2.png'),
     
-
     ///create feed
-
-    pollImage: require('../../assets/images/createfeedimage.png'),
-    pollText: require('../../assets/images/createfeedtext.png'),
-
+    pollImage: require('../../assets/images/createFeedImage.png'),
+    pollText: require('../../assets/images/createFeedText.png'),
+    
     // Show Feed
-
     cratePollImage: require('../../assets/images/createpoll.png'),
-    userImage: require('../../assets/images/Ellipse220.png')
-}
+    userImage: require('../../assets/images/Ellipse220.png'),
 
+    // Not Found Post
+    notFoundPost : require('../../assets/images/postNotFound.png'),
+}
 export default images;

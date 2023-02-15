@@ -3,18 +3,17 @@ import colors from '../../../theme/colors/colors';
 
 export default ScaledSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#B5D2EF',
-    maxHeight: ms(400),
+    backgroundColor: colors.AppTheme.Secondary,
+    maxHeight: ms(320),
     borderRadius: ms(32),
-
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: ms(16),
-    marginVertical: ms(16),
+    marginTop: ms(32),
+    marginBottom:ms(8),
   },
   viewMyPage: {
     marginTop: ms(10),
@@ -28,20 +27,10 @@ export default ScaledSheet.create({
     borderRadius: 100,
   },
   logoutContanier: {
-    marginTop: ms(8),
     flexDirection: 'row',
     backgroundColor: colors.AppTheme.Secondary,
     marginEnd: ms(16),
     marginStart: ms(16),
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
-    borderRadius: 10,
   },
   logoutButtonTitle: {
     color: colors.AppTheme.Text,
@@ -51,23 +40,21 @@ export default ScaledSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:'flex-start'
   },
   userDisplayName: {
     marginLeft: ms(10),
     fontSize: ms(16),
     color: colors.AppTheme.Text,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'DMSans-Medium',
   },
   userViewProfile: {
-    color: colors.AppTheme.Text,
+    color: colors.AppTheme.Primary,
     textDecorationLine: 'underline',
     fontSize: ms(16),
   },
   logoutIconView: {
-    backgroundColor: '#00063D',
-    borderRadius: ms(50),
     padding: ms(8),
-    marginVertical: ms(5),
-    marginHorizontal: ms(12)
+    marginVertical: ms(8),
   },
 });

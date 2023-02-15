@@ -9,6 +9,13 @@ export default ScaledSheet.create({
     marginTop: ms(30),
     color: 'black'
   },
+  loginHeaderTitle: {
+    fontSize: ms(24),
+    fontWeight: 'bold',
+    color: colors.AppTheme.Text,
+    textAlign: 'center',
+    marginTop: ms(24),
+  },
   verificationCodeText: {
     textAlign: 'center',
     marginTop: ms(12),
@@ -19,7 +26,7 @@ export default ScaledSheet.create({
     height: ms(48),
     padding: ms(16),
     marginTop: ms(24),
-    borderColor: colors.grayShadeCC,
+    borderColor: colors.AppTheme.grayShadeCC,
     borderWidth: ms(1),
     borderRadius: ms(50),
     fontSize: ms(13),
@@ -44,7 +51,7 @@ export default ScaledSheet.create({
     fontSize: ms(14),
     marginTop: ms(24),
     marginHorizontal: ms(16),
-    color: colors.grayShade8F,
+    color: colors.AppTheme.grayShade8F,
   },
   secondContainer:{
     marginHorizontal: ms(16),
@@ -56,5 +63,9 @@ export default ScaledSheet.create({
     borderBottomWidth: 1,
     borderColor: '#7D7D7D',
     // paddingHorizontal: ms(10)
+},
+imageStyleView: {
+  alignItems: 'center',
+  marginTop: ms(44),
 },
 });

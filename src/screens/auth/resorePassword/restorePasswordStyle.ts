@@ -6,14 +6,15 @@ export default ScaledSheet.create({
   headerTitle: {
     fontSize: ms(24),
     fontWeight: 'bold',
-    marginTop: ms(30),
-    color: 'black',
+    color: colors.AppTheme.Text,
+    textAlign: 'center',
+    marginTop: ms(24),
   },
   restorePasswordTextInput: {
     height: ms(48),
     padding: ms(16),
     marginTop: ms(60),
-    borderColor: colors.grayShadeCC,
+    borderColor: colors.AppTheme.grayShadeCC,
     borderWidth: ms(1),
     borderRadius: ms(50),
     fontSize: ms(13),
@@ -24,7 +25,7 @@ export default ScaledSheet.create({
     marginTop: ms(20),
     paddingHorizontal: ms(20),
     fontSize: ms(16),
-    color: colors.grayShade8F,
+    color: colors.AppTheme.grayShade8F,
   },
   sendCodeButton: {
     marginHorizontal: ms(16),
@@ -33,7 +34,6 @@ export default ScaledSheet.create({
   },
   sendCodeButtonTitle: {
     fontSize: ms(16),
-    color: colors.white,
   },
   cancelButton: {
     marginHorizontal: ms(16),
@@ -43,5 +43,9 @@ export default ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: ms(50),
+  },
+  imageStyleView: {
+    alignItems: 'center',
+    marginTop: ms(44),
   },
 });

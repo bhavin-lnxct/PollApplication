@@ -2,18 +2,14 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   TouchableOpacity,
-  StyleSheet,
   TextInput,
   Keyboard,
-  ScrollView,
   Pressable,
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import Header from '../../components/header/header';
 import colors from '../../theme/colors/colors';
 import {ms} from 'react-native-size-matters';
 import Icon from '../../components/icon/Icon';
-import {Button} from 'react-native-paper';
 import CustomText from '../../components/text/CustomText';
 import {
   Emmiter,
@@ -37,6 +33,9 @@ import CreateFeedStyle from './CreateFeedStyle';
 import svg from '../../theme/svg/svg';
 import {SvgXml} from 'react-native-svg';
 import ThemeButton from '../../components/themeButton/themeButton';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import messages from '../../helper/messages';
+import editProfileScreenStyle from '../profile/editProfileScreenStyle';
 export interface imageBoxProps {
   isDelete?: boolean;
   index: number;
@@ -54,18 +53,25 @@ const ImageBox = ({
 }: imageBoxProps) => {
   const [openCameraModal, setCameraModal] = useState(false);
 
+  const onPressRemove = () => {
+    let newArray = [...optionValue];
+
+    newArray[index].source = '';
+    newArray[index].blob = '';
+
+    return setOptionValue(newArray);
+  };
+
   const onClickCamera = async (index: number) => {
     setCameraModal(false);
     const cameraPermission = await Permission.getCameraPermission();
-    const micPermission = await Permission.getMicPermission();
-    if (cameraPermission && micPermission) {
+    if (cameraPermission) {
       launchCamera({
         mediaType: 'photo',
         quality: 1,
         videoQuality: 'high',
         presentationStyle: 'fullScreen',
       }).then(async (cameraResponse: any) => {
-        console.log('cameraResponse', cameraResponse);
         if (cameraResponse.didCancel) {
           return;
         }
@@ -85,6 +91,11 @@ const ImageBox = ({
           type: cameraResponse.assets[0].type,
         };
 
+        if (resp?.fileSize / 1000000 > 10) {
+          showToast(messages.cantUploadImageMax10);
+          return;
+        }
+
         const ext = resp?.type.split('/')[1];
 
         if (ext === 'jpeg' || ext === 'png' || ext === 'jpg') {
@@ -96,12 +107,12 @@ const ImageBox = ({
 
           return setOptionValue(newArray);
         } else {
-          showToast('Please select jpeg, jpg or png file');
+          showToast(messages.selectValidImage);
           return;
         }
       });
     } else {
-      showToast('Please allow the camera and microphone permissions');
+      showToast(messages.cameraPermission);
     }
   };
 
@@ -116,7 +127,6 @@ const ImageBox = ({
         includeExtra: true,
         presentationStyle: 'fullScreen',
       }).then(async (cameraResponse: any) => {
-        console.log('cameraResponse', cameraResponse?.assets[0]);
         if (cameraResponse.didCancel) {
           return;
         }
@@ -136,7 +146,10 @@ const ImageBox = ({
           timestamp: cameraResponse.assets[0].timestamp,
           type: cameraResponse.assets[0].type,
         };
-
+        if (resp?.fileSize / 1000000 > 10) {
+          showToast(messages.cantUploadImageMax10);
+          return;
+        }
         const ext = resp?.type.split('/')[1];
         if (ext === 'jpeg' || ext === 'png' || ext === 'jpg') {
           const dataImage = await getUploadMediaUrl(resp);
@@ -147,18 +160,16 @@ const ImageBox = ({
 
           return setOptionValue(newArray);
         } else {
-          showToast('Please select jpeg, jpg or png file');
+          showToast(messages.selectValidImage);
           return;
         }
       });
     } else {
-      showToast('Please allow the storage permission');
+      showToast(messages.storagePermission);
     }
   };
 
   const DeleteOptionImageHandler = (item: object) => {
-    console.log(optionValue.filter(val => val.key !== item.key));
-
     setOptionValue((oldData: object[]) => {
       return oldData.filter(val => val.key !== item.key);
     });
@@ -176,26 +187,44 @@ const ImageBox = ({
           CreateFeedImageStyle.createImageMain,
         ]}>
         <View style={[CreateFeedImageStyle.row, {alignItems: 'center'}]}>
-          <TouchableOpacity
-            style={CreateFeedImageStyle.PlusIcon}
-            onPress={() => setCameraModal(true)}>
+          <View style={CreateFeedImageStyle.PlusIcon}>
             {item?.source !== '' ? (
               <FastImage
                 style={CreateFeedImageStyle.previewImage}
                 source={{uri: item?.source || images.cratePollImage}}
-                resizeMode={FastImage.resizeMode.cover}
-              />
+                resizeMode={FastImage.resizeMode.cover}>
+                <TouchableOpacity
+                  onPress={onPressRemove}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                  <Icon
+                    type={'Ionicons'}
+                    name={'close-sharp'}
+                    size={15}
+                    color={colors.AppTheme.Text}
+                    style={{
+                      position: 'absolute',
+                      right: 5,
+                      top: 5,
+                      backgroundColor: 'white',
+                      opacity: 0.8,
+                      borderRadius: ms(20),
+                    }}
+                  />
+                </TouchableOpacity>
+              </FastImage>
             ) : (
-              <SvgXml xml={svg.CreateImage} height={ms(30)} width={ms(30)} />
+              <TouchableOpacity onPress={() => setCameraModal(true)}>
+                <SvgXml xml={svg.CreateImage} height={ms(32)} width={ms(32)} />
+              </TouchableOpacity>
             )}
-          </TouchableOpacity>
+          </View>
 
           <TextInput
             style={CreateFeedImageStyle.textInputStyle}
             placeholder={`Option ${index + 1} ${
               index <= 1 ? '*' : ''
             } Description`}
-            textAlign={'center'}
+            maxLength={25}
             value={item.value}
             placeholderTextColor={colors.AppTheme.PlaceholderColor}
             onChangeText={val => {
@@ -206,9 +235,9 @@ const ImageBox = ({
           />
         </View>
         <View style={[CreateFeedImageStyle.row, {margin: ms(10)}]}>
-          <TouchableOpacity style={{marginHorizontal: ms(6)}}>
+          {/* <TouchableOpacity style={{marginHorizontal: ms(6)}}>
             <SvgXml xml={svg.Edit} height={ms(14)} width={ms(14)} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {isDelete && (
             <TouchableOpacity
               style={{marginHorizontal: ms(6)}}
@@ -228,27 +257,23 @@ const ImageBox = ({
         <View style={bottomSheetStyle.container}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => onClickCamera(index)}>
-            <Icon
-              type="Entypo"
-              name="camera"
-              size={50}
-              color={colors.blackShade1B}
-              style={bottomSheetStyle.btnImage}
-            />
-            <CustomText textStyle={bottomSheetStyle.btnText}>Camera</CustomText>
+            onPress={() => onClickCamera(index)}
+            style={editProfileScreenStyle.bottomTouchable}>
+            <View style={editProfileScreenStyle.bottomCamera}>
+              <SvgXml xml={svg.BottomCamera} />
+            </View>
+            <CustomText textStyle={editProfileScreenStyle.btnText}>
+              Camera
+            </CustomText>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => onClickGallery(index)}>
-            <Icon
-              type="Ionicons"
-              name="folder"
-              size={50}
-              color={colors.blackShade1B}
-              style={bottomSheetStyle.btnImage}
-            />
-            <CustomText textStyle={bottomSheetStyle.btnText}>
+            onPress={() => onClickGallery(index)}
+            style={editProfileScreenStyle.bottomTouchable}>
+            <View style={editProfileScreenStyle.bottomCamera}>
+              <SvgXml xml={svg.BottomGallery} />
+            </View>
+            <CustomText textStyle={editProfileScreenStyle.btnText}>
               Gallery
             </CustomText>
           </TouchableOpacity>
@@ -271,10 +296,14 @@ const CreateFeedImage = () => {
     {key: 1, value: '', source: '', blob: ''},
     {key: 2, value: '', source: '', blob: ''},
   ]);
+  const currentDate = new Date();
   const endTime = route?.params?.date;
   const postType = route?.params?.value;
   const minRes = route?.params?.isRange;
   const postRequireExplanation = route?.params?.checked;
+  const isPrivate = route?.params?.isPrivate;
+  const privateEndTime = route?.params?.privateEndTime;
+  const category = route?.params?.category;
 
   let postOption = {};
 
@@ -292,21 +321,22 @@ const CreateFeedImage = () => {
       Storage.put(fileName, blob, {
         level: 'public',
         contentType: type,
+        useAccelerateEndpoint: true,
       })
-        .then(async res => {
+        .then(res => {
           if (res) {
-            postOption = {...postOption, [res.key]: data?.value};
+            postOption = {...postOption, [res.key]: removeSpace(data?.value)};
             resolve({
               src: `public/${res?.key}`,
-              value: data?.value,
+              value: removeSpace(data?.value),
             });
-            console.log(res);
           } else {
-            console.log('Error uploading to s3 from else');
+            console.log(
+              'ERROR in file: CreateFeedImage.tsx:301 ~ Error uploading to s3',
+            );
           }
         })
         .catch(err => {
-          console.log('Error uploading to s3 from catch');
           reject(err);
           setCreatePostLoading(false);
         });
@@ -315,22 +345,22 @@ const CreateFeedImage = () => {
 
   const createImagePost = async () => {
     if (removeSpace(description) === '') {
-      showToast('Please enter a title of your poll');
+      showToast(messages.enterPollTitle);
       return;
     }
 
     for (var i = 0; i < optionValue.length; i++) {
-      if (
-        optionValue[i].blob === '' ||
-        optionValue[i].source === '' ||
-        removeSpace(optionValue[i].value) === ''
-      ) {
-        showToast('Please enter an information');
+      if (optionValue[i].blob === '' || optionValue[i].source === '') {
+        showToast(messages.selectImageCreatePoll);
+        return;
+      }
+      if (removeSpace(optionValue[i].value) === '') {
+        showToast(messages.enterDescriptionimagePoll);
         return;
       }
     }
     setCreatePostLoading(true);
-    showToast('We are processing your post');
+    showToast(messages.processingPoll);
     navigation.navigate(screenNameEnum.FeedScreen);
     Keyboard.dismiss();
     let promises: any[] = [];
@@ -344,45 +374,69 @@ const CreateFeedImage = () => {
 
     await Promise.all(promises).then(async response => {
       if (promises.map(val => val.src && val.value)) {
-        console.log('All images are uploaded successfully', response);
-        console.log(postOption);
-
         postOption = JSON.stringify(postOption).replaceAll(/"/g, "'");
 
         var dataInput = {
+          post_private: isPrivate,
           user_id: userData?.user_id,
           post_type: postType,
           post_start_time: JSON.stringify(new Date()),
-          post_end_time: JSON.stringify(endTime),
           post_language: 'ENGLISH',
           post_required_explanation: postRequireExplanation,
-          post_title: description,
+          post_title: removeSpace(description),
           post_options: postOption,
+          post_category: category
+        };
+
+        if (isPrivate) {
+          var dataInput = {
+            ...dataInput,
+            post_end_time: JSON.stringify(
+              new Date(
+                currentDate.setDate(
+                  currentDate.getDate() + Number(privateEndTime),
+                ),
+              ),
+            ),
+          };
+        } else {
+          var dataInput = {
+            ...dataInput,
+            post_end_time: JSON.stringify(endTime),
+          };
         }
 
-        if(minRes !== "") {
-          console.log('called');
-          var dataInput = {...dataInput, post_required_min_responses: Number(minRes)}
+        if (minRes === '0' || minRes === '') {
+          null;
+        } else {
+          var dataInput = {
+            ...dataInput,
+            post_required_min_responses: Number(minRes),
+          };
         }
-            
+
         try {
-          const result = await API.graphql(graphqlOperation(Query.createPost, dataInput));
+          const result = await API.graphql(
+            graphqlOperation(Query.createPost, dataInput),
+          );
           setCreatePostLoading(false);
           setTimeout(() => {
             Emmiter.emit('getFeed');
           }, 2000);
         } catch (error) {
+          console.log(
+            'ERROR in file: CreateFeedImage.tsx:374 ~ createImagePost',
+            error?.errors[0]?.message,
+          );
           setCreatePostLoading(false);
-          console.log(error, 'error in create post');
-          showToast('Failed to create post');
+          showToast(messages.failedPoll);
         }
       }
     });
   };
 
   const AddFeedBoxHandler = () => {
-    console.log('value', optionValue);
-    if (optionValue.length < 4) {
+    if (optionValue.length < 20) {
       setOptionValue(val => [
         ...val,
         {
@@ -393,7 +447,7 @@ const CreateFeedImage = () => {
         },
       ]);
     }
-    if (optionValue.length === 4) {
+    if (optionValue.length === 20) {
       showToast('You can select maximum 4');
       return;
     }
@@ -434,15 +488,15 @@ const CreateFeedImage = () => {
   }, [opacity]);
 
   return (
-    <>
+    <View style={{backgroundColor: '#EFEFEF', flex: 1}}>
       <Header
-        title="Create Post"
+        title="Image Poll"
         isBack={true}
         isClose={false}
         post={false}
         onPressPost={createImagePost}
       />
-      <ScrollView>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
         <View style={{marginHorizontal: ms(15), marginBottom: ms(10)}}>
           <TextInput
             onFocus={() => setOpacity(true)}
@@ -450,7 +504,10 @@ const CreateFeedImage = () => {
             placeholder="Title *"
             multiline={true}
             maxLength={500}
-            style={CreateFeedStyle.optionTextInput}
+            style={[
+              CreateFeedStyle.optionTextInput,
+              CreateFeedStyle.optionTextInputFirst,
+            ]}
             placeholderTextColor={colors.AppTheme.PlaceholderColor}
             onChangeText={val => setDescription(val)}
           />
@@ -463,7 +520,7 @@ const CreateFeedImage = () => {
               {' '}
               Upload Image
             </CustomText>
-            <SvgXml xml={svg.UploadImage} height={ms(22)} width={ms(22)} />
+            <SvgXml xml={svg.UploadImage} height={ms(24)} width={ms(24)} />
           </View>
         </View>
 
@@ -472,8 +529,6 @@ const CreateFeedImage = () => {
             style={{
               flexDirection: 'column',
               width: '100%',
-              // flexWrap: 'wrap',
-              // justifyContent: 'space-evenly',
             }}>
             {optionValue.map((item, index) => (
               <ImageBox
@@ -486,18 +541,21 @@ const CreateFeedImage = () => {
               />
             ))}
           </View>
-
-          <Pressable
-            onPress={AddFeedBoxHandler}
-            hitSlop={{left: 10, right: 10, top: 10, bottom: 10}}
-            style={{
-              alignItems: 'center',
-              marginTop: ms(20),
-            }}>
-            <SvgXml xml={svg.CreateImage} height={ms(50)} width={ms(50)} />
-          </Pressable>
+          {optionValue.length < 20 ? (
+            <Pressable
+              onPress={AddFeedBoxHandler}
+              hitSlop={{left: 10, right: 10, top: 10, bottom: 10}}
+              style={{
+                alignItems: 'center',
+                marginTop: ms(20),
+              }}>
+              <SvgXml xml={svg.CreateImage} height={ms(50)} width={ms(50)} />
+            </Pressable>
+          ) : (
+            <View style={{height: ms(50), width: ms(50)}} />
+          )}
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <ThemeButton
         loading={createPostLoading}
         title={'Create Poll'}
@@ -505,7 +563,7 @@ const CreateFeedImage = () => {
         titleStyle={CreateFeedImageStyle.addOptionText}
         onPress={createImagePost}
       />
-    </>
+    </View>
   );
 };
 

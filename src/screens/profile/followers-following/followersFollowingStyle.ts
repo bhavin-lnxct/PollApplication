@@ -11,7 +11,7 @@ export default ScaledSheet.create({
     borderRadius: ms(50),
   },
   searchBar: {
-    backgroundColor: 'rgb(225, 225, 225)',
+    backgroundColor: colors.AppTheme.OtherSecond,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: ms(5),
@@ -56,8 +56,9 @@ export default ScaledSheet.create({
   followButtonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: ms(5),
+    padding: ms(7),
     width: ms(80),
     borderRadius: ms(8),
-  }
+    backgroundColor: colors.AppTheme.OtherSecond,
+  },
 });

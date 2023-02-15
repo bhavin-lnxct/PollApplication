@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, TextInput, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import LoginScreenStyle from './LoginScreenStyle';
@@ -6,7 +6,7 @@ import {ms} from 'react-native-size-matters';
 import ThemeButton from '../../../components/themeButton/themeButton';
 import {useNavigation} from '@react-navigation/native';
 import screenNameEnum from '../../../helper/screenNameEnum';
-import {removeSpace, showToast} from '../../../helper/helper';
+import {getFireBaseToken, removeSpace, showToast} from '../../../helper/helper';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {Query} from '../../../network/Query';
 import {useDispatch} from 'react-redux';
@@ -17,6 +17,9 @@ import images from '../../../theme/images/images';
 import RegisterScreenStyle from '../register/RegisterScreenStyle';
 import colors from '../../../theme/colors/colors';
 import Icon from '../../../components/icon/Icon';
+import messages from '../../../helper/messages';
+import {SvgXml} from 'react-native-svg';
+import svg from '../../../theme/svg/svg';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -30,7 +33,7 @@ const LoginScreen = () => {
     const trimmedEmail = removeSpace(email);
 
     if (!trimmedEmail || !password) {
-      showToast('please fill all required fields');
+      showToast(messages.fillAllFields);
       return;
     }
 
@@ -38,12 +41,11 @@ const LoginScreen = () => {
       setLoading(true);
       const user = await Auth.signIn(trimmedEmail, password);
       const userId = user?.attributes?.sub;
-      console.log(userId, 'user');
+
       if (user) {
         const result = await API.graphql(
           graphqlOperation(Query.getUser, {user_id: userId}),
         );
-        console.log(result, 'result -------');
         if (result) {
           dispatch(
             userAction.setUserData({
@@ -51,21 +53,30 @@ const LoginScreen = () => {
               user_id: userId,
             }),
           );
-          showToast('login successfully');
+          const token = await getFireBaseToken();
+          try {
+            await API.graphql(
+              graphqlOperation(Query.updateToken, {
+                user_id: userId,
+                token: token,
+              }),
+            );
+          } catch (error) {
+            console.log('failed to update token in login');
+          }
         }
       }
 
       setLoading(false);
-    } catch (error: any) {
-      console.log(error, 'error ----------');
-
+    } catch (error) {
+      console.log('ERROR in file: LoginScreen.tsx:58 ~ signIn', error.message);
       setLoading(false);
       if (error.message[0] === '2') {
-        showToast('Enter valid email address');
+        showToast(messages.enterValidEmail);
       }
       let message = error.message;
       if (message === 'User does not exist.') {
-        showToast('Username doesn’t exist.');
+        showToast(messages.usernameNotExist);
       } else {
         showToast(error.message);
       }
@@ -81,7 +92,7 @@ const LoginScreen = () => {
         <TouchableOpacity activeOpacity={0.8} onPress={onPressGoToSignUp}>
           <CustomText
             textStyle={{
-              fontFamily: 'Poppins-Bold',
+              fontFamily: 'DMSans-Bold',
               fontSize: ms(14),
               color: colors.AppTheme.Text,
             }}>
@@ -93,7 +104,6 @@ const LoginScreen = () => {
   };
 
   const onPressGoToSignUp = () => {
-    console.log('sign up clicked -------->>>>>>>');
     navigation.navigate(screenNameEnum.RegisterScreen);
   };
 
@@ -106,16 +116,12 @@ const LoginScreen = () => {
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
       <SafeAreaView style={LoginScreenStyle.container}>
-        <View style={{alignItems: 'flex-end'}}>
-          <FastImage
-            source={images.login}
-            resizeMode={FastImage.resizeMode.cover}
-            style={RegisterScreenStyle.imageStyle}
-          />
+        <View style={LoginScreenStyle.imageStyleView}>
+          <SvgXml xml={svg.AuthLogin} />
+          <CustomText textStyle={LoginScreenStyle.loginHeaderTitle}>
+            Login
+          </CustomText>
         </View>
-        <CustomText textStyle={LoginScreenStyle.loginHeaderTitle}>
-          Login
-        </CustomText>
         <View style={LoginScreenStyle.secondContainer}>
           <View style={LoginScreenStyle.loginTextInputContainer}>
             <Icon

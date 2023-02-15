@@ -3,12 +3,12 @@ import colors from '../../theme/colors/colors';
 
 export default ScaledSheet.create({
   container: {
+    // flex: 1,
     height: ms(50),
     minWidth: ms(50),
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: colors.blackShade20,
-    borderRadius: ms(30),
+    borderRadius: ms(15),
     overflow: 'hidden',
   },
   linearGradientContainer: {
@@ -16,10 +16,12 @@ export default ScaledSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    color:'white',
+    color: 'white',
   },
   titleTextStyle: {
-    color: 'white',
-    fontSize: ms(16),
+    color: '#fff',
+    // fontFamily:'MDsans-Medium',
+    fontSize: ms(17),
+    lineHeight:ms(24)
   },
 });

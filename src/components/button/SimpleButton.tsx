@@ -1,14 +1,15 @@
 import React from 'react';
-import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import SimpleButtonStyle from './SimpleButtonStyle';
-import { buttonProps } from './models/buttonProps';
+import {buttonProps} from './models/buttonProps';
 import CustomText from '../text/CustomText';
 
 const SimpleButton = ({
   title = 'Button',
   loading = false,
+  loadingColor = '#fff',
   containerStyle = {},
-  buttonTitleStyle = SimpleButtonStyle.buttonTitle,
+  buttonTitleStyle,
   onPress,
 }: buttonProps) => {
   return (
@@ -18,9 +19,10 @@ const SimpleButton = ({
       activeOpacity={0.8}
       disabled={loading}>
       {loading ? (
-        <ActivityIndicator size="small" color={'#fff'} />
+        <ActivityIndicator size="small" color={loadingColor} />
       ) : (
-        <CustomText textStyle={[SimpleButtonStyle.buttonTitle, buttonTitleStyle]}>
+        <CustomText
+          textStyle={[SimpleButtonStyle.buttonTitle, buttonTitleStyle]}>
           {title}
         </CustomText>
       )}

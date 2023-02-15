@@ -20,16 +20,19 @@ import {
   useUserData,
 } from '../../../redux/reducers/user-slice/userSlice';
 import images from '../../../theme/images/images';
-import {Auth} from 'aws-amplify';
+import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import CustomText from '../../../components/text/CustomText';
-import { feedSliceActions } from '../../../redux/reducers/feedSlice/feedSlice';
+import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
+import svg from '../../../theme/svg/svg';
+import SimpleRepostButton from '../../../components/simpleRepostButton/SimpleRepostButton';
+import { Query } from '../../../network/Query';
 
 export interface UserProfileInterFace {
-  setVisibleProfile: boolean;
+  setVisibleProfile: any;
 }
 
-const UserProfile = ({setVisibleProfile}:UserProfileInterFace) => {
+const UserProfile = ({setVisibleProfile}: UserProfileInterFace) => {
   const navigation = useNavigation();
   const userData = useUserData();
   const dispatch = useDispatch();
@@ -39,50 +42,35 @@ const UserProfile = ({setVisibleProfile}:UserProfileInterFace) => {
     const goToChangePassword = () => {
       setTimeout(() => {
         navigation.navigate(screenNameEnum.ChangePassword);
-        
       }, 400);
       setVisibleProfile(false);
     };
     const goToSetting = () => {
-      setTimeout(() => {
-        navigation.navigate(screenNameEnum.FeedDetailsView);
-        console.log('goToSetting clicked');
-      }, 400);
+      console.log('go to notification');
+      // setTimeout(() => {
+      //   navigation.navigate(screenNameEnum.FeedDetailsView);
+      // }, 400);
     };
     const inviteFriend = () => {
-      console.log('invite frieds clicked');
+      console.log('Invite frieds clicked');
     };
     const goToAboutScreen = () => {
       navigation.navigate(screenNameEnum.AboutStack);
       setVisibleProfile(false);
     };
     return (
-      <View>
-        <SimpleProfileButton
-          title="Notifications"
-          frontIcon="notifications"
-          onPressButton={goToSetting}
-          color={'#F26419'}
-        />
+      <>
         <SimpleProfileButton
           title="Change Password"
-          frontIcon="lock"
+          icon={svg.ChangePass}
           onPressButton={goToChangePassword}
-          color={'#FF595E'}
-        />
-        <SimpleProfileButton
-          title="Share with friends"
-          frontIcon="group"
-          onPressButton={inviteFriend}
-          color={'#FFCA3A'}
         />
         <SimpleProfileButton
           title="About"
-          frontIcon="support-agent"
+          icon={svg.About}
           onPressButton={goToAboutScreen}
-          color={'#8AC926'}
         />
-      </View>
+      </>
     );
   };
 
@@ -96,7 +84,7 @@ const UserProfile = ({setVisibleProfile}:UserProfileInterFace) => {
               userData?.image_url
                 ? {
                     uri: `https://d1iermgo1iu801.cloudfront.net/${userData?.image_url}`,
-                    priority: FastImage.priority.normal,
+                    priority: FastImage.priority.high,
                   }
                 : images.dp
             }
@@ -129,9 +117,14 @@ const UserProfile = ({setVisibleProfile}:UserProfileInterFace) => {
           onPress={() => {
             setLoading(true);
             setTimeout(async () => {
+              await Auth.signOut();
+              try {
+                await API.graphql(graphqlOperation(Query.deleteToken,{user_id: userData?.user_id}));
+              } catch (error) {
+                console.log('failded to delete token')
+              }
               dispatch(userAction.clearUser());
               dispatch(feedSliceActions.clearFeedData());
-              await Auth.signOut();
               setLoading(false);
             }, 1000);
           }}>
@@ -139,7 +132,7 @@ const UserProfile = ({setVisibleProfile}:UserProfileInterFace) => {
             <Icon
               size={24}
               name="logout"
-              color={colors.AppTheme.Secondary}
+              color={'#79AFC1'}
               type={'MaterialIcons'}
             />
           </View>
@@ -160,7 +153,6 @@ const UserProfile = ({setVisibleProfile}:UserProfileInterFace) => {
     navigation.navigate(screenNameEnum.ProfileScreen, {
       userId: userData?.user_id,
     });
-    
   };
 
   return (

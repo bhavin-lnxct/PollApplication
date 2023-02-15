@@ -9,7 +9,7 @@ export default ScaledSheet.create({
         justifyContent: 'space-between',
         // marginEnd: ms(16),
         // marginStart: ms(16),
-        color: colors.blackShade02,
+        color: colors.AppTheme.blackShade02,
         
     },
     buttonTitle: {

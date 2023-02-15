@@ -1,18 +1,42 @@
-import { View } from 'react-native';
 import React from 'react';
+import {View} from 'react-native';
 import feedCardStyle from '../feedCardStyle';
 import svg from '../../../theme/svg/svg';
 import colors from '../../../theme/colors/colors';
 import SimpleRepostButton from '../../simpleRepostButton/SimpleRepostButton';
+import {createShareLink} from '../../../helper/helper';
+import {useNavigation} from '@react-navigation/native';
+import Share from 'react-native-share';
+import appConstants from '../../../helper/appConstant';
 
 interface RepostInterface {
+  routeName: string;
   userId?: string;
   myId?: string;
-  onPressDelete?:()=>void;
+  onPressDelete?: () => void;
+  onPressReport: () => void;
+  onPressExplanations: () => void;
   isDeleteLoading?: boolean;
+  item: object;
+  deletePost?: () => void;
+  isExplanation?: boolean;
+  onPressShare?:() => void;
 }
 
-const Repost = ({userId, myId, onPressDelete,isDeleteLoading}: RepostInterface) => {
+const Repost = ({
+  routeName,
+  item,
+  userId,
+  myId,
+  onPressDelete,
+  isDeleteLoading,
+  onPressReport,
+  onPressExplanations,
+  deletePost,
+  isExplanation,
+  onPressShare
+}: RepostInterface) => {
+  const navigation = useNavigation();
   const GotoShare = () => {
     console.log('GotoShare');
   };
@@ -22,62 +46,20 @@ const Repost = ({userId, myId, onPressDelete,isDeleteLoading}: RepostInterface) 
       {userId === myId ? (
         <>
           <SimpleRepostButton
-            title="share"
-            onPressButton={GotoShare}
+            title="Share"
+            onPressButton={onPressShare}
             color={colors.AppTheme.OrangeRed}
             icon={svg.Share}
           />
-          <SimpleRepostButton
-            title="Edit"
-            onPressButton={GotoShare}
-            color={colors.AppTheme.RedSalsa}
-            icon={svg.EditWhite}
-          />
-          <SimpleRepostButton
-            title="Save"
-            onPressButton={GotoShare}
-            color={colors.AppTheme.Sunglow}
-            icon={svg.Download}
-          />
-          <SimpleRepostButton
-            title="QR Code"
-            onPressButton={GotoShare}
-            color={colors.AppTheme.YellowGreen}
-            icon={svg.QrCode}
-          />
-          <SimpleRepostButton
-            title="Archive"
-            onPressButton={GotoShare}
-            icon={svg.Archive}
+          {isExplanation && <SimpleRepostButton
+            title="Explanations"
+            onPressButton={onPressExplanations}
+            icon={svg.Explanation}
             color={colors.AppTheme.OrangeRed}
-          />
-          <SimpleRepostButton
-            title="Turn Off Commenting"
-            onPressButton={GotoShare}
-            icon={svg.TurnOff}
-            color={colors.AppTheme.RedSalsa}
-          />
-          <SimpleRepostButton
-            title="Link"
-            onPressButton={GotoShare}
-            icon={svg.Link}
-            color={colors.AppTheme.Primary}
-          />
-          <SimpleRepostButton
-            title="Post Other Aps"
-            onPressButton={GotoShare}
-            icon={svg.PostAps}
-            color={colors.AppTheme.Sunglow}
-          />
-          <SimpleRepostButton
-            title="Pin To Your Profile"
-            onPressButton={GotoShare}
-            icon={svg.PinToProfile}
-            color={colors.AppTheme.YellowGreen}
-          />
+          />}
           <SimpleRepostButton
             title="Delete"
-            onPressButton={onPressDelete}
+            onPressButton={deletePost}
             icon={svg.DeleteWhite}
             color={colors.AppTheme.OrangeRed}
             isLoading={isDeleteLoading}
@@ -85,17 +67,18 @@ const Repost = ({userId, myId, onPressDelete,isDeleteLoading}: RepostInterface) 
         </>
       ) : (
         <>
-         <SimpleRepostButton
-            title="share"
-            onPressButton={GotoShare}
+          <SimpleRepostButton
+            title="Share"
+            onPressButton={onPressShare}
             color={colors.AppTheme.OrangeRed}
             icon={svg.Share}
           />
           <SimpleRepostButton
-            title="Edit"
-            onPressButton={GotoShare}
-            color={colors.AppTheme.RedSalsa}
-            icon={svg.EditWhite}
+            title="Report"
+            onPressButton={onPressReport}
+            icon={svg.ReportPost}
+            color={colors.AppTheme.OrangeRed}
+            isLoading={isDeleteLoading}
           />
         </>
       )}

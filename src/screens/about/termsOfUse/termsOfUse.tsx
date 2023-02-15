@@ -9,13 +9,13 @@ import termsOfUseStyle from "./termsOfUseStyle";
 const TermsOfUse = () => {
     return(
         <SafeAreaView style={termsOfUseStyle.container}>
-      <Header  title="Terms of Use"  />
+      <Header  title="Terms of Use" isBack={true} />
 
       <View style={termsOfUseStyle.mainContainer}>
         <ScrollView>
           <View>
             <Text style={termsOfUseStyle.headerTitle}>Terms of Use</Text>
-            <Text style={{marginLeft: ms(24), color: colors.grayShade8F}}>
+            <Text style={{marginLeft: ms(24), color: colors.AppTheme.grayShade8F}}>
               Last updated on July 2022
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
@@ -47,7 +47,7 @@ const TermsOfUse = () => {
                 textAlign: 'justify',
                 marginHorizontal: ms(24),
                 marginTop: 4,
-                color: colors.blackShade20,
+                color: colors.AppTheme.blackShade20,
               }}
             >
               We reserve the right, at any time and without prior notice, to
@@ -221,7 +221,7 @@ const TermsOfUse = () => {
               to file a complaint about information or materials uploaded by
               other users, {'\n'}contact us at:
               <Text
-                style={{color: colors.blueviolet}}
+                style={{color: colors.AppTheme.blueviolet}}
                 onPress={() => {
                   Linking.openURL('https://lnxct.com');
                 }}

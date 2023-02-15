@@ -1,23 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {TextInput, TouchableOpacity, View} from 'react-native';
 import {ms} from 'react-native-size-matters';
 import CustomText from '../../../components/text/CustomText';
 import colors from '../../../theme/colors/colors';
 import FastImage from 'react-native-fast-image';
-import pollQuestionStyle from './pollQuestionStyle';
 import {API, graphqlOperation} from 'aws-amplify';
 import {Query} from '../../../network/Query';
 import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
 import {useDispatch} from 'react-redux';
-import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
 import pollImageQuestionStyle from './pollImageQuestionStyle';
+import ThemeButton from '../../../components/themeButton/themeButton';
+import {removeSpace, showToast} from '../../../helper/helper';
+import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
+import Icon from '../../../components/icon/Icon';
+import messages from '../../../helper/messages';
+import feedCardStyle from '../../../components/card/feedCardStyle';
 
 export interface PollOptionsInterface {
   option: string;
@@ -32,96 +30,142 @@ export interface PollQuestionInterface {
   setIsVoted: any;
 }
 
-const PollImageQuestion:React.FC = ({item, routeName, setIsVoted}: PollQuestionInterface) => {
-  const [totalVote, setTotalVote] = useState(item?.total_votes || 0);
-  const [voted, setVoted] = useState(item?.already_voted || false);
+const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
   const userData = useUserData();
   const dispatch = useDispatch();
+  const [explanation, setExplanation] = useState('');
+  const [createPoll, setCreatePoll] = useState();
+  const [viewMore, setViewMore] = useState(false);
+  const viewOptions =
+    viewMore || item?.options.length < 4
+      ? item?.options
+      : item?.options?.slice(0, 4);
 
-  const pollRow = (data: object) => {
-    const [getVote, setGetVote] = useState(data?.vote);
-
-    const onPressAns = async () => {
-      console.log(routeName, '-----image route name --------');
-      setGetVote(vote => vote + 1);
-      setTotalVote(totalVote => totalVote + 1);
-      setVoted(true);
-      setIsVoted(true);
-      // setTimeout(() => {
-      //   dispatch(
-      //     feedSliceActions.voteAction({
-      //       routeName: routeName,
-      //       id: item?.post_id,
-      //       optionId: data?.option_id,
-      //     }),
-      //   );
-      // }, 200);
+  const onPressVote = async () => {
+    try {
+      const trimmedExplanation = removeSpace(explanation);
+      if (item?.post_required_explanation && trimmedExplanation === '') {
+        showToast(messages.EnterReasoning);
+        return;
+      }
+      dispatch(
+        feedSliceActions.voteAction({
+          id: item?.post_id,
+          optionId: createPoll?.option_id,
+        }),
+      );
       const result = await API.graphql(
         graphqlOperation(Query.giveAns, {
           user_id: userData?.user_id,
           post_id: item?.post_id,
-          option_id: data?.option_id,
+          option_id: createPoll?.option_id,
+          explanation: explanation,
         }),
       );
+    } catch (error) {
+      console.log(
+        'ERROR in file: pollImageQuestion.tsx:69 ~ onPressVote',
+        error?.errors[0]?.message,
+      );
+    }
+  };
+
+  const pollRow = (data: object) => {
+    const onSelectAns = async (val: object | undefined) => {
+      setCreatePoll(val);
     };
+
     return (
       <View style={pollImageQuestionStyle.pollRowImageContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
-          disabled={voted}
+          disabled={item?.already_voted}
           style={[
-            voted
+            item?.already_voted
               ? pollImageQuestionStyle.pollContainerButtonVoted
               : pollImageQuestionStyle.pollContainerButton,
           ]}
-          onPress={() => onPressAns()}>
+          onPress={() => onSelectAns(data)}>
           <View style={pollImageQuestionStyle.pollContainer}>
-            <View style={{width: ms(72)}}>
-              <FastImage
-                style={pollImageQuestionStyle.pollImage}
-                source={{
-                  uri: `https://d1iermgo1iu801.cloudfront.net/public/${data?.option_selector}`,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-            <View style={pollImageQuestionStyle.pollImageTextContainer}>
-              <View
-                style={[
-                  pollImageQuestionStyle.pollFillView,
-                 voted && {
-                    backgroundColor:
-                      (data.option_id === 1 && '#7EBFFF') ||
-                      (data.option_id === 2 && '#FFDF86') ||
-                      (data.option_id === 3 && '#FFAD82') ||
-                      (data.option_id === 4 && '#7BE291') ||
-                      (data.option_id === 5 && '#FF9ABB'),
-                    width: `${
-                      Math.round((Number(getVote) * 100) / totalVote) || 0
-                    }%`,
-                  },
-                ]}
-              />
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginLeft: ms(12),
-                }}>
-                <CustomText textStyle={pollQuestionStyle.optionText}>
-                  {' '}
-                  {data?.option}
-                </CustomText>
-                <View>
-                  {voted && (
-                    <CustomText textStyle={pollQuestionStyle.percentageText}>
-                      {Math.round((Number(getVote) * 100) / totalVote) || 0}%
+            {item?.already_voted ? (
+              <>
+                <View style={pollImageQuestionStyle.pollImageView}>
+                  <FastImage
+                    style={pollImageQuestionStyle.pollImage}
+                    source={{
+                      uri: `https://d1iermgo1iu801.cloudfront.net/public/${data?.option_selector}`,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </View>
+                <View style={pollImageQuestionStyle.pollImageTextContainer}>
+                  <View
+                    style={[
+                      pollImageQuestionStyle.pollFillView,
+                      item?.already_voted && {
+                        backgroundColor: colors.AppTheme.OtherSecond,
+                        width: `${
+                          Math.round(
+                            (Number(data?.vote) * 100) / item?.total_votes,
+                          ) || 0
+                        }%`,
+                      },
+                    ]}
+                  />
+                  <View style={pollImageQuestionStyle.alreadyVoted}>
+                    <CustomText textStyle={pollImageQuestionStyle.optionText}>
+                      {data?.option}
                     </CustomText>
+                    <View>
+                      {item?.already_voted && (
+                        <CustomText
+                          textStyle={pollImageQuestionStyle.percentageText}>
+                          {Math.round(
+                            (Number(data?.vote) * 100) / item?.total_votes,
+                          ) || 0}
+                          %
+                        </CustomText>
+                      )}
+                    </View>
+                  </View>
+                </View>
+              </>
+            ) : (
+              <>
+                <View
+                  style={{
+                    marginRight: ms(12),
+                  }}>
+                  {createPoll?.option_id === data?.option_id ? (
+                    <Icon
+                      type="AntDesign"
+                      name="checkcircle"
+                      size={ms(16)}
+                      color={'#000'}
+                    />
+                  ) : (
+                    <View style={pollImageQuestionStyle.checkcircle} />
                   )}
                 </View>
-              </View>
-            </View>
+                <View style={pollImageQuestionStyle.pollImageViewVoted}>
+                  <FastImage
+                    style={[
+                      pollImageQuestionStyle.pollImage,
+                      {borderRadius: ms(7)},
+                    ]}
+                    source={{
+                      uri: `https://d1iermgo1iu801.cloudfront.net/public/${data?.option_selector}`,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </View>
+                <View style={pollImageQuestionStyle.pollImageTextContainer}>
+                  <CustomText textStyle={pollImageQuestionStyle.optionText}>
+                    {data?.option}
+                  </CustomText>
+                </View>
+              </>
+            )}
           </View>
         </TouchableOpacity>
       </View>
@@ -129,11 +173,75 @@ const PollImageQuestion:React.FC = ({item, routeName, setIsVoted}: PollQuestionI
   };
 
   return (
-    <View style={pollImageQuestionStyle.container}>
-      {item?.options?.map((val, i) => {
-        return <View key={i}>{pollRow(val)}</View>;
-      })}
-    </View>
+    <>
+      <View style={pollImageQuestionStyle.container}>
+        <View style={item?.already_voted && {paddingTop: ms(10)}}>
+          {viewOptions?.map((val: object, i: number) => {
+            return <View key={i}>{pollRow(val)}</View>;
+          })}
+          {!viewMore && item?.options.length > 4 && (
+            <TouchableOpacity
+              style={pollImageQuestionStyle.ViewMoreButton}
+              onPress={() => setViewMore(!viewMore)}>
+              <CustomText textStyle={pollImageQuestionStyle.viewMoreText}>
+                View More
+              </CustomText>
+              <Icon
+                type={'MaterialCommunityIcons'}
+                name={'chevron-double-down'}
+                size={16}
+                color={'black'}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={{marginTop: ms(5)}} />
+        <CustomText textStyle={pollImageQuestionStyle.totalVotesText}>
+          {item?.total_votes} Votes
+        </CustomText>
+      </View>
+      <View style={{marginTop: ms(5)}} />
+      {item?.post_category && item?.post_category.length > 0 && (
+        <View style={feedCardStyle.labelViewContainer}>
+          {item?.post_category?.map((val, i) => {
+            return (
+              <View style={feedCardStyle.labelContainer} key={i}>
+                <CustomText textStyle={feedCardStyle.labelText}>
+                  {val}
+                </CustomText>
+              </View>
+            );
+          })}
+        </View>
+      )}
+
+      {item?.post_required_explanation && !item?.already_voted && (
+        <>
+          <CustomText textStyle={pollImageQuestionStyle.ReasoningTitle}>
+            Reason for your vote
+          </CustomText>
+          <TextInput
+            placeholder="write your reason"
+            placeholderTextColor={colors.AppTheme.grayShade8F}
+            style={pollImageQuestionStyle.reasoningTextInput}
+            multiline={true}
+            onChangeText={val => setExplanation(val)}
+          />
+        </>
+      )}
+      <View>
+        {!item?.already_voted && (
+          <ThemeButton
+            title={'Vote'}
+            containerStyle={pollImageQuestionStyle.addOptionButtonContainer}
+            titleStyle={pollImageQuestionStyle.addOptionText}
+            onPress={() =>
+              createPoll ? onPressVote() : showToast(messages.selectOption)
+            }
+          />
+        )}
+      </View>
+    </>
   );
 };
 

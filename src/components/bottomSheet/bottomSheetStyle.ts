@@ -23,14 +23,16 @@ export default ScaledSheet.create({
         borderTopStartRadius: ms(15),
         width: '100%',
         paddingHorizontal: ms(10)
+    
     },
     btnText: {
         fontSize: ms(11),
-        color: colors.blackShade02,
-        marginLeft: ms(5)
+        color: colors.AppTheme.blackShade02,
     },
     btnImage: {
         width: ms(55),
         height: ms(55),
     },
+
+   
 })

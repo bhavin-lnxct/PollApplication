@@ -15,14 +15,14 @@ const CreateFeedHeader = ({onPressCreatePost}:HeaderProps) => {
     return(
         <View style={CreateFeedHeaderStyle.container}>
             <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
-                <Icon type="Ionicons" name="arrow-back" size={30} color={colors.blackShade1B}/>
+                <Icon type="Ionicons" name="arrow-back" size={30} color={colors.AppTheme.blackShade1B}/>
             </TouchableOpacity>
             <Text
                 style={CreateFeedHeaderStyle.titleText}>
                 {`Post`}
             </Text>
             <TouchableOpacity activeOpacity={0.8} style={CreateFeedHeaderStyle.TextRight} onPress={onPressCreatePost}>
-                <Icon type="Ionicons" name="paper-plane-sharp" size={30} color={colors.blackShade1B}/>
+                <Icon type="Ionicons" name="paper-plane-sharp" size={30} color={colors.AppTheme.blackShade1B}/>
             </TouchableOpacity>
         </View>
     )

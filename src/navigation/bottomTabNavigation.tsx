@@ -4,11 +4,9 @@ import screenNameEnum from '../helper/screenNameEnum';
 import {ms, ScaledSheet} from 'react-native-size-matters';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import Icon from '../components/icon/Icon';
 import FeedNavigation from './feedNavigation';
 import colors from '../theme/colors/colors';
 import CreateFeedScreen from '../screens/create-feed/CreateFeedScreen';
-import ProfileScreen from '../screens/profile/myProfile/profileScreen';
 import EditProfileScreen from '../screens/profile/editProfileScreen';
 import {SvgXml} from 'react-native-svg';
 import svg from '../theme/svg/svg';
@@ -103,8 +101,8 @@ const TabButton = (props: {
 
           <SvgXml
             xml={!focused ? item?.name : item?.name2}
-            height={focused ? ms(30) : ms(48)}
-            width={focused ? ms(30) : ms(48)}
+            height={focused ? ms(30) : ms(53)}
+            width={focused ? ms(30) : ms(53)}
           />
         </View>
       </Animatable.View>

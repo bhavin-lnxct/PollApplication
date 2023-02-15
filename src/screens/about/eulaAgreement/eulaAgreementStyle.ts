@@ -7,7 +7,7 @@ export default ScaledSheet.create({
     fontSize: ms(32),
     marginLeft: ms(24),
     marginTop: ms(16),
-    color: colors.blackShade02,
+    color: colors.AppTheme.blackShade02,
     fontWeight: 'bold',
   },
   mainContainer: {
@@ -19,7 +19,7 @@ export default ScaledSheet.create({
     marginRight: ms(24),
     fontSize: ms(18),
     fontWeight: '600',
-    color: colors.blackShade20,
+    color: colors.AppTheme.blackShade20,
     marginLeft: ms(24),
     marginTop: ms(24),
   },
@@ -27,6 +27,6 @@ export default ScaledSheet.create({
     textAlign: 'justify',
     marginHorizontal: ms(24),
     marginTop: ms(20),
-    color: colors.blackShade20,
+    color: colors.AppTheme.blackShade20,
   },
 });
