@@ -80,7 +80,7 @@ export const createShareLink = async (postId: string) => {
       // },
       domainUriPrefix: 'https://mythought.page.link',
       android: {
-        packageName: 'com.Ponder',
+        packageName: 'com.Plebiscite',
       },
     },
     dynamicLinks.ShortLinkType.SHORT,
@@ -114,7 +114,7 @@ export const notificationGenerator = async (message) => {
     await notifee.requestPermission();
     const channelId = await notifee.createChannel({
       id: '123',
-      name: 'Ponder',
+      name: 'Plebiscite',
     });
     await notifee.displayNotification({
       title: message.data.title,
@@ -131,7 +131,7 @@ export const notificationGenerator = async (message) => {
 }
 
 export const openUrl = async (data) => {
-  const link = data.replace('https://mythought.page.link','ponder:/')
+  const link = data.replace('https://mythought.page.link','plebiscite:/')
 
   Linking.canOpenURL(link).then(() => {
     console.log('URL works');

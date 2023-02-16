@@ -21,9 +21,9 @@ const DataPolicy = () => {
               ARTICLE I. INTRODUCTION
             </Text>
             <Text style={dataPolicyStyle.termsOfUseTextContainer}>
-              {'\n\n'}Ponder, Inc. (hereinafter “Company”) will be collecting
-              information which you provide on the Ponder. Platform
-              (hereinafter “Platform”), as a result of your use of Ponder’s:
+              {'\n\n'}Plebiscite, Inc. (hereinafter “Company”) will be collecting
+              information which you provide on the Plebiscite. Platform
+              (hereinafter “Platform”), as a result of your use of Plebiscite’s:
               {'\n\n'}(a) MobileApp
               {'\n\n'}(b) websites, portals, mobile applications, channels,
               software, social media pages, applications, platforms and channels
@@ -44,7 +44,7 @@ const DataPolicy = () => {
               {'\n\n'}2) Organizer: event creators using the Services to create
               events for Consumers using our Services
               {'\n\n'}3) Users: Consumers and Third Parties using our Services.
-              {'\n\n'}4) Company: Ponder, Inc. (also referred to as “we”,
+              {'\n\n'}4) Company: Plebiscite, Inc. (also referred to as “we”,
               “us”)
               {'\n\n'}5) Non Personal Data: any information that does not relate
               to a person and/or cannot be used to identify a person. When you

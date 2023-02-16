@@ -60,7 +60,7 @@ export default ScaledSheet.create({
     borderColor: '#C6C6C6',
     borderWidth: ms(0.2),
     paddingHorizontal: ms(16),
-    textAlign:'right'
+    textAlign: 'right',
   },
   optionText: {
     color: colors.AppTheme.Text,
@@ -172,19 +172,19 @@ export default ScaledSheet.create({
     borderRadius: ms(30),
   },
   ViewMoreButton: {
-    flexDirection:'row',
-    alignItems:'center',
-    borderColor:'#BBBBBB',
-    borderWidth:0.2,
-    borderRadius:ms(20),
-    width:'30%',
-    justifyContent:'center',
-    padding:ms(3),
-    alignSelf:'center',
-    marginTop:ms(10)
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#BBBBBB',
+    borderWidth: 0.2,
+    borderRadius: ms(20),
+    width: '30%',
+    justifyContent: 'center',
+    padding: ms(3),
+    alignSelf: 'center',
+    marginTop: ms(10),
   },
-  viewMoreText:{
-    color:colors.AppTheme.Text,
-    fontSize:ms(14)
-  }
+  viewMoreText: {
+    color: colors.AppTheme.Text,
+    fontSize: ms(14),
+  },
 });

@@ -36,7 +36,7 @@ const deepLinksConf = {
 };
 
 const linking: LinkingOptions = {
-  prefixes: ['ponder://', 'https://mythought.page.link'],
+  prefixes: ['plebiscite://', 'https://mythought.page.link'],
   config: deepLinksConf,
 };
 

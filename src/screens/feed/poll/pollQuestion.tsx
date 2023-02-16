@@ -171,19 +171,6 @@ const PollQuestion: React.FC = ({item, routeName}: PollQuestionInterface) => {
         </CustomText>
       </View>
       <View style={{marginTop: ms(5)}} />
-      {/* {item?.post_category && item?.post_category.length > 0 && (
-        <View style={feedCardStyle.labelViewContainer}>
-          {item?.post_category?.map((val, i) => {
-            return (
-              <View style={feedCardStyle.labelContainer} key={i}>
-                <CustomText textStyle={feedCardStyle.labelText}>
-                  {val}
-                </CustomText>
-              </View>
-            );
-          })}
-        </View>
-      )} */}
 
       {item?.post_required_explanation && !item?.already_voted && (
         <>

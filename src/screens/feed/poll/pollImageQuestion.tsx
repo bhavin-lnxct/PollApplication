@@ -1,6 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {ms} from 'react-native-size-matters';
 import CustomText from '../../../components/text/CustomText';
 import colors from '../../../theme/colors/colors';
@@ -36,6 +41,7 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
   const [explanation, setExplanation] = useState('');
   const [createPoll, setCreatePoll] = useState();
   const [viewMore, setViewMore] = useState(false);
+  // const [loadingPollImage, setLoadingPollImage] = useState(false);
   const viewOptions =
     viewMore || item?.options.length < 4
       ? item?.options
@@ -70,7 +76,11 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
     }
   };
 
-  const pollRow = (data: object) => {
+  const pollRow = (
+    data: object,
+    loadingPollImage: boolean,
+    setLoadingPollImage: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => {
     const onSelectAns = async (val: object | undefined) => {
       setCreatePoll(val);
     };
@@ -95,8 +105,20 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
                     source={{
                       uri: `https://d1iermgo1iu801.cloudfront.net/public/${data?.option_selector}`,
                     }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
+                    onLoadStart={() => setLoadingPollImage(true)}
+                    onLoadEnd={() => setLoadingPollImage(false)}
+                    resizeMode={FastImage.resizeMode.cover}>
+                    {loadingPollImage ? (
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <ActivityIndicator color={colors.AppTheme.Primary} />
+                      </View>
+                    ) : null}
+                  </FastImage>
                 </View>
                 <View style={pollImageQuestionStyle.pollImageTextContainer}>
                   <View
@@ -156,8 +178,20 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
                     source={{
                       uri: `https://d1iermgo1iu801.cloudfront.net/public/${data?.option_selector}`,
                     }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
+                    onLoadStart={() => setLoadingPollImage(true)}
+                    onLoadEnd={() => setLoadingPollImage(false)}
+                    resizeMode={FastImage.resizeMode.cover}>
+                    {loadingPollImage ? (
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <ActivityIndicator color={colors.AppTheme.Primary} />
+                      </View>
+                    ) : null}
+                  </FastImage>
                 </View>
                 <View style={pollImageQuestionStyle.pollImageTextContainer}>
                   <CustomText textStyle={pollImageQuestionStyle.optionText}>
@@ -177,7 +211,12 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
       <View style={pollImageQuestionStyle.container}>
         <View style={item?.already_voted && {paddingTop: ms(10)}}>
           {viewOptions?.map((val: object, i: number) => {
-            return <View key={i}>{pollRow(val)}</View>;
+            const [loadingPollImage, setLoadingPollImage] = useState(false);
+            return (
+              <View key={i}>
+                {pollRow(val, loadingPollImage, setLoadingPollImage)}
+              </View>
+            );
           })}
           {!viewMore && item?.options.length > 4 && (
             <TouchableOpacity

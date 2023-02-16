@@ -30,14 +30,14 @@ const TermsOfUse = () => {
               AGREEING TO THESE TERMS OF USE. YOU HAVE NO OBLIGATION TO USE THE
               PLATFORM/WEBSITE, THE MOBILE APP OR THE SERVICES, OR AGREE TO
               THESE TERMS OF USE, BUT YOU ARE DOING SO VOLUNTARILY AND
-              UNDERSTAND THAT Ponder MAY UPDATE THESE TERMS OF USE IN ITS
+              UNDERSTAND THAT Plebiscite MAY UPDATE THESE TERMS OF USE IN ITS
               DISCRETION. YOUR USE OF THE PLATFORM/WEBSITE AND THE PLATFORM IS
               EXPRESSLY SUBJECT TO YOUR ACCEPTANCE OF THESE TERMS OF USE, AND
               YOU MAY NOT USE THE PLATFORM/WEBSITE UNLESS AND UNTIL YOU HAVE
               ACCEPTED AND AGREED TO BE BOUND BY THESE TERMS OF USE.
               {'\n\n'}
-              Welcome to Ponder, a virtual marketplace and social platform.
-              Ponder through its Platform (“Platform”) provides you with a
+              Welcome to Plebiscite, a virtual marketplace and social platform.
+              Plebiscite through its Platform (“Platform”) provides you with a
               means to connect with third parties which will enhance your social
               experiences.
             </Text>
@@ -80,10 +80,10 @@ const TermsOfUse = () => {
               by more than one user. Users of the Services may also overlay
               music, graphics, stickers, Virtual Items (as defined and further
               explained Virtual Items Policy) and other elements provided by
-              LNXCT/Ponder (“LNXCT/Ponder Elements”) onto this User
+              LNXCT/Plebiscite (“LNXCT/Plebiscite Elements”) onto this User
               Content and transmit this User Content through the Services. The
               information and materials in the User Content, including User
-              Content that includes LNXCT/Ponder Elements, have not been
+              Content that includes LNXCT/Plebiscite Elements, have not been
               verified or approved by us. The views expressed by other users on
               the Services (including through use of the virtual gifts) do not
               represent our views or values. {'\n\n'}Whenever you access or use
@@ -94,7 +94,7 @@ const TermsOfUse = () => {
               with the standards set out at “Your Access to and Use of Our
               Services” above. You may also choose to upload or transmit your
               User Content, including User Content that includes
-              LNXCT/Ponder Elements, on sites or platforms hosted by third
+              LNXCT/Plebiscite Elements, on sites or platforms hosted by third
               parties. If you decide to do this, you must comply with their
               content guidelines as well as with the standards set out at “Your
               Access to and Use of Our Services” above. As noted above, these
@@ -229,9 +229,9 @@ const TermsOfUse = () => {
                 {' '}
                 https://lnxct.com
               </Text>
-              . LNXCT/Ponder takes reasonable measures to expeditiously
+              . LNXCT/Plebiscite takes reasonable measures to expeditiously
               remove from our Services any infringing material that we become
-              aware of.It is LNXCT/Ponder’s policy, in appropriate
+              aware of.It is LNXCT/Plebiscite’s policy, in appropriate
               circumstances and at its discretion, to disable or terminate the
               accounts of users of the Services who repeatedly infringe
               copyrights or intellectual property rights of others. {'\n\n'}
@@ -248,7 +248,7 @@ const TermsOfUse = () => {
               “Feedback”), then regardless of what your accompanying
               communication may say, the following terms will apply, so that
               future misunderstandings can be avoided. Accordingly, by sending
-              Feedback to us, you agree that: LNXCT/Ponder has no
+              Feedback to us, you agree that: LNXCT/Plebiscite has no
               obligation to review, consider, or implement your Feedback, or to
               return to you all or part of any Feedback for any reason; Feedback
               is provided on a non-confidential basis, and we are not under any
@@ -269,17 +269,17 @@ const TermsOfUse = () => {
               ARTICLE 1. TERMS OF USE
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              1.1. These Terms of use (“Terms of use”) established by Ponder
+              1.1. These Terms of use (“Terms of use”) established by Plebiscite
               govern your use of our Platform (the “Platform”), our
               Platform/Website, www.lnxct.com and
               https://lnxct.com/ (the “Platform/Websites”). Although
               you may not be signing a document, your accessing the Platform,
               the Platform/Website and use of the services thereon creates a
-              legally binding contract between Ponder, Inc. (“Ponder”,
+              legally binding contract between Plebiscite, Inc. (“Plebiscite”,
               “us”, “we” or “our”), and You (“you” or “your”) and (if
               applicable) the corporate entity. Your acceptance of these Terms
               is an express condition of, and governs your access to and use of,
-              Ponder’s:
+              Plebiscite’s:
               {'\n\n'}
               (a) Platform
               {'\n\n'}
@@ -314,7 +314,7 @@ const TermsOfUse = () => {
               to bind the business to these Terms, the Additional Terms, the
               Privacy Policy, the Data Policy, the Community Standards and any
               other related or pertinent agreements. You and/or the business
-              agrees to hold harmless and indemnify Ponder and its
+              agrees to hold harmless and indemnify Plebiscite and its
               affiliates, officers, agents, and employees from any claim, suit
               or action arising from or related to the use of the
               Platform/Websites or Services or violation of these terms,
@@ -331,7 +331,7 @@ const TermsOfUse = () => {
               ARTICLE 2. OWNERSHIP OF SERVICE
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              2.1. Ponder is the owner, or authorized licensee, of all
+              2.1. Plebiscite is the owner, or authorized licensee, of all
               content displayed on or by the Services, including but not limited
               to text, graphics, visual interfaces, audio interfaces, drawings,
               artwork, photographs, trademarks, copyrights, music, sounds,
@@ -340,48 +340,48 @@ const TermsOfUse = () => {
               2.2. We may, at any time and within our sole discretion, modify,
               alter, delete, add or otherwise change the Content.
               {'\n\n'}
-              2.3. Ponder grants you a limited, non-transferable license to
+              2.3. Plebiscite grants you a limited, non-transferable license to
               use the Services and Content as provided for herein. You may not
               use, modify, duplicate, obscure, rent, lease, loan, sell,
               manipulate, reproduce, copy, republish, download, post, transmit,
               scrape, reverse engineer, distribute, create derivative works or
               adaptations of, publicly display, or in any way exploit any of the
-              Ponder Content, Platform/Websites, or the Services or any of
-              the IP Rights of Ponder, in whole or in part, unless expressly
+              Plebiscite Content, Platform/Websites, or the Services or any of
+              the IP Rights of Plebiscite, in whole or in part, unless expressly
               authorized by us in writing. Except as expressly and unambiguously
               provided herein, we do not grant you any express or implied
               rights, and all rights in and to the Platform/Websites and the
-              Ponder Content are retained by us.
+              Plebiscite Content are retained by us.
               {'\n\n'}
               2.4. This license does not include (i) any resale or commercial
               use of the Platform/Websites or Services, or their contents; (ii)
               any collection, scraping, downloading, reproducing, distributing,
-              copying or use of any product or Ponder client listings,
+              copying or use of any product or Plebiscite client listings,
               descriptions, prices, or any other Platform/Website Content; (iii)
               any derivative use of any of the Platform/Websites or Services or
               Platform/Website Content; or (iv) any use of data mining, robots,
               or similar data gathering and extraction tools. All rights not
               expressly granted to you in these Terms, any Additional Terms, the
               Privacy Policy, or Data Policy are reserved and retained by
-              Ponder. You may not use any meta-tags or any other “hidden
-              text” utilizing Ponder’s name or trademarks or other IP Rights
-              without the express written consent of Ponder. The licenses
-              granted by Ponder shall immediately terminate should you fail
+              Plebiscite. You may not use any meta-tags or any other “hidden
+              text” utilizing Plebiscite’s name or trademarks or other IP Rights
+              without the express written consent of Plebiscite. The licenses
+              granted by Plebiscite shall immediately terminate should you fail
               to comply with these Terms, any Additional Terms, or the Privacy
               Policy.
               {'\n\n'}
               2.5. There may be some applications of the Platform/Website and/or
               the Service that will require you to install and use software made
-              available by Ponder. Subject to these Terms, the Additional
+              available by Plebiscite. Subject to these Terms, the Additional
               Terms, the Privacy Policy, the Data Policy and Community
-              Standards, Ponder grants you a non-transferable, non-exclusive
+              Standards, Plebiscite grants you a non-transferable, non-exclusive
               license to install and use said software for your mobile devices
               (“Mobile App”), in executable object code format only, solely on
               your own handheld mobile device and for your personal,
               noncommercial use. You acknowledge and agree that the availability
               of the Mobile App is dependent on the third-party app platform
               from which you received the Mobile App (“App Platform”). You
-              acknowledge that these Terms concern you and Ponder, and not
+              acknowledge that these Terms concern you and Plebiscite, and not
               the App Platform. The App Platform is not responsible for the
               Mobile App, the content therein, maintenance, support services,
               and warranty therefore. Each App Platform may have Additional
@@ -394,19 +394,19 @@ const TermsOfUse = () => {
               2.6. There may be occasions when the Services may be interrupted,
               including, without limitation, for scheduled maintenance or
               upgrades, for emergency repairs, or due to failure of
-              telecommunications links and/or equipment. Ponder will not be
+              telecommunications links and/or equipment. Plebiscite will not be
               held responsible for any such interruptions.
               {'\n\n'}
-              2.7. Ponder reserves the right to remove any Content and/or
+              2.7. Plebiscite reserves the right to remove any Content and/or
               User Engagement from the Services for any reason without prior
               notice. Content and/or User Engagement removed from the Services
-              may continue to be stored by Ponder including, without
+              may continue to be stored by Plebiscite including, without
               limitation, in order to comply with certain legal obligations, but
-              may not be retrievable without a valid court order. Ponder is
+              may not be retrievable without a valid court order. Plebiscite is
               not a backup service and User agrees that User will not rely on
               the Services for the purposes of content backup or storage.
-              Ponder will not be liable to User for any modification,
-              suspension, or discontinuation of the Ponder Services or the
+              Plebiscite will not be liable to User for any modification,
+              suspension, or discontinuation of the Plebiscite Services or the
               loss of any Content or User Engagement. User also acknowledges
               that the internet may be subject to breaches of security and that
               the submission of User Engagement or other information may not be
@@ -441,7 +441,7 @@ const TermsOfUse = () => {
               {'\n\n'}
               3.5. You are responsible for changing your password if you believe
               that your password has been stolen, lost, compromised or might
-              otherwise be misused. You agree to notify Ponder immediately of
+              otherwise be misused. You agree to notify Plebiscite immediately of
               any unauthorized use of your username or password, or if you
               suspect any other security breach. We reserve the right, at any
               time and in our sole discretion, to suspend or terminate your
@@ -467,13 +467,13 @@ const TermsOfUse = () => {
               registration process and, as permitted, to maintain and update it
               continuously and promptly to keep it accurate, current, and
               complete. If you provide any information that is untrue,
-              inaccurate, outdated, or incomplete, Ponder may suspend or
+              inaccurate, outdated, or incomplete, Plebiscite may suspend or
               terminate your account and refuse you any and all current or
               future access to or use of the Platform/Websites and Services (or
               any portion thereof). If you fail to update your information in a
-              timely manner, then Ponder has reasonable grounds to suspect
+              timely manner, then Plebiscite has reasonable grounds to suspect
               that such information is untrue, inaccurate, outdated or
-              incomplete, which will allow Ponder to suspend or terminate
+              incomplete, which will allow Plebiscite to suspend or terminate
               your account and refuse you any and all current or future access
               or use of the Platform/Websites and Services (or any portion
               thereof).
@@ -493,7 +493,7 @@ const TermsOfUse = () => {
               {'\n\n'}
               3.11. You will not use Protected Information of others.
               {'\n\n'}
-              3.12. Ponder is not liable for any loss or damage (of any kind
+              3.12. Plebiscite is not liable for any loss or damage (of any kind
               and under any legal theory) to you or any third party arising from
               your inability or failure for any reason to comply with any of the
               foregoing obligations.
@@ -513,15 +513,15 @@ const TermsOfUse = () => {
               prior written consent. We may offer you the ability to set
               preferences relating to your User Profile, but changes to your
               settings may not become effective immediately or be error free,
-              and options may change from time-to-time. Ponder assumes no
+              and options may change from time-to-time. Plebiscite assumes no
               responsibility or liability for any issues, problems, or Content
               on your User Profile.
               {'\n\n'}
               3.15. User Profiles may only be set up by an authorized
               representative of the individual or business that is the subject
-              of the User Profile. Ponder does not review each User Profile
+              of the User Profile. Plebiscite does not review each User Profile
               to determine if it was created by an appropriate party. In
-              addition, Ponder is not responsible for any unauthorized User
+              addition, Plebiscite is not responsible for any unauthorized User
               Profiles that may appear on the Services. If you believe that a
               User Profile listed on one of the Platform/Websites is
               unauthorized, fake, fraudulent, or otherwise improper or
@@ -549,17 +549,17 @@ const TermsOfUse = () => {
               User Profile, and including any electronic data or information
               with respect to a User’s Publics,
               {'\n\n'}
-              (c) “Ponder Content” is Content owned and/or is generated by us
+              (c) “Plebiscite Content” is Content owned and/or is generated by us
               and made available to Users via the Platform/Websites or Services,
               {'\n\n'}
               (d) “Third Party Content” is Content that originates from parties
-              other than Ponder or Users on the Platform/Websites or
+              other than Plebiscite or Users on the Platform/Websites or
               Services, and available on the Platform/Websites or Services,
               {'\n\n'}
               (e) “Platform/Website Content” is all of the Content on the
               Platform/Websites or Services, including User Content, Third Party
               Content (and Third Party Material (as defined below), and
-              Ponder Content.
+              Plebiscite Content.
               {'\n\n'}
               (f) “User Comments” refer to comments submitted, posted, or
               displayed by Users.
@@ -572,35 +572,35 @@ const TermsOfUse = () => {
               (collectively, “Content”) that you publish or display (“post”) on
               Service and for any material or information that you send to other
               users, if applicable. Content you submit may not, at the
-              Ponder’s discretion, be posted by Ponder. Once posted on the
+              Plebiscite’s discretion, be posted by Plebiscite. Once posted on the
               Platform/Websites or on the Internet, it is not always possible to
               remove, especially if multiple copies exist. When User Content is
               uploaded to the Platform/Websites or Services, or posted on any
-              social media platforms with a tag or reference to Ponder, you
-              give Ponder complete permission to make it available in
+              social media platforms with a tag or reference to Plebiscite, you
+              give Plebiscite complete permission to make it available in
               multiple forms, including, without limitation, on any of our
               social media accounts, email newsletters, or any digital or print
               promotional materials. If any of your User Content is acquired and
               used by a third party in a way that violates these Terms, any
               Additional Terms, the Privacy Policy, the Data Policy and the
-              Community Standards, you agree that Ponder can take legal
-              action against the third party and that Ponder shall not be
+              Community Standards, you agree that Plebiscite can take legal
+              action against the third party and that Plebiscite shall not be
               obligated to distribute any recovered sums to you that may be
               obtained in connection with such legal proceedings.
               {'\n\n'}
               4.3. You agree not violate any applicable laws and/or regulations
               while using the Services.
               {'\n\n'}
-              4.4. By posting content on the Service, you grant Ponder a
+              4.4. By posting content on the Service, you grant Plebiscite a
               non-exclusive, fully paid, worldwide license to use or display
-              such Content in whatever way Ponder chooses. This license shall
+              such Content in whatever way Plebiscite chooses. This license shall
               remain in effect upon you terminating the use of the Services.
               {'\n\n'}
               4.5. You represent and warrant that:
               {'\n\n'}
               (a) You either own, or have the necessary licenses, rights,
               consents, and/or permissions, for the content and authorize
-              Ponder, its applicable affiliates, the Platform/Websites, the
+              Plebiscite, its applicable affiliates, the Platform/Websites, the
               Services, and all users thereof, to use such User Content as
               necessary to exercise the licenses granted by you hereunder
               (including with respect to all patent, trademark, trade secret,
@@ -615,20 +615,20 @@ const TermsOfUse = () => {
               person by reason of any Content you post on Service.
               {'\n\n'}
               (d) You are entirely responsible for anything you submit to the
-              Platform/Websites or Services and agree that Ponder does not
+              Platform/Websites or Services and agree that Plebiscite does not
               have to post or keep posted anything you provide. Once posted on
               the Platform/Websites or on the Internet, it is not always
               possible to remove, especially if multiple copies exist. When User
               Content is uploaded to the Platform/Websites or Services, or
               posted on any social media platforms with a tag or reference to
-              Ponder, you give Ponder complete permission to make it
+              Plebiscite, you give Plebiscite complete permission to make it
               available in multiple forms, including, without limitation, on any
               of our social media accounts, email newsletters, or any digital or
               print promotional materials. If any of your User Content is
               acquired and used by a third party in a way that violates these
               Terms, any Additional Terms, the Privacy Policy, the Data Policy,
-              or the Community Standards you agree that Ponder can take legal
-              action against the third party and that Ponder shall not be
+              or the Community Standards you agree that Plebiscite can take legal
+              action against the third party and that Plebiscite shall not be
               obligated to distribute any recovered sums to you that may be
               obtained in connection with such legal proceedings;
               {'\n\n'}
@@ -637,19 +637,19 @@ const TermsOfUse = () => {
               Content does not and will not infringe the proprietary rights or
               otherwise cause injury to any other person or entity, including
               any such person or entity using the Platform/Websites, Services,
-              or otherwise, and that Ponder is under no obligation to post
+              or otherwise, and that Plebiscite is under no obligation to post
               any User Content that you provide and reserves the right to post
-              our own versions of your User Content as Ponder Content in our
+              our own versions of your User Content as Plebiscite Content in our
               sole discretion;
               {'\n\n'}
-              (f) You fully assign Ponder the right to pursue enforcement of
+              (f) You fully assign Plebiscite the right to pursue enforcement of
               copyright, trademark, trade secret, and other intellectual
               property related claims against third parties that have, without
               receiving proper authorization, and in violation of these Terms,
               any Additional Terms or the Privacy Policy, scraped, manipulated,
               copied, derived, distributed, or otherwise improperly or illegally
               used and benefited from User Content that has been provided to
-              Ponder by you;
+              Plebiscite by you;
               {'\n\n'}
               (g) You have the written consent, release, and/or express
               permission of each and every identifiable person in your User
@@ -671,15 +671,15 @@ const TermsOfUse = () => {
               identity or affiliation with any person or organization;
               {'\n\n'}
               (j) You will not give the impression that any activity engaged in
-              by you and not approved by Ponder is from or are endorsed by
-              Ponder, or any other person or entity, if that is not the case;
+              by you and not approved by Plebiscite is from or are endorsed by
+              Plebiscite, or any other person or entity, if that is not the case;
               {'\n\n'}
               (k) that you are at least twenty-one (21) years old, as
               applicable, and you acknowledge that persons under that age may
               not submit User Content to the Platform, the Platform/Websites, or
               the Services; and
               {'\n\n'}
-              (l) that Ponder may, in its sole discretion, monitor the User
+              (l) that Plebiscite may, in its sole discretion, monitor the User
               Content you submit and any other communications that you may have,
               but is under no obligation to do so.
               {'\n\n'}
@@ -695,19 +695,19 @@ const TermsOfUse = () => {
               regulation.
               {'\n\n'}
               4.7. You irrevocably waive, and cause to be waived, against
-              Ponder and its users, any claims and/or objections from
+              Plebiscite and its users, any claims and/or objections from
               third-parties with respect to your User Content.
               {'\n\n'}
-              4.8. Ponder does not guarantee the accuracy, integrity,
+              4.8. Plebiscite does not guarantee the accuracy, integrity,
               quality, or authenticity of any User Content. In the event that
               you find any Offensive Content during your use of the
               Platform/Websites and Services unpleasant, indecent, or
-              objectionable you acknowledge and agree that Ponder will not be
+              objectionable you acknowledge and agree that Plebiscite will not be
               liable in any way for any such Offensive Content, including, but
               not limited to, any errors or omissions in any Offensive Content,
               or any loss or damage of any kind incurred as a result of any
               Offensive Content uploaded, posted, transmitted, broadcast,
-              transferred, or otherwise made available via Ponder, the
+              transferred, or otherwise made available via Plebiscite, the
               Platform/Websites, Services, or any related process or venue.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
@@ -715,7 +715,7 @@ const TermsOfUse = () => {
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
               5.1. We reserve the right to review and, if necessary, delete any
-              Content that in the sole judgment of Ponder would violate these
+              Content that in the sole judgment of Plebiscite would violate these
               Terms of Use or which may be offensive, illegal or violate the
               rights of any other user. Prohibited Content includes Content
               that:
@@ -748,22 +748,22 @@ const TermsOfUse = () => {
               (i) solicits passwords or personal identifying information for
               commercial or unlawful purposes, or
               {'\n\n'}
-              (j) is irrelevant to the stated purpose of Ponder.
+              (j) is irrelevant to the stated purpose of Plebiscite.
               {'\n\n'}
               5.2. If you believe that your Content should not be removed, you
-              may submit the basis of your belief to Ponder and it will be
+              may submit the basis of your belief to Plebiscite and it will be
               reviewed for reconsideration. Once Company completes its review,
               you will be notified of the decision. All decisions made by
               Company shall be final.
               {'\n\n'}
-              5.3. It is Ponder’s policy, in appropriate circumstances and at
+              5.3. It is Plebiscite’s policy, in appropriate circumstances and at
               its discretion, to disable, eliminate access to and/or terminate
               the accounts of users who repeatedly infringe or are repeatedly
               charged with infringing the copyrights of others.
               {'\n\n'}
               5.4. In accordance with the Digital Millennium Copyright Act of
               1998 (“DMCA”), the text of which can be found on the U.S.
-              Copyright Office Platform/Website, Ponder will respond
+              Copyright Office Platform/Website, Plebiscite will respond
               appropriately to claims and reports of copyright infringement
               taking place on or through the Platform/Websites. You may not
               post, upload, or otherwise place any content or information on the
@@ -804,7 +804,7 @@ const TermsOfUse = () => {
               may be held liable for damages (including costs and attorneys’
               fees).
               {'\n\n'}
-              It is the policy of Ponder to disable the accounts of users who
+              It is the policy of Plebiscite to disable the accounts of users who
               repeatedly post infringing material on the Site.
               {'\n\n'}
               5.5. If you believe that your User Engagement that was removed (or
@@ -829,28 +829,28 @@ const TermsOfUse = () => {
               statement that you consent to the jurisdiction the Federal
               District Court for the juridical district in which the User is
               located or, if the User is outside of the United States, for any
-              judicial district in which Ponder may be found, and a statement
+              judicial district in which Plebiscite may be found, and a statement
               that you will accept service of process from the person who
               provided the original DMCA notification of the alleged
               infringement or an agent of such person.
               {'\n\n'}
               5.6. If a counter-notice is received by owner’s Copyright Agent,
-              Ponder may send a copy of the counter- notice to the original
+              Plebiscite may send a copy of the counter- notice to the original
               complaining party informing that person that it may replace the
               removed User Engagement or cease disabling it in 10 business days.
               Unless the copyright owner files an action seeking a court order
               against the User who provided the User Engagement, the removed
               User Engagement may be replaced, or access to it restored, in 10
               to 14 business days or more after receipt of the counter-notice,
-              at Ponder’s sole discretion.
+              at Plebiscite’s sole discretion.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 6. LICENSE TO USER AND THIRD PARTY CONTENT/DATA
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              6.1. Ponder acknowledges that all User Content you post or make
+              6.1. Plebiscite acknowledges that all User Content you post or make
               available on the Platform/Website or Services are owned by you,
-              but you grant Ponder a license in perpetuity and transferable
+              but you grant Plebiscite a license in perpetuity and transferable
               rights and licenses:
               {'\n\n'}
               (a) to host, cache, store, archive, index, crawl, create
@@ -882,11 +882,11 @@ const TermsOfUse = () => {
               of the foregoing in the above clauses (a) – (c) in connection with
               their own Platform/Websites and media platforms.
               {'\n\n'}
-              6.2. You hereby grant Ponder the right and license to use any
+              6.2. You hereby grant Plebiscite the right and license to use any
               data, images, or information that is pushed or otherwise
               transferred to us through any of our APIs by you or by any third
               party on your behalf (“Licensed Data”) for any purpose relating to
-              any of the businesses of Ponder or for any purpose relating to
+              any of the businesses of Plebiscite or for any purpose relating to
               the Platform/Websites or Services, including in connection with
               displaying any data, images, or information on the
               Platform/Websites. You acknowledge and agree that we shall have
@@ -895,7 +895,7 @@ const TermsOfUse = () => {
               exclusively own all derivative works, graphical layouts,
               compilations, improvements, modifications, adaptations, analyses,
               and interpretations of the Licensed Data. Interpretations or
-              translations of any of the Licensed Data prepared by Ponder
+              translations of any of the Licensed Data prepared by Plebiscite
               shall be owned exclusively by us.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
@@ -911,12 +911,12 @@ const TermsOfUse = () => {
               listings showing where cannabis and cannabis goods may be
               available. Any such information and/or listings are provided by
               licensed cannabis businesses and other users of the Services, and
-              Ponder may or may not verify such information and/or listings.
+              Plebiscite may or may not verify such information and/or listings.
               You agree that any information that you post and/or listings that
               you create shall contain true and accurate information and that
               you will update any such information and/or listings in a timely
               manner. Availability, pricing, and other information are subject
-              to change at any time. You agree that Ponder is not responsible
+              to change at any time. You agree that Plebiscite is not responsible
               for, and may not be held liable for, checking and/or ensuring the
               accuracy of any information related to the availability of any
               cannabis or cannabis goods that are listed on the Services, and
@@ -974,12 +974,12 @@ const TermsOfUse = () => {
               for ensuring that customers are eligible to place orders, that
               customers are notified of changes to available inventory, and that
               all orders are process in compliance with the laws and regulations
-              governing the retailers operations. You agree that Ponder is
+              governing the retailers operations. You agree that Plebiscite is
               not responsible for, and may not be held liable for, the accuracy
               of menus provided by retailers, the accuracy and functionality of
               online ordering, payment processing, preparation of cannabis/goods
               pursuant to an online order, or any other aspect of the online
-              ordering experience. Payments that are made through Ponder are
+              ordering experience. Payments that are made through Plebiscite are
               governed by the terms of use and privacy policy of the financial
               institution processing the payment.
               {'\n\n'}
@@ -989,10 +989,10 @@ const TermsOfUse = () => {
               services, and/or materials) or contain links to third-party
               Platform/Websites, services, and advertisements for third-party
               Offers (as defined below) (collectively, the “Third-Party
-              Materials”). You acknowledge and agree that Ponder is not
+              Materials”). You acknowledge and agree that Plebiscite is not
               responsible for Third-Party Materials, including their accuracy,
               completeness, timeliness, validity, copyright compliance,
-              legality, decency, quality, or any other aspect thereof. Ponder
+              legality, decency, quality, or any other aspect thereof. Plebiscite
               does not assume and will not have any liability or responsibility
               to you or any other person or user for any Third-Party Materials.
               Third-Party Materials and links thereto are provided solely as a
@@ -1008,14 +1008,14 @@ const TermsOfUse = () => {
               make available coupons, promotional codes, giveaways, samples, and
               other offers from listed dispensaries or other third parties
               (collectively, the “Offers”). Offers constitute “Third-Party
-              Materials” under these Terms. Ponder displays these Offers on
+              Materials” under these Terms. Plebiscite displays these Offers on
               the Platform/Website and Services as a form of advertisement for
               the listing dispensary or other third party (the “Offeror”) only.
               All Offers are made directly by the applicable Offeror, and may be
               subject to additional terms, conditions, or restrictions of the
               Offeror or under applicable law, whether or not such terms,
               conditions, or restrictions are expressly included on the
-              Platform/Website or Services. The Offeror, and not Ponder, is
+              Platform/Website or Services. The Offeror, and not Plebiscite, is
               solely responsible for:
               {'\n\n'}
               (a) redemption of the Offer;
@@ -1031,7 +1031,7 @@ const TermsOfUse = () => {
               or in part, whether related to the use or redemption of an Offer
               or not.
               {'\n\n'}
-              7.7. Social Media. Ponder may also provide users with the
+              7.7. Social Media. Plebiscite may also provide users with the
               ability to login to the Platform/Websites or Services with your
               login credentials from certain social networking Platform/Websites
               (e.g., Facebook, LinkedIn). If you log in or otherwise associate
@@ -1050,9 +1050,9 @@ const TermsOfUse = () => {
               Users to search for events. Use of the Services are subject to the
               following:
               {'\n\n'}
-              (a) Ponder is NOT the creator, organizer or owner of the events
+              (a) Plebiscite is NOT the creator, organizer or owner of the events
               listed on the Services, unless the event is specifically
-              designated a Ponder event. Users agree that Ponder is not
+              designated a Plebiscite event. Users agree that Plebiscite is not
               responsible for, and may not be held liable for, the accuracy of
               any information related to events that are listed on the Services,
               and that Users are solely responsible for checking on the time,
@@ -1073,13 +1073,13 @@ const TermsOfUse = () => {
               information shall be updated as needed.
               {'\n\n'}
               (e) Organizers who post event listings are solely responsible for
-              the content thereof, and Ponder is not responsible for
+              the content thereof, and Plebiscite is not responsible for
               verifying details of any such listings.
               {'\n\n'}
               (f) If you list or participate in an event listed on the Services,
               or you provide event information to another Consumer based on
               information found within the Services, then you agree that
-              Ponder is not responsible for any damages that may be incurred
+              Plebiscite is not responsible for any damages that may be incurred
               as a result of your event listing or participation.
               {'\n\n'}
               (g) The Organizer is solely responsible for ensuring that any page
@@ -1102,31 +1102,31 @@ const TermsOfUse = () => {
               applicable policies posted on the Services with respect to
               information you collect from (or receive about) consumers.
               {'\n\n'}
-              (j) Ponder may terminate your right to use the Services at any
+              (j) Plebiscite may terminate your right to use the Services at any
               time (i) if you violate or breach these Terms; (ii) if you misuse
               or abuse the Services, or use the Services in a way not intended
-              or permitted by Ponder; or (iii) if allowing you to access and
+              or permitted by Plebiscite; or (iii) if allowing you to access and
               use the Services would violate any applicable local, state,
               provincial, national and other laws, rules and regulations or
-              would expose Ponder to legal liability. Ponder may choose to
+              would expose Plebiscite to legal liability. Plebiscite may choose to
               stop offering the Services, or any particular portion of the
               Service, or modify or replace any aspect of the Service, at any
               time. We will use reasonable efforts to provide you with notice of
               our termination of your access to the Services, where, in
-              Ponder’s sole discretion, failure to do so would materially
-              prejudice you. You agree that Ponder will not be liable to you
+              Plebiscite’s sole discretion, failure to do so would materially
+              prejudice you. You agree that Plebiscite will not be liable to you
               or any third-party as a result of its termination of your right to
               use or otherwise access the Services.
               {'\n\n'}
-              (k) You acknowledge that Ponder has no control over and does
+              (k) You acknowledge that Plebiscite has no control over and does
               not guarantee the quality, safety, accuracy or legality of any
               event or Content associated with an event, the truth or accuracy
               of any information provided by Users (including the Consumer’s
               personal information shared with Organizers in connection with
               events) or the ability of any User to perform or actually complete
-              a transaction. Ponder has no responsibility to you for, and
+              a transaction. Plebiscite has no responsibility to you for, and
               hereby disclaims all liability arising from, the acts or omissions
-              of any third parties that Ponder requires to provide the
+              of any third parties that Plebiscite requires to provide the
               Services, that an Organizer chooses to assist with an event, or
               that you choose to contract with when using the Services.
               {'\n\n'}
@@ -1158,9 +1158,9 @@ const TermsOfUse = () => {
               posted shall be of the user, and that information will be updated
               as necessary. If you utilize any chat or instant message features
               associated with personal matches, you acknowledge and agree that
-              Ponder is not responsible for the content of any message you
+              Plebiscite is not responsible for the content of any message you
               may receive from another user, nor does it guarantee that any such
-              content is accurate. You agree that Ponder is not responsible,
+              content is accurate. You agree that Plebiscite is not responsible,
               and may not be held liable for, any inaccurate or false
               information that is posted by a user of the Services.{' '}
               <Text >
@@ -1168,7 +1168,7 @@ const TermsOfUse = () => {
                 anyone that you meet through the Services, including but not
                 limited to notifying friends and family of your expected
                 whereabouts and with whom you will be meeting. You agree that
-                Ponder is not responsible for any damages that may be
+                Plebiscite is not responsible for any damages that may be
                 incurred as a result of your personal match with another user.
               </Text>
               {'\n\n'}
@@ -1199,10 +1199,10 @@ const TermsOfUse = () => {
               scheme, or other similar practice;
               {'\n\n'}
               (i) You will not express or imply that any statements You make are
-              endorsed by Ponder; and/or
+              endorsed by Plebiscite; and/or
               {'\n\n'}
               (j) You will not engage in any conduct that may harm the
-              reputation of Ponder.
+              reputation of Plebiscite.
               {'\n\n'}
               The content included on your individual profile should be relevant
               to the intended use of our Services. You may not display any
@@ -1241,11 +1241,11 @@ const TermsOfUse = () => {
               application store or marketplace where you have downloaded such
               Services, and, to the extent applicable, foreign, national, state,
               or local laws. If a comment is made using your identity, it will
-              be deemed to have been posted by you. Ponder will not accept
+              be deemed to have been posted by you. Plebiscite will not accept
               responsibility for User Comments and other information posted in
-              the comments. If Ponder receives notice that any User Comments
+              the comments. If Plebiscite receives notice that any User Comments
               are not in compliance with this Agreement or the intended use of
-              the User Comments, Ponder may remove such User Comments.
+              the User Comments, Plebiscite may remove such User Comments.
               Additionally, engaging in such conduct may result in you and/or
               your account being banned from the Services.
               {'\n\n\t\t\t\t'}
@@ -1264,12 +1264,12 @@ const TermsOfUse = () => {
               Services may now or in the future permit User Submissions and the
               hosting, sharing, and/or publishing of such User Submissions. You
               understand that whether or not such User Submissions are
-              published, Ponder does not guarantee any confidentiality with
+              published, Plebiscite does not guarantee any confidentiality with
               respect to any submissions.
               {'\n\n'}
               (d) You additionally affirm, represent, and warrant that the
               posting and use of your User Engagement on or through the
-              Ponder Services does not violate, misappropriate or infringe on
+              Plebiscite Services does not violate, misappropriate or infringe on
               the rights of any third party, including, without limitation,
               privacy rights, publicity rights, copyrights, trademark and/or
               other intellectual property rights.
@@ -1278,48 +1278,48 @@ const TermsOfUse = () => {
               owed by reason of your User Engagement that you post on or through
               the Services.
               {'\n\n'}
-              (f) Ponder does not endorse any User Engagement or any opinion,
-              recommendation, or advice expressed therein, and Ponder
+              (f) Plebiscite does not endorse any User Engagement or any opinion,
+              recommendation, or advice expressed therein, and Plebiscite
               expressly disclaims any and all liability in connection with User
-              Engagement. Ponder does not permit copyright infringing
+              Engagement. Plebiscite does not permit copyright infringing
               activities and infringement of intellectual property rights on its
-              Services, and Ponder will remove all Content and User
+              Services, and Plebiscite will remove all Content and User
               Engagement if properly notified that such Content or User
               Engagement infringes on another’s intellectual property rights.
-              Ponder may, but has no obligation to, remove, edit, block,
+              Plebiscite may, but has no obligation to, remove, edit, block,
               and/or monitor User Engagement or accounts containing User
-              Engagement that Ponder determines in its sole discretion
-              violates this Agreement. Ponder will also terminate a User’s
+              Engagement that Plebiscite determines in its sole discretion
+              violates this Agreement. Plebiscite will also terminate a User’s
               access to the Services, if they are determined to be a repeat
               infringer. A repeat infringer is a User who has been notified of
               infringing activity more than twice and/or has had User Engagement
               removed from the Services more than twice.
               {'\n\n'}
-              (g) Ponder reserves the right to determine in its sole
+              (g) Plebiscite reserves the right to determine in its sole
               discretion whether Content or User Engagement is appropriate and
               complies with this Agreement for violations other than copyright
               infringement and violations of intellectual property law,
               including, but not limited to, pornography, obscene or defamatory
-              material, hate speech, or excessive length. Ponder may, at any
+              material, hate speech, or excessive length. Plebiscite may, at any
               time, without prior notice and in its sole discretion remove such
               User Engagement and/or terminate a User’s access for submitting
               such material in violation of this Agreement.
               {'\n\n'}
               (h) You understand that when using the Services, you will be
-              exposed to User Engagement from a variety of sources. Ponder is
+              exposed to User Engagement from a variety of sources. Plebiscite is
               not responsible for the accuracy, usefulness, safety, or
               intellectual property rights of or relating to such User
-              Engagement. You understand and agree that Ponder cannot and
+              Engagement. You understand and agree that Plebiscite cannot and
               will not be responsible for the User Engagement posted on the
               Services and you use the Services at your own risk. You further
               understand and acknowledge that you may be exposed to User
               Engagement that are inaccurate, offensive, indecent, or
               objectionable, and you agree to waive, and hereby do waive, any
               legal or equitable rights or remedies you have or may have against
-              Ponder with respect thereto to the fullest extent permitted by
+              Plebiscite with respect thereto to the fullest extent permitted by
               law.
               {'\n\n'}
-              7.11. Contests. Ponder provides a platform to allow Users to
+              7.11. Contests. Plebiscite provides a platform to allow Users to
               participate in various contests. Contests may be created,
               administered and/or controlled by Third Parties. We simply list
               links to them for the value of our Users. We are not a merchant
@@ -1336,16 +1336,16 @@ const TermsOfUse = () => {
               {'\n\n'}
               (b) There may be tax consequences as a result of prizes won in any
               listed contest. User must take all necessary steps to ensure
-              compliance with any applicable tax laws or regulations. Ponder
+              compliance with any applicable tax laws or regulations. Plebiscite
               does not provide tax, investment, or financial services with
               regard to any prizes that may be connected to the Contests. Any
               information regarding prizes and tax implications available
               through contests posted on the Site by third parties is provided
               solely for informational purposes on an “as is” basis at User’s
-              sole risk. Ponder makes no warranties or representations with
-              regard to said information. Ponder makes no guarantees as to
+              sole risk. Plebiscite makes no warranties or representations with
+              regard to said information. Plebiscite makes no guarantees as to
               the accurateness, quality, or completeness of the information and
-              Ponder shall not be responsible or liable for any error,
+              Plebiscite shall not be responsible or liable for any error,
               omissions, or inaccuracies in the information or for any User’s
               reliance on the information.
               {'\n\n'}
@@ -1355,19 +1355,19 @@ const TermsOfUse = () => {
               regarding any specific financial questions a user may have.
               {'\n\n'}
               (d) Content on the Platform may be provided by independent outside
-              Contributors. Ponder does not represent or guarantee that any
+              Contributors. Plebiscite does not represent or guarantee that any
               contributor has achieved any particular level of expertise or
               knowledge or has any specific qualifications or credentials,
               without limitation, as to the subject matter to which their
               contributions relate.
               {'\n\n'}
               (e) Any reference to information about the Contributor by
-              Ponder is based on information provided by Contributor, and
-              does not reflect any opinion by Ponder of the ability or
+              Plebiscite is based on information provided by Contributor, and
+              does not reflect any opinion by Plebiscite of the ability or
               veracity of Contributor.
               {'\n\n'}
-              (f) Ponder is not obligated to monitor or independently
-              research or verify any content of Contributor, nor does Ponder
+              (f) Plebiscite is not obligated to monitor or independently
+              research or verify any content of Contributor, nor does Plebiscite
               represent or warrant the accuracy, completeness or truthfulness of
               the qualifications or credentials of any Contributor, nor of any
               other Users of the Site.
@@ -1377,7 +1377,7 @@ const TermsOfUse = () => {
               your unique, personal circumstances and needs. User acknowledges
               and agrees that any reliance or actions you take in violation of
               your agreement with us shall be at your sole and exclusive risk
-              and Ponder shall have no responsibility or liability to you
+              and Plebiscite shall have no responsibility or liability to you
               whatsoever. You also acknowledge and agree that communications on
               or through the Site, whether with Contributors or other users, are
               at your own risk and are not covered by any privilege or
@@ -1385,7 +1385,7 @@ const TermsOfUse = () => {
               your own professional advice (e.g., from a financial advisor).
               {'\n\n'}
               7.12. Indemnity and Release. You agree to indemnify and hold
-              Ponder (and its directors, managers, officers, partners,
+              Plebiscite (and its directors, managers, officers, partners,
               employees, independent contractors, and agents, and successors and
               assigns of itself or its affiliates) harmless from any and all
               losses, damages, liabilities, claims, actions, judgments, awards,
@@ -1403,22 +1403,22 @@ const TermsOfUse = () => {
               {'\n\n'}
               (d) Your violation of applicable laws or regulations.
               {'\n\n'}
-              Ponder reserves the right, at Your expense, to assume the
+              Plebiscite reserves the right, at Your expense, to assume the
               exclusive defense and control of any matter for which You are
               required to indemnify us or any other indemnitee hereunder and You
               agree to cooperate with our defense of these claims. You agree not
               to settle any matter without the prior written consent of
-              Ponder. Ponder will use reasonable efforts to notify You of
+              Plebiscite. Plebiscite will use reasonable efforts to notify You of
               any such claim, action, or proceeding upon becoming aware of it.
               {'\n\n'}
               7.13. If there is a dispute between users of the Platform/Websites
               or Services, including between Publics and Retailers (each, a
-              “Dispute”), you understand and agree that Ponder and its
+              “Dispute”), you understand and agree that Plebiscite and its
               affiliates (including the Platform/Websites and the Services,
               including Web Orders) are under no obligation to become involved
               in such Dispute.
               {'\n\n'}
-              7.14. You hereby release and forever discharge Ponder (and its
+              7.14. You hereby release and forever discharge Plebiscite (and its
               directors, managers, officers, partners, employees, independent
               contractors, and agents, and successors and assigns of itself or
               its affiliates) from, and hereby waive and relinquish your rights
@@ -1498,7 +1498,7 @@ const TermsOfUse = () => {
               {'\n\n'}
               (j) interfere with or disrupt any Platform/Website processes,
               servers or networks supporting the Platform/Websites and/or
-              Ponder;
+              Plebiscite;
               {'\n\n'}
               (k) impair or harm any of our computer or related systems or
               transmit software viruses, worms, or other damaging files;
@@ -1512,7 +1512,7 @@ const TermsOfUse = () => {
               of our Services, features or tools, or impose an unreasonable or
               disproportionately large load on our infrastructure;
               {'\n\n'}
-              (n) export or re-export any Ponder’ application or tool except
+              (n) export or re-export any Plebiscite’ application or tool except
               in compliance with the export control laws of any relevant
               jurisdictions and in accordance with all relevant posted rules and
               restrictions;
@@ -1540,13 +1540,13 @@ const TermsOfUse = () => {
               pursuant to section 219 of the United States Immigration and
               Nationality Act.
               {'\n\n'}
-              (r) refuse to acknowledge that Ponder may establish general
+              (r) refuse to acknowledge that Plebiscite may establish general
               practices and limitations concerning use of the Platform/Websites
               and Services, including without limitation restrictions concerning
               User Content provided by You for use on the Platform/Websites and
               Services, the type and quantity of transactional data stored and
               presented in connection with your account, the maximum disk space
-              that will be allotted on Ponder’ servers on Your behalf, and
+              that will be allotted on Plebiscite’ servers on Your behalf, and
               the maximum number of times (and the maximum duration for which)
               You may access the Platform/Websites and Services in any given
               period of time;
@@ -1574,13 +1574,13 @@ const TermsOfUse = () => {
               addresses. User must not submit material that is copyrighted,
               protected by trade secret, or otherwise subject to third partyto
               third party proprietary rights, including privacy and publicity
-              rights, unless User is the Ponder of such rights or havs
-              permission from their rightful Ponder to post the material and
-              to grant to Ponder all of the licensed right granted herein.
+              rights, unless User is the Plebiscite of such rights or havs
+              permission from their rightful Plebiscite to post the material and
+              to grant to Plebiscite all of the licensed right granted herein.
               {'\n\n'}
-              8.2. You fully understand, acknowledge and agree that Ponder
+              8.2. You fully understand, acknowledge and agree that Plebiscite
               may, under certain circumstances and without prior notice,
-              immediately terminate your Ponder User Profile and access to
+              immediately terminate your Plebiscite User Profile and access to
               the Platform/Websites, Services and any other related or
               affiliated applications, functions and tools.
               {'\n\n'}
@@ -1598,14 +1598,14 @@ const TermsOfUse = () => {
               {'\n\n'}
               (d) discontinuance or significant modification to the
               Platform/Websites or Services, or any related or affiliated
-              Platform/Website owned and/or operated by Ponder (or any part
+              Platform/Website owned and/or operated by Plebiscite (or any part
               thereof);
               {'\n\n'}
               (e) unforeseen technical, electronic, mechanical or any other
               difficulties or security issues;
               {'\n\n'}
               (f) prolonged inactivity of Your account, which shall be
-              determined by Ponder;
+              determined by Plebiscite;
               {'\n\n'}
               (g) knowing, willing and/or negligent engagement by you in any
               form of deceitful, fraudulent, counterfeit or illegal activities;
@@ -1622,14 +1622,14 @@ const TermsOfUse = () => {
               to prevent you from using our Platform/Websites and Services in
               the future.
               {'\n\n'}
-              Ponder has the right to investigate and prosecute violations of
+              Plebiscite has the right to investigate and prosecute violations of
               any of the above to the fullest extent of the law.
               {'\n\n'}
               8.4. User must not change, alter, or modify any part of the
               Services for any reason.
               {'\n\n'}
               8.5. User must not distribute in any medium any part of the
-              Services without prior written authorization from Ponder. User
+              Services without prior written authorization from Plebiscite. User
               agrees not to circumvent, disable or otherwise interfere with
               security related features of the Services or features that prevent
               or restrict use or copying of any Content and User Engagement or
@@ -1640,15 +1640,15 @@ const TermsOfUse = () => {
               topic” to the particular item of User Engagement open for comments
               or submissions.
               {'\n\n'}
-              8.7. The Content and Ponder intellectual property, including,
-              but not limited to, the Ponder trademarks, trade names, and
-              logos, on the Services are owned by or licensed to Ponder,
+              8.7. The Content and Plebiscite intellectual property, including,
+              but not limited to, the Plebiscite trademarks, trade names, and
+              logos, on the Services are owned by or licensed to Plebiscite,
               subject to copyright and other intellectual property rights under
               United States and foreign laws and international conventions.
               Content on the Services may not be used, copied, reproduced,
               distributed, transmitted, broadcast, displayed, sold, licensed, or
               otherwise exploited for any other purposes whatsoever without the
-              prior written consent of the respective owners. Ponder reserves
+              prior written consent of the respective owners. Plebiscite reserves
               all rights that are not expressly granted in and to the Services
               and the Content. User agrees not to use, copy, or distribute,
               either directly or indirectly, any of the Content other than that
@@ -1657,9 +1657,9 @@ const TermsOfUse = () => {
               through the Services for any commercial purposes. If User
               downloads or prints a copy of the Content and/or User Engagement
               for personal use, User must retain all copyright and other
-              proprietary notices contained therein. User agrees that Ponder
+              proprietary notices contained therein. User agrees that Plebiscite
               holds no responsibility for content posted within the service,
-              including, but not limited to, User Engagement. Ponder is not
+              including, but not limited to, User Engagement. Plebiscite is not
               obligated to monitor or edit any content posted on Services,
               including, but not limited to, User Engagement. If User’s content
               violates this Agreement, User may bear legal responsibility for
@@ -1667,10 +1667,10 @@ const TermsOfUse = () => {
               {'\n\n'}
               8.8 User agrees not to use the Services for any commercial purpose
               or use, either direct or indirect, without the prior written
-              authorization of Ponder. User may access User Engagement solely
+              authorization of Plebiscite. User may access User Engagement solely
               for User’s information and non-commercial, personal use or as
               otherwise intended through the normal functionality of the
-              Ponder Services. Ponder permits User to link to materials on
+              Plebiscite Services. Plebiscite permits User to link to materials on
               the Services for personal, non-commercial purposes only.
               {'\n\n'}
               8.9. User must not solicit for commercial purposes, spam, or send
@@ -1678,11 +1678,11 @@ const TermsOfUse = () => {
               must not collect or harvest any personal information from the
               Services. User must not offer to sell or buy any product or
               service, and User must not post advertisements or solicitations of
-              business without the prior consent of Ponder.
+              business without the prior consent of Plebiscite.
               {'\n\n'}
               8.10 User must not attempt to restrict another User from using or
               enjoying the Services and User must not encourage or facilitate
-              violations of this Agreement or any other Ponder terms.
+              violations of this Agreement or any other Plebiscite terms.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 9. COMMUNICATIONS
@@ -1698,9 +1698,9 @@ const TermsOfUse = () => {
               electronically shall have the same force and effect as if such
               communications be in writing.
               {'\n\n'}
-              9.2. Ponder does not endorse or guarantee the content of any
+              9.2. Plebiscite does not endorse or guarantee the content of any
               communication you receive from another user of the Services.
-              Ponder may store contents of chats, instant messages and other
+              Plebiscite may store contents of chats, instant messages and other
               communications that are sent through the Services for the purpose
               of product analysis and improvement. We may also review chats,
               instant messages and other communications to ensure adherence to
@@ -1714,25 +1714,25 @@ const TermsOfUse = () => {
               DISCLAIMER OF LIABILITY
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              10.1. Ponder is not responsible for the contents of any Content
+              10.1. Plebiscite is not responsible for the contents of any Content
               that is posted by a user of the Services or any third party. By
-              using the Services, you agree that Ponder provides a forum
+              using the Services, you agree that Plebiscite provides a forum
               whereby users may communicate with each other. You agree that
-              Ponder does not control the information posted on the Services
+              Plebiscite does not control the information posted on the Services
               and is under no obligation to monitor, edit, change, remove, or
               otherwise modify any Content, and that you will not rely solely on
               any of the content (including Content) that is contained within
-              the Services. You further agree that Ponder is not liable for
+              the Services. You further agree that Plebiscite is not liable for
               any damages that may result as a result of your use of the content
               (including Content) that is contained within the Services, and
-              that you will indemnify and hold Ponder harmless pursuant to
+              that you will indemnify and hold Plebiscite harmless pursuant to
               Article 16 of the Terms of use.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 11. DMCA
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              11.1 Ponder deals with copyright infringement in accordance
+              11.1 Plebiscite deals with copyright infringement in accordance
               with the Digital Millennium Copyright Act (DMCA). You may not
               post, upload, or otherwise place any content or information on the
               Site that belongs to a third party, unless you have the legal
@@ -1772,7 +1772,7 @@ const TermsOfUse = () => {
               may be held liable for damages (including costs and attorneys’
               fees).
               {'\n\n'}
-              11.2 It is the policy of Ponder to disable the accounts of
+              11.2 It is the policy of Plebiscite to disable the accounts of
               users who repeatedly post infringing material on the
               Platform/Website or the Service.
             </Text>
@@ -1782,58 +1782,58 @@ const TermsOfUse = () => {
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
               12.1. In order to use certain aspects of the Services, such as
               finding events and personal matches, you must enable geo-location
-              on your mobile device. Ponder uses this location information
+              on your mobile device. Plebiscite uses this location information
               solely to show you location-based listings and information.
               {'\n\n'}
-              12.2. Ponder may provide you with the ability to share your
-              geographical location with Ponder and other users of the
+              12.2. Plebiscite may provide you with the ability to share your
+              geographical location with Plebiscite and other users of the
               Services when using the Services. You may also accept or reject
               any requests from users of the Services to obtain your
               geographical location through the Services. If you share your
               geographical location with your subscribers, you understand and
               agree that your geographical location may appear on a map and that
-              subscribers to your Ponder account may be able to determine
+              subscribers to your Plebiscite account may be able to determine
               your exact, physical location. If you utilize the Services to post
-              User Engagement to the Ponder map feature located within the
+              User Engagement to the Plebiscite map feature located within the
               Services, you understand and agree that your geographical location
-              may appear on a map and that all users of the Ponder map
+              may appear on a map and that all users of the Plebiscite map
               feature located within the Services may be able to determine your
-              exact, physical location. Ponder provides you with the
+              exact, physical location. Plebiscite provides you with the
               opportunity to opt-in and opt-out of sharing your geographical
               location within the settings of your mobile device and/or web
               browser, which may provide you with several options for the
               sharing of your geographical location, such as options to share
               your geographical location at all times, only when using the
               iServices, or never. Should you wish to cease the sharing and use
-              of your geographic location by Ponder, you are advised to
+              of your geographic location by Plebiscite, you are advised to
               disable location services within the settings of your mobile
               device and/or web browser. If you do not share your physical
-              location with the Services, you may not use the Ponder map
+              location with the Services, you may not use the Plebiscite map
               feature located within the Services.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 13. NOTIFICATIONS
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              13.1. Ponder may send notifications to your mobile devise to
+              13.1. Plebiscite may send notifications to your mobile devise to
               alert you of upcoming events, new cannabis goods, and other
               information that we think you may want to be made aware of. If you
-              do not wish to receive notifications from Ponder, please update
+              do not wish to receive notifications from Plebiscite, please update
               the notification settings on your device.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 14. EXTERNAL LINKS
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              14.1. Ponder may provide links to other Platform/Websites
-              and/or App that are not maintained or controlled by Ponder
+              14.1. Plebiscite may provide links to other Platform/Websites
+              and/or App that are not maintained or controlled by Plebiscite
               (“Linked Sites”). The inclusion of any hyperlinks to Linked Sites
-              does not imply approval or endorsement by Ponder of those
+              does not imply approval or endorsement by Plebiscite of those
               Linked Sites, or content, products or services offered on those
-              Linked Sites. Ponder expressly disclaims any responsibility for
+              Linked Sites. Plebiscite expressly disclaims any responsibility for
               the content, legal compliance, accuracy of the information, and/or
               the quality of goods or services provided by or advertised on any
-              Linked Sites, and in no event shall Ponder be held responsible
+              Linked Sites, and in no event shall Plebiscite be held responsible
               or directly or indirectly liable for any loss or damage caused or
               alleged to have been caused in connection with the use of or
               reliance on any content, goods or services available on any Linked
@@ -1843,11 +1843,11 @@ const TermsOfUse = () => {
               ARTICLE 15. REVIEW/FEEDBACK POLICY
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              15.1. An important part of the Ponder community is the feedback
+              15.1. An important part of the Plebiscite community is the feedback
               system. Users have the ability to leave reviews and comments, and
               we want that process to be as open as possible. Part of that
               openness is acknowledging that certain behaviors are not
-              acceptable. Ponder retains the right to remove any content
+              acceptable. Plebiscite retains the right to remove any content
               posted on or submitted through any of its Platform/Websites or
               Services. However, the only User Content likely to be removed is
               that which violates these Terms, any Additional Terms, Privacy
@@ -1859,16 +1859,16 @@ const TermsOfUse = () => {
               relevant Platform/Website or Service to learn about its applicable
               Review Policy.
               {'\n\n'}
-              Please note, Ponder is under no obligation to enforce these
+              Please note, Plebiscite is under no obligation to enforce these
               Terms, any Additional Terms, Privacy Policy, Data Policy or the
               Community Standards, or any of the Review Policies on your behalf
-              against another user. While Ponder encourages you to let us
+              against another user. While Plebiscite encourages you to let us
               know if you believe another user has violated these Terms, any
               Additional Terms, or the Privacy Policy, or any of the Review
               Policies, we reserve the right to investigate and take appropriate
               action at our sole discretion.
               {'\n\n'}
-              15.2. For questions about the Ponder Platform/Websites or any
+              15.2. For questions about the Plebiscite Platform/Websites or any
               of the Services we provide, please feel free to contact our Public
               Service department at info@lnxct.com.
             </Text>
@@ -1876,16 +1876,16 @@ const TermsOfUse = () => {
               ARTICLE 16. DISCLAIMER OF WARRANTIES
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
-              16.1. Ponder makes no representations or warranties about the
+              16.1. Plebiscite makes no representations or warranties about the
               services, the suitability of the information contained on or
               received through the services, or information or products received
-              through Ponder. All information and use of Ponder is
+              through Plebiscite. All information and use of Plebiscite is
               provided “as is” without warranty of any kind, including all
               express, implied, or statutory warranties of merchantability,
               fitness for a particular purpose, title and non-infringement.
-              Ponder does not warrant that the contents or any information
+              Plebiscite does not warrant that the contents or any information
               received through the services are accurate, reliable or correct;
-              that Ponder will be available at any particular time or
+              that Plebiscite will be available at any particular time or
               location; that any defects or errors will be corrected; or that
               the contents or any information received through the services are
               free of viruses or other destructive or harmful components. Your
@@ -1896,8 +1896,8 @@ const TermsOfUse = () => {
               the exclusions may not apply to you but shall apply to the maximum
               extent permitted by the laws of your jurisdiction.
               {'\n\n'}
-              16.2. Ponder and its affiliates, officers, directors, managers,
-              shareholders, Ponders, employees, contractors, consultants, and
+              16.2. Plebiscite and its affiliates, officers, directors, managers,
+              shareholders, Plebiscites, employees, contractors, consultants, and
               agents make no guarantee or warranty that:
               {'\n\n'}
               (a) the Platform/Websites and services will satisfy your needs and
@@ -1936,16 +1936,16 @@ const TermsOfUse = () => {
               {'\n\n'}
               16.4. No advice or information, including medical advice,
               strategy, guidelines, or related content, whether oral or written,
-              obtained by you from Ponder or from the Platform/Websites,
+              obtained by you from Plebiscite or from the Platform/Websites,
               services, or relevant social media pages shall create any
               warranty, guarantee, or strategy not expressly stated in these
               terms.
               {'\n\n'}
-              16.5. Vetting by Ponder of each and every document, photograph,
+              16.5. Vetting by Plebiscite of each and every document, photograph,
               video, review, related media, posting, or other communication, in
               addition to any other content posted via the Platform/Websites or
               services, may not be possible or realistically practicable. As a
-              result, Ponder cannot and does not control any listing reviews,
+              result, Plebiscite cannot and does not control any listing reviews,
               comments, photographs, opinions, postings, or other content or
               material posted via the Platform/Websites or services and, as
               such, does not guarantee the accuracy, integrity, quality, safety,
@@ -1967,16 +1967,16 @@ const TermsOfUse = () => {
               EXEMPLARY, INCIDENTAL, SPECIAL OR PUNITIVE DAMAGES ARISING FROM
               YOUR USE OF THE SERVICES, EVEN IF WE HAVE BEEN ADVISED IN ADVANCE
               OF THE POSSIBILITY OF SUCH DAMAGES. IN ANY CASE WHERE THE ABOVE
-              LIMITATION IS UNENFORCEABLE, YOU AGREE THAT Ponder TOTAL
+              LIMITATION IS UNENFORCEABLE, YOU AGREE THAT Plebiscite TOTAL
               LIABILITY TO YOU SHALL NOT EXCEED EITHER:
               {'\n\n'}
-              (a) THE TOTAL AMOUNT THAT YOU ACTUALLY PAID TO Ponder DURING
+              (a) THE TOTAL AMOUNT THAT YOU ACTUALLY PAID TO Plebiscite DURING
               THE THREE (3) MONTHS PRECEDING THE ACCRUAL OF THE CAUSE OF ACTION;
               OR
               {'\n\n'}
               (b) ONE HUNDRED DOLLARS ($100.00), WHICHEVER IS LESS.
               {'\n\n'}
-              17.2. User agrees to indemnify, defend and hold Ponder, its
+              17.2. User agrees to indemnify, defend and hold Plebiscite, its
               affiliates and each of their respective officers, directors,
               employees, representatives and agents harmless from and against
               any and all liabilities, claims, losses, damages, costs and
@@ -1992,7 +1992,7 @@ const TermsOfUse = () => {
               {'\n\n'}
               17.3. Except for the express representations and warranties set
               forth in this agreement, all information, products and services
-              provided by Ponder to User under this Terms of use, including
+              provided by Plebiscite to User under this Terms of use, including
               the listing services, are provided “as is” and “as available”
               without representation or warranty of any kind, whether express,
               implied, statutory or otherwise, including the implied warranties
@@ -2013,14 +2013,14 @@ const TermsOfUse = () => {
               or any services provided by the company.
               {'\n\n'}
               17.4. You agree that in the event you incur any damages, losses or
-              injuries that arise out of Ponder’s acts or omissions, the
+              injuries that arise out of Plebiscite’s acts or omissions, the
               damages, if any, caused to you are not irreparable or sufficient
               to entitle you to an injunction preventing any exploitation of any
               web site, service, property, product or other content owned or
-              controlled by Ponder, and you will have no rights to enjoin or
+              controlled by Plebiscite, and you will have no rights to enjoin or
               restrain the development, production, distribution, advertising,
               exhibition or exploitation of any web site, property, product,
-              service, or other content owned or controlled by Ponder.
+              service, or other content owned or controlled by Plebiscite.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 18. DISPUTE RESOLUTION & ARBITRATION AGREEMENT
@@ -2095,18 +2095,18 @@ const TermsOfUse = () => {
               arbitration among the Parties in such amounts as the arbitrator
               deems appropriate.
               {'\n\n'}
-              18.5. Jury Trial Waiver. Both User and Ponder acknowledge and
+              18.5. Jury Trial Waiver. Both User and Plebiscite acknowledge and
               agree that they are waiving the right to a trial by jury as to all
               disputes subject to arbitration.
               {'\n\n'}
               18.6. No Class Actions or Representative Proceedings. Both User
-              and Ponder acknowledge and agree that, to the fullest extent
+              and Plebiscite acknowledge and agree that, to the fullest extent
               permitted by law, each is waiving the right to participate as a
               plaintiff or class member in any purported class action lawsuit,
               class-wide arbitration, collective action, private attorney
               general action, or any other representative proceeding as to all
               Disputes. Disputes may not be arbitrated on a class, collective or
-              representative basis. Unless User and Ponder both otherwise
+              representative basis. Unless User and Plebiscite both otherwise
               agree in writing, the arbitrator may not consolidate or join the
               claims of other persons or parties, or otherwise preside over any
               form of class action or representative proceeding. If the “class
@@ -2150,8 +2150,8 @@ const TermsOfUse = () => {
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
               19.1 By accessing or using the Platform/Websites or Services, you
-              agree that the Ponder Privacy Policy and Data Policy (which may
-              be updated from time to time) governs Ponder’s collection and
+              agree that the Plebiscite Privacy Policy and Data Policy (which may
+              be updated from time to time) governs Plebiscite’s collection and
               use of your personal information. Registration data and certain
               other information about you are subject to our Privacy Policy and
               Data Policy. For more information, please make sure that you
@@ -2160,7 +2160,7 @@ const TermsOfUse = () => {
               Services, you consent to the collection and use (as set forth in
               the Privacy Policy) of this information, including the transfer of
               information to the United States and/or other countries for
-              storage, processing and use by Ponder.
+              storage, processing and use by Plebiscite.
             </Text>
             <Text style={termsOfUseStyle.subHeaderTitle}>
               ARTICLE 20. CHANGES TO THE TERMS,ADDITIONAL TERMS, PRIVACY
@@ -2190,14 +2190,14 @@ const TermsOfUse = () => {
             </Text>
             <Text style={termsOfUseStyle.termsOfUseTextContainer}>
               21.1. These terms constitute the entire agreement between Users
-              and Ponder regarding use of the Services, although additional
+              and Plebiscite regarding use of the Services, although additional
               terms may apply to licensed cannabis businesses.
               {'\n\n'}
-              21.2. The failure of Ponder to enforce any right or provision
+              21.2. The failure of Plebiscite to enforce any right or provision
               of these Terms will not constitute a waiver of future enforcement
               of that right or provision. The waiver of any such right or
               provision will be effective only if in writing and signed by a
-              duly authorized representative of Ponder. Except as expressly
+              duly authorized representative of Plebiscite. Except as expressly
               set forth in these Terms, the exercise by either party of any of
               its remedies under these Terms will be without prejudice to its
               other remedies under these Terms or otherwise. If for any reason a
@@ -2215,13 +2215,13 @@ const TermsOfUse = () => {
               these Terms, please stop using Service immediately.
               {'\n\n'}
               21.4. These Terms do not and are not intended to confer any rights
-              or remedies upon any person other than you and Ponder.
+              or remedies upon any person other than you and Plebiscite.
               {'\n\n'}
-              21.5. You acknowledge and agree that Ponder will have no
+              21.5. You acknowledge and agree that Plebiscite will have no
               obligation to provide you with any support or maintenance in
               connection with the Platform/Websites or Services.
               {'\n\n'}
-              21.6. You agree that your Ponder account is non-transferable
+              21.6. You agree that your Plebiscite account is non-transferable
               and any rights to your Platform/Website user identification or
               contents within your accounts terminate upon your death.
               {'\n\n'}

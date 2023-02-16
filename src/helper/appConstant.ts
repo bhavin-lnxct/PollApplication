@@ -1,5 +1,5 @@
 const appConstants = {
-  appName: 'Ponder',
+  appName: 'Plebiscite',
   posts: 'posts',
   surveys: 'surveys',
   myPosts: 'myPosts',

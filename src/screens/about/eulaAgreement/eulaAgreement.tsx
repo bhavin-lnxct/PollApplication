@@ -20,10 +20,10 @@ const EulaAgreement = () => {
           </Text>
           <View>
             <Text style={eulaAgreementStyle.termsOfUseTextContainer}>
-              This Ponder Mobile Application End User License Agreement
+              This Plebiscite Mobile Application End User License Agreement
               ("Agreement") is a binding agreement between you ("End User" or
               "you") and LNXCT Inc ("Company"). This Agreement governs your
-              use of the "Ponder" APP on the MOBILE PLATFORMS and MOBILE
+              use of the "Plebiscite" APP on the MOBILE PLATFORMS and MOBILE
               DEVICES, (including all related documentation, the "Application").
               The Application is licensed, not sold, to you.
               {'\n\n'}
@@ -76,10 +76,10 @@ const EulaAgreement = () => {
               by more than one user. Users of the Services may also overlay
               music, graphics, stickers, Virtual Items (as defined and further
               explained Virtual Items Policy) and other elements provided by
-              LNXCT/Ponder (“LNXCT/Ponder Elements”) onto this User
+              LNXCT/Plebiscite (“LNXCT/Plebiscite Elements”) onto this User
               Content and transmit this User Content through the Services. The
               information and materials in the User Content, including User
-              Content that includes LNXCT/Ponder Elements, have not been
+              Content that includes LNXCT/Plebiscite Elements, have not been
               verified or approved by us. The views expressed by other users on
               the Services (including through use of the virtual gifts) do not
               represent our views or values. {'\n\n'}Whenever you access or use
@@ -90,7 +90,7 @@ const EulaAgreement = () => {
               with the standards set out at “Your Access to and Use of Our
               Services” above. You may also choose to upload or transmit your
               User Content, including User Content that includes
-              LNXCT/Ponder Elements, on sites or platforms hosted by third
+              LNXCT/Plebiscite Elements, on sites or platforms hosted by third
               parties. If you decide to do this, you must comply with their
               content guidelines as well as with the standards set out at “Your
               Access to and Use of Our Services” above. As noted above, these
@@ -225,9 +225,9 @@ const EulaAgreement = () => {
                 {' '}
                 https://lnxct.com
               </Text>
-              . LNXCT/Ponder takes reasonable measures to expeditiously
+              . LNXCT/Plebiscite takes reasonable measures to expeditiously
               remove from our Services any infringing material that we become
-              aware of.It is LNXCT/Ponder’s policy, in appropriate
+              aware of.It is LNXCT/Plebiscite’s policy, in appropriate
               circumstances and at its discretion, to disable or terminate the
               accounts of users of the Services who repeatedly infringe
               copyrights or intellectual property rights of others. {'\n\n'}
@@ -244,7 +244,7 @@ const EulaAgreement = () => {
               “Feedback”), then regardless of what your accompanying
               communication may say, the following terms will apply, so that
               future misunderstandings can be avoided. Accordingly, by sending
-              Feedback to us, you agree that: LNXCT/Ponder has no
+              Feedback to us, you agree that: LNXCT/Plebiscite has no
               obligation to review, consider, or implement your Feedback, or to
               return to you all or part of any Feedback for any reason; Feedback
               is provided on a non-confidential basis, and we are not under any
@@ -361,7 +361,7 @@ const EulaAgreement = () => {
             </Text>
             <Text style={eulaAgreementStyle.termsOfUseTextContainer}>
               The Application may provide you with access to Company's website
-              located at Ponder.com (the "Website") and products and services
+              located at Plebiscite.com (the "Website") and products and services
               accessible thereon, and certain features, functionality and
               content accessible on or through the Application may be hosted on
               the Website (collectively, "Content and Services"). Your access to
