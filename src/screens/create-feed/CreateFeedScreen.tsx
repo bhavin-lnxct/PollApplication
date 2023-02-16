@@ -10,20 +10,14 @@ import {
 import Header from '../../components/header/header';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CreateFeedStyle from './CreateFeedStyle';
-import {MultiSelect} from 'react-native-element-dropdown';
 import CustomText from '../../components/text/CustomText';
-import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
 import {ms} from 'react-native-size-matters';
-import {RadioButton} from 'react-native-paper';
 import colors from '../../theme/colors/colors';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {Slider} from '@miblanchard/react-native-slider';
 import ThemeButton from '../../components/themeButton/themeButton';
 import {showToast} from '../../helper/helper';
 import screenNameEnum from '../../helper/screenNameEnum';
-import {useUserData} from '../../redux/reducers/user-slice/userSlice';
-import {InterestDataSelector} from '../../helper/profileHelper';
 import messages from '../../helper/messages';
 import {SvgXml} from 'react-native-svg';
 import svg from '../../theme/svg/svg';
@@ -32,10 +26,7 @@ const CreateFeedScreen = () => {
   const [value, setValue] = useState('');
   const [date, setDate] = useState('');
   const [isRange, setRange] = useState('');
-  const [openDatePicker, setDatePicker] = useState(false);
   const navigation = useNavigation();
-  const currentTime = new Date().getTime();
-  const after3HourTime = new Date(currentTime + 2 * 60 * 60 * 1000);
   const [checked, setChecked] = useState(false);
   const [category, setCategory] = useState([]);
   const [isPrivate, setIsPrivate] = useState(false);
@@ -45,11 +36,6 @@ const CreateFeedScreen = () => {
     {image: svg.createtextPoll, text: 'Text poll', val: 'poll'},
     {image: svg.createImagePoll, text: 'Image poll', val: 'image'},
   ];
-
-  const isValidDate = (d: string) => {
-    const dt = Date.parse(d);
-    return !Number.isNaN(dt);
-  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -166,62 +152,6 @@ const CreateFeedScreen = () => {
             />
             <View style={CreateFeedStyle.selectPoll}>
               <CustomText textStyle={CreateFeedStyle.selectPollText}>
-                End Time
-              </CustomText>
-              {!isPrivate ? (
-                <>
-                  <DatePicker
-                    modal
-                    style={{}}
-                    open={openDatePicker}
-                    date={isValidDate(date) ? new Date(date) : after3HourTime}
-                    mode="datetime"
-                    confirmText="Set"
-                    minimumDate={after3HourTime}
-                    onConfirm={d => {
-                      setDate(d);
-                      setDatePicker(false);
-                    }}
-                    onCancel={() => {
-                      setDatePicker(false);
-                    }}
-                  />
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={CreateFeedStyle.dateViewInput}
-                    onPress={() => setDatePicker(true)}>
-                    <CustomText textStyle={CreateFeedStyle.dateText}>
-                      {isValidDate(date)
-                        ? moment(date).format('DD/MM/YYYY HH:MM')
-                        : 'select'}
-                    </CustomText>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <View style={CreateFeedStyle.genderContainer}>
-                  <RadioButton
-                    value="1"
-                    status={privateEndTime === '1' ? 'checked' : 'unchecked'}
-                    onPress={() => setPrivateEndTime('1')}
-                    color={colors.AppTheme.blackShade02}
-                  />
-                  <CustomText textStyle={CreateFeedStyle.genderText}>
-                    1 Day
-                  </CustomText>
-                  <RadioButton
-                    value="7"
-                    status={privateEndTime === '7' ? 'checked' : 'unchecked'}
-                    onPress={() => setPrivateEndTime('7')}
-                    color={colors.AppTheme.blackShade02}
-                  />
-                  <CustomText textStyle={CreateFeedStyle.genderText}>
-                    7 Day
-                  </CustomText>
-                </View>
-              )}
-            </View>
-            <View style={CreateFeedStyle.selectPoll}>
-              <CustomText textStyle={CreateFeedStyle.selectPollText}>
                 Maximum Expected Votes
               </CustomText>
               <TextInput
@@ -239,10 +169,9 @@ const CreateFeedScreen = () => {
               <Slider
                 animateTransitions
                 value={
-                  parseInt(isRange) >= 100 &&
-                  parseInt(isRange) &&
-                  parseInt(isRange) <= 100000 &&
-                  parseInt(isRange)
+                  parseInt(isRange) >= 100 && parseInt(isRange) <= 100000
+                    ? parseInt(isRange)
+                    : undefined
                 }
                 onValueChange={val => setRange(Math.round(val).toString())}
                 maximumValue={100000}

@@ -345,13 +345,11 @@ const EditProfileScreen = () => {
   const getEducationData = async () => {
     try {
       const result = await API.graphql(graphqlOperation(Query.getEducation));
-      const data = result?.data?.getEducation.map((item, index) => {
-        return {
-          id: index,
-          label: item.education_name,
-          value: item.education_name,
-        };
-      });
+      const data = result?.data?.getEducation.map((item, index) => ({
+        id: index,
+        label: item.education_name,
+        value: item.education_name,
+      }));
       setEducationData(data);
     } catch (error) {
       console.log(
@@ -438,6 +436,7 @@ const EditProfileScreen = () => {
             Date Of Birth
           </CustomText>
           <DatePicker
+            key={Math.random() * 100}
             modal
             open={openDatePicker}
             date={isValidate(date) ? new Date(date) : thirteenYearAgo}
@@ -550,6 +549,7 @@ const EditProfileScreen = () => {
             Select Your Education :
           </CustomText>
           <DropDownPicker
+            key={Math.random() * 100}
             style={editProfileScreenStyle.textInputDropDown}
             labelStyle={{color: colors.AppTheme.Text, fontSize: ms(16)}}
             selectedItemLabelStyle={editProfileScreenStyle.selectedTextStyle}
@@ -592,10 +592,11 @@ const EditProfileScreen = () => {
             }}
             flatListProps={{
               keyboardShouldPersistTaps: 'handled',
+              keyExtractor: item => `item${item.label}`,
             }}
           />
         </View>
-        <View
+        {/* <View
           style={[
             editProfileScreenStyle.textInputViewNew,
             editProfileScreenStyle.gender,
@@ -665,7 +666,7 @@ const EditProfileScreen = () => {
               </View>
             );
           })}
-        </View>
+        </View> */}
       </View>
     );
   };

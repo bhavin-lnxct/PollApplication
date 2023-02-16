@@ -42,7 +42,7 @@ const ThemeButton = ({
         start={{x: 0.0, y: 2.5}}
         end={{x: 1.5, y: 2.5}}
         locations={[0, 0.5]}
-        colors={['#79AFC1', '#79AFC1']}
+        colors={['#7292C1', '#7292C1']}
         style={ThemeButtonStyle.linearGradientContainer}>
         {loading ? (
           <ActivityIndicator size="small" color={colors?.AppTheme.Secondary} />

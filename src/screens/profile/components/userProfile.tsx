@@ -132,7 +132,7 @@ const UserProfile = ({setVisibleProfile}: UserProfileInterFace) => {
             <Icon
               size={24}
               name="logout"
-              color={'#79AFC1'}
+              color={'#7292C1'}
               type={'MaterialIcons'}
             />
           </View>

@@ -1,8 +1,14 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {API, graphqlOperation} from 'aws-amplify';
 import {debounce} from 'lodash';
-import React, { useEffect, useState} from 'react';
-import { Text, View, TouchableOpacity, TouchableNativeFeedback, useWindowDimensions } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  useWindowDimensions,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ms} from 'react-native-size-matters';
 import SimpleButton from '../../../components/button/SimpleButton';
@@ -18,7 +24,7 @@ import colors from '../../../theme/colors/colors';
 import images from '../../../theme/images/images';
 import profileScreenStyle from './profileScreenStyle';
 import ViewMoreText from 'react-native-view-more-text';
-import { TabBar, TabView } from 'react-native-tab-view';
+import {TabBar, TabView} from 'react-native-tab-view';
 import ProfilePollScreen from './component/pollScreen';
 import ProfileSurveyScreen from './component/surveyScreen';
 
@@ -50,11 +56,15 @@ const ProfileScreen = () => {
     try {
       setFeedLoading(true);
       if (route?.params?.userId === userData?.user_id) {
-        const result = await API.graphql(graphqlOperation(Query.getUser, {user_id: userData?.user_id}),);
+        const result = await API.graphql(
+          graphqlOperation(Query.getUser, {user_id: userData?.user_id}),
+        );
         if (!result?.data?.getuser?.image_url) {
           setUserProfile(result?.data?.getuser?.image_url);
         } else {
-          setUserProfile(`https://d1iermgo1iu801.cloudfront.net/${result?.data?.getuser?.image_url}`);
+          setUserProfile(
+            `https://d1iermgo1iu801.cloudfront.net/${result?.data?.getuser?.image_url}`,
+          );
         }
         setItem(result?.data?.getuser);
         setUserName(result?.data?.getuser?.user_name);
@@ -63,11 +73,18 @@ const ProfileScreen = () => {
         setTotalPosts(result?.data?.getuser?.post_count);
         setFeedLoading(false);
       } else {
-        const result = await API.graphql(graphqlOperation(Query.getOppositeUser,{my_id: userData?.user_id,user_id: route?.params?.userId}));
+        const result = await API.graphql(
+          graphqlOperation(Query.getOppositeUser, {
+            my_id: userData?.user_id,
+            user_id: route?.params?.userId,
+          }),
+        );
         if (!result?.data?.getOppositeUser?.image_url) {
           setUserProfile(result?.data?.getOppositeUser?.image_url);
         } else {
-          setUserProfile(`https://d1iermgo1iu801.cloudfront.net/${result?.data?.getOppositeUser?.image_url}`);
+          setUserProfile(
+            `https://d1iermgo1iu801.cloudfront.net/${result?.data?.getOppositeUser?.image_url}`,
+          );
         }
         setItem(result?.data?.getOppositeUser);
         setIsFollow(result?.data?.getOppositeUser?.follow_already);
@@ -92,7 +109,12 @@ const ProfileScreen = () => {
     if (isFollow) {
       setIsFollow(false);
       try {
-        const result = await API.graphql(graphqlOperation(Query.unFollowUser,{following_id: route?.params?.userId,user_id: userData?.user_id}));
+        const result = await API.graphql(
+          graphqlOperation(Query.unFollowUser, {
+            following_id: route?.params?.userId,
+            user_id: userData?.user_id,
+          }),
+        );
         if (result) {
           setFollowers(val => val - 1);
           setLoading(false);
@@ -104,7 +126,13 @@ const ProfileScreen = () => {
     } else {
       setIsFollow(true);
       try {
-        const result = await API.graphql(graphqlOperation(Query.followUser,{follow_time: new Date().toString(),following_id: route?.params?.userId,user_id: userData?.user_id}));
+        const result = await API.graphql(
+          graphqlOperation(Query.followUser, {
+            follow_time: new Date().toString(),
+            following_id: route?.params?.userId,
+            user_id: userData?.user_id,
+          }),
+        );
         if (result) {
           setFollowers(val => val + 1);
           setLoading(false);
@@ -211,12 +239,11 @@ const ProfileScreen = () => {
           </CustomText>
         )}
         {item?.user_bio && (
-          <ViewMoreText 
+          <ViewMoreText
             textStyle={profileScreenStyle.bioText}
             numberOfLines={2}
             renderViewMore={renderViewMore}
-            renderViewLess={renderViewLess}
-          >
+            renderViewLess={renderViewLess}>
             {item?.user_bio}
           </ViewMoreText>
         )}
@@ -225,8 +252,13 @@ const ProfileScreen = () => {
           {route.params?.userId === userData?.user_id ? (
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate(screenNameEnum.EditProfileScreen)}
-              style={[profileScreenStyle.profileButton,{backgroundColor: colors.AppTheme.OtherSecond}]}>
+              onPress={() =>
+                navigation.navigate(screenNameEnum.EditProfileScreen)
+              }
+              style={[
+                profileScreenStyle.profileButton,
+                {backgroundColor: colors.AppTheme.OtherSecond},
+              ]}>
               <View style={profileScreenStyle.editProfileButtonView}>
                 <Icon
                   type={'MaterialCommunityIcons'}
@@ -242,7 +274,9 @@ const ProfileScreen = () => {
           ) : (
             <SimpleButton
               loading={loading}
-              loadingColor={isFollow ? colors.AppTheme.Primary : colors.AppTheme.Secondary}
+              loadingColor={
+                isFollow ? colors.AppTheme.Primary : colors.AppTheme.Secondary
+              }
               title={isFollow ? 'Following' : 'Follow'}
               onPress={debounce(() => onPressFollow(), 100)}
               containerStyle={[
@@ -251,7 +285,11 @@ const ProfileScreen = () => {
                   ? {backgroundColor: colors.AppTheme.OtherSecond}
                   : {backgroundColor: colors.AppTheme.Primary},
               ]}
-              buttonTitleStyle={isFollow? {color: colors.AppTheme.Text}: {color: colors.AppTheme.Secondary}}
+              buttonTitleStyle={
+                isFollow
+                  ? {color: colors.AppTheme.Text}
+                  : {color: colors.AppTheme.Secondary}
+              }
             />
           )}
         </View>
@@ -262,9 +300,9 @@ const ProfileScreen = () => {
   const renderScene = ({route, jumpTo}: {route: any; jumpTo: any}) => {
     switch (route?.key) {
       case 'poll':
-        return <ProfilePollScreen userId={userId}/>;
+        return <ProfilePollScreen userId={userId} />;
       case 'survey':
-        return <ProfileSurveyScreen userId={userId}/>;
+        return <ProfileSurveyScreen userId={userId} />;
     }
   };
 
@@ -291,14 +329,7 @@ const ProfileScreen = () => {
     <View style={profileScreenStyle.container}>
       <Header title={userName} isNotification={true} isBack={true} />
       {myProfileHeader()}
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{index, routes}}
-        animationEnabled={true}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{width: layout.width}}
-      />
+      <ProfilePollScreen userId={userId} />
     </View>
   );
 };

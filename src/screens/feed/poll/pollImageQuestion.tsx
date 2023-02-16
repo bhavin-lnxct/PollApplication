@@ -201,7 +201,7 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
         </CustomText>
       </View>
       <View style={{marginTop: ms(5)}} />
-      {item?.post_category && item?.post_category.length > 0 && (
+      {/* {item?.post_category && item?.post_category.length > 0 && (
         <View style={feedCardStyle.labelViewContainer}>
           {item?.post_category?.map((val, i) => {
             return (
@@ -213,7 +213,7 @@ const PollImageQuestion: React.FC = ({item}: PollQuestionInterface) => {
             );
           })}
         </View>
-      )}
+      )} */}
 
       {item?.post_required_explanation && !item?.already_voted && (
         <>

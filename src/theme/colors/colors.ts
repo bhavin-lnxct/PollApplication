@@ -1,7 +1,7 @@
 const colors = {
   AppTheme: {
     Secondary: '#ffffff',
-    Primary: '#79AFC1',
+    Primary: '#7292C1',
     SecondaryNew: '#2DDE98',
     Terittory: '#69C5E4',
     OtherFirst: '#02A388',

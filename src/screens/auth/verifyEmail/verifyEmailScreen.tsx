@@ -65,7 +65,7 @@ const VerifyEmailScreen = () => {
             } catch (error) {
               console.log('failed to update token in login');
             }
-            navigation.navigate(screenNameEnum.UserInterest, {email, userId});
+            // navigation.navigate(screenNameEnum.UserInterest, {email, userId});
           });
         }
       }
