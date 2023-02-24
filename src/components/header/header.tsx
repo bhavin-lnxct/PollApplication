@@ -1,27 +1,16 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-  Image,
-  SafeAreaView,
-} from 'react-native';
-import React, {useRef, useState} from 'react';
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
-import {styles} from './headerStyle';
 import {useNavigation} from '@react-navigation/native';
-import Icon from '../icon/Icon';
-import {Paragraph} from 'react-native-paper';
-import CustomText from '../text/CustomText';
-import BottomSheet from '../bottomSheet/bottomSheet';
-import SimpleButton from '../button/SimpleButton';
-import UserProfile from '../../screens/profile/components/userProfile';
-import {useUserData} from '../../redux/reducers/user-slice/userSlice';
+import React, {useRef, useState} from 'react';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import images from '../../theme/images/images';
 import {ms} from 'react-native-size-matters';
 import screenNameEnum from '../../helper/screenNameEnum';
+import {useUserData} from '../../redux/reducers/user-slice/userSlice';
+import UserProfile from '../../screens/profile/components/userProfile';
+import images from '../../theme/images/images';
+import BottomSheet from '../bottomSheet/bottomSheet';
+import Icon from '../icon/Icon';
+import CustomText from '../text/CustomText';
+import {styles} from './headerStyle';
 
 export interface HeaderProps {
   title?: string;
@@ -65,7 +54,12 @@ const Header = ({
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.goBack()}>
-              <Icon type='Feather' size={24} name={'chevron-left'} color={'#EBEBEB'} />
+              <Icon
+                type="Feather"
+                size={24}
+                name={'chevron-left'}
+                color={'#EBEBEB'}
+              />
             </TouchableOpacity>
           )}
           {isClose && (
@@ -98,15 +92,7 @@ const Header = ({
 
           {!isBack && !isUser && !isClose && <View style={{width: ms(24)}} />}
           <CustomText textStyle={styles.headerTitleStyle}>{title}</CustomText>
-          {isNotification && (
-            <TouchableOpacity activeOpacity={0.8} onPress={onPressNotification}>
-              <IconIonicons
-                size={24}
-                name={'ios-notifications-outline'}
-                color={'#EBEBEB'}
-              />
-            </TouchableOpacity>
-          )}
+          {isNotification && <View style={{width: ms(30)}} />}
           {post && (
             <TouchableOpacity activeOpacity={0.8} onPress={onPressPost}>
               <CustomText textStyle={styles.postTextStyle}>Post</CustomText>

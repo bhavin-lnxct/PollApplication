@@ -1,46 +1,41 @@
+import NetInfo from '@react-native-community/netinfo';
+import {useNavigation} from '@react-navigation/native';
+import {API, graphqlOperation, Storage} from 'aws-amplify';
 import React, {useEffect, useState} from 'react';
 import {
-  View,
-  Text,
   SafeAreaView,
-  TouchableOpacity,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ms} from 'react-native-size-matters';
-import Icon from '../../components/icon/Icon';
+import {SvgXml} from 'react-native-svg';
+import {useDispatch} from 'react-redux';
 import BottomSheet from '../../components/bottomSheet/bottomSheet';
-import colors from '../../theme/colors/colors';
-import editProfileScreenStyle from './editProfileScreenStyle';
-import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
-import {RadioButton} from 'react-native-paper';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {API, graphqlOperation, Storage} from 'aws-amplify';
+import bottomSheetStyle from '../../components/bottomSheet/bottomSheetStyle';
+import Header from '../../components/header/header';
+import Icon from '../../components/icon/Icon';
+import Loading from '../../components/loading/Loading';
+import CustomText from '../../components/text/CustomText';
 import {getUploadMediaUrl, showToast} from '../../helper/helper';
+import messages from '../../helper/messages';
+import Permission from '../../helper/permission';
+import screenNameEnum from '../../helper/screenNameEnum';
+import {Query} from '../../network/Query';
 import {
   useFeedSelector,
   userAction,
   useUserData,
 } from '../../redux/reducers/user-slice/userSlice';
+import colors from '../../theme/colors/colors';
 import images from '../../theme/images/images';
-import {useDispatch} from 'react-redux';
-import {Query} from '../../network/Query';
-import {useNavigation} from '@react-navigation/native';
-import Permission from '../../helper/permission';
-import CustomText from '../../components/text/CustomText';
-import bottomSheetStyle from '../../components/bottomSheet/bottomSheetStyle';
-import {Dropdown} from 'react-native-element-dropdown';
-import {SvgXml} from 'react-native-svg';
 import svg from '../../theme/svg/svg';
-import screenNameEnum from '../../helper/screenNameEnum';
-import Header from '../../components/header/header';
-import Loading from '../../components/loading/Loading';
-import messages from '../../helper/messages';
-import DropDownPicker from 'react-native-dropdown-picker';
-import _ from 'lodash';
+import editProfileScreenStyle from './editProfileScreenStyle';
 
 const EditProfileScreen = () => {
   const userData = useUserData();
@@ -431,7 +426,7 @@ const EditProfileScreen = () => {
             />
           </View>
         </View>
-        <View style={editProfileScreenStyle.textInputBox}>
+        {/* <View style={editProfileScreenStyle.textInputBox}>
           <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
             Date Of Birth
           </CustomText>
@@ -462,7 +457,7 @@ const EditProfileScreen = () => {
                 : 'select'}
             </CustomText>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View style={editProfileScreenStyle.textInputBox}>
           <CustomText textStyle={editProfileScreenStyle.textInputLabel}>
             Bio
@@ -487,7 +482,7 @@ const EditProfileScreen = () => {
           </View>
         </View>
 
-        <View
+        {/* <View
           style={[
             editProfileScreenStyle.textInputViewNew,
             editProfileScreenStyle.gender,
@@ -596,7 +591,7 @@ const EditProfileScreen = () => {
             }}
           />
         </View>
-        {/* <View
+        <View
           style={[
             editProfileScreenStyle.textInputViewNew,
             editProfileScreenStyle.gender,

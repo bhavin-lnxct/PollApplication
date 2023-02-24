@@ -4,13 +4,12 @@ import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   Text,
-  View,
-  TouchableOpacity,
   TouchableNativeFeedback,
-  useWindowDimensions,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {ms} from 'react-native-size-matters';
+import ViewMoreText from 'react-native-view-more-text';
 import SimpleButton from '../../../components/button/SimpleButton';
 import Header from '../../../components/header/header';
 import Icon from '../../../components/icon/Icon';
@@ -22,15 +21,11 @@ import {Query} from '../../../network/Query';
 import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
 import colors from '../../../theme/colors/colors';
 import images from '../../../theme/images/images';
-import profileScreenStyle from './profileScreenStyle';
-import ViewMoreText from 'react-native-view-more-text';
-import {TabBar, TabView} from 'react-native-tab-view';
 import ProfilePollScreen from './component/pollScreen';
-import ProfileSurveyScreen from './component/surveyScreen';
+import profileScreenStyle from './profileScreenStyle';
 
 const ProfileScreen = () => {
   const userData = useUserData();
-  const layout = useWindowDimensions();
   const route = useRoute();
   const userId = route?.params?.userId;
   const navigation = useNavigation();
@@ -43,11 +38,6 @@ const ProfileScreen = () => {
   const [isFollow, setIsFollow] = useState(false);
   const [item, setItem] = useState();
   const [loading, setLoading] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {key: 'poll', title: 'poll'},
-    {key: 'survey', title: 'survey'},
-  ]);
   useEffect(() => {
     getUserDetails();
   }, [route]);
@@ -294,34 +284,6 @@ const ProfileScreen = () => {
           )}
         </View>
       </View>
-    );
-  };
-
-  const renderScene = ({route, jumpTo}: {route: any; jumpTo: any}) => {
-    switch (route?.key) {
-      case 'poll':
-        return <ProfilePollScreen userId={userId} />;
-      case 'survey':
-        return <ProfileSurveyScreen userId={userId} />;
-    }
-  };
-
-  const renderTabBar = (props: any) => {
-    return (
-      <TabBar
-        {...props}
-        pressColor={'transparent'}
-        style={profileScreenStyle.tabBar}
-        indicatorStyle={{backgroundColor: colors.AppTheme.Primary}}
-        renderLabel={({route}) => {
-          const isPoll = route?.key === 'poll';
-          return (
-            <CustomText textStyle={profileScreenStyle.tabBarText}>
-              {isPoll ? 'Poll' : 'Survey'}
-            </CustomText>
-          );
-        }}
-      />
     );
   };
 

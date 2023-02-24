@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import {API, graphqlOperation} from 'aws-amplify';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
@@ -6,21 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ms} from 'react-native-size-matters';
-import CustomText from '../../../components/text/CustomText';
-import colors from '../../../theme/colors/colors';
 import FastImage from 'react-native-fast-image';
-import {API, graphqlOperation} from 'aws-amplify';
-import {Query} from '../../../network/Query';
-import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
+import {ms} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
-import pollImageQuestionStyle from './pollImageQuestionStyle';
+import Icon from '../../../components/icon/Icon';
+import CustomText from '../../../components/text/CustomText';
 import ThemeButton from '../../../components/themeButton/themeButton';
 import {removeSpace, showToast} from '../../../helper/helper';
-import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
-import Icon from '../../../components/icon/Icon';
 import messages from '../../../helper/messages';
-import feedCardStyle from '../../../components/card/feedCardStyle';
+import {Query} from '../../../network/Query';
+import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
+import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
+import colors from '../../../theme/colors/colors';
+import pollImageQuestionStyle from './pollImageQuestionStyle';
 
 export interface PollOptionsInterface {
   option: string;

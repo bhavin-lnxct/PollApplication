@@ -1,20 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
+import {API, graphqlOperation} from 'aws-amplify';
 import React, {useState} from 'react';
 import {TextInput, TouchableOpacity, View} from 'react-native';
 import {ms} from 'react-native-size-matters';
-import CustomText from '../../../components/text/CustomText';
-import colors from '../../../theme/colors/colors';
-import {API, graphqlOperation} from 'aws-amplify';
-import {Query} from '../../../network/Query';
-import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
-import pollQuestionStyle from './pollQuestionStyle';
 import {useDispatch} from 'react-redux';
-import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
 import Icon from '../../../components/icon/Icon';
-import {removeSpace, showToast} from '../../../helper/helper';
+import CustomText from '../../../components/text/CustomText';
 import ThemeButton from '../../../components/themeButton/themeButton';
+import {removeSpace, showToast} from '../../../helper/helper';
 import messages from '../../../helper/messages';
-import feedCardStyle from '../../../components/card/feedCardStyle';
+import {Query} from '../../../network/Query';
+import {feedSliceActions} from '../../../redux/reducers/feedSlice/feedSlice';
+import {useUserData} from '../../../redux/reducers/user-slice/userSlice';
+import colors from '../../../theme/colors/colors';
+import pollQuestionStyle from './pollQuestionStyle';
 
 export interface PollOptionsInterface {
   option: string;
@@ -29,7 +28,7 @@ export interface PollQuestionInterface {
   setIsVoted: any;
 }
 
-const PollQuestion: React.FC = ({item, routeName}: PollQuestionInterface) => {
+const PollQuestion = ({item, routeName}: PollQuestionInterface) => {
   const userData = useUserData();
   const dispatch = useDispatch();
   const [explanation, setExplanation] = useState('');

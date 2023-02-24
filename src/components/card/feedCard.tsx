@@ -1,12 +1,12 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {View} from 'react-native';
-import {Title, Paragraph} from 'react-native-paper';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Paragraph, Title} from 'react-native-paper';
+import {ms} from 'react-native-size-matters';
 import FeedProfileHeader from '../../screens/feed/component/feedProfileHeader/feedProfileHeader';
-import feedCardStyle from './feedCardStyle';
 import PollImageQuestion from '../../screens/feed/poll/pollImageQuestion';
 import PollQuestion from '../../screens/feed/poll/pollQuestion';
-import {ms} from 'react-native-size-matters';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import feedCardStyle from './feedCardStyle';
 
 interface FeedCardInterface {
   item: object;
@@ -37,4 +37,4 @@ const FeedCard = ({item, routeName}: FeedCardInterface) => {
   );
 };
 
-export default memo(FeedCard);
+export default FeedCard;
